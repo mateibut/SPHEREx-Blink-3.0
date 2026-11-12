@@ -162,7 +162,7 @@ export const WORKSPACE_STEPS = [
     text: "Type a position (degrees or hours-minutes-seconds) and a field of view up to 30 arcminutes. You get one image per observation date." },
   { target: "#stage", title: "Blink, and other ways to look",
     text: "The images of one detector flash one after another: stars stay put, something that moves jumps. Difference makes still stars vanish; Stack and Trail add the images up; Compare subtracts one set of dates from another (buttons above the picture)." },
-  { target: "#movers", title: "Let the computer find them",
+  { target: "#search-actions", title: "Let the computer find them",
     text: "Find movers links dots across at least three survey passes and lists the ones that moved. Look for a distant body is the Planet X mode: it follows the swing the Earth's motion gives a body hundreds of AU away, and reads off its distance." },
   { target: "#inspector", title: "The inspector",
     text: "Facts about what you have selected: the image on screen, the position you marked with a click, and the description of the candidate you pressed in a list. The keys [ and ] hide the search panel and the inspector to give the picture room." },
