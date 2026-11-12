@@ -66,7 +66,7 @@ async function checkNavigation() {
       });
       const before = await imageGeometry();
       assert.equal(before[0], before[1], "the image remains square");
-      for (const id of ["viewer-settings", "image-layers", "moving-guide", "simulation-note"]) {
+      for (const id of ["viewer-settings", "image-layers", "simulation-note"]) {
         const opener = page.locator('[data-open-panel="' + id + '"]');
         await opener.click();
         const panel = page.locator("#" + id);
@@ -76,7 +76,7 @@ async function checkNavigation() {
           await panel.locator("#centre-crosshair").uncheck();
           await panel.locator("#centre-crosshair").check();
         }
-        if (id === "moving-guide") await page.mouse.click(1, 1);
+        if (id === "image-layers") await page.mouse.click(1, 1);
         else if (id === "simulation-note") await panel.getByRole("button", { name: "Close" }).click();
         else await page.keyboard.press("Escape");
         assert.equal(await panel.isVisible(), false);

@@ -6,6 +6,32 @@
 > **superseded**. SPHEREx-Blink-2.0 holds a parallel line of work (service-failure handling, chance baselines, a release audit, a Paper-theme redesign) that is **not merged into
 > this repository yet**; what differs is listed in `docs/MERGE_NOTES.md` and has to be decided before the two are joined.
 
+## 2026-11-12 — Tour pacing follow-up
+
+Reduced travel time by another 15% to 415–960 ms. Linux Chromium with the synthetic Barnard field passed all eight steps at the seven agreed widths, including a downward scroll without reversals and Escape during motion. All scratch/test_*.mjs scripts, benchmark.mjs --check, the smoke, accessibility, navigation, layout and tour modal checks, and 190 backend tests passed. Physical devices were outside this check.
+
+## 2026-11-12 — Quicker tour transitions
+
+Shortened spotlight travel by about 25%, to 490–1125 ms according to scroll distance. With the synthetic Barnard field, the Linux Chromium tour check aligned each of the eight steps at all seven agreed widths. At 390 px a long downward move advanced through 43 distinct scroll positions without reversing, and Escape stopped it in progress. All 44 Node test scripts, the three benchmark comparisons and 190 backend pytest cases passed. Physical devices were outside this timing check.
+
+## 2026-11-12 — Restore guided tour movement
+
+A single animation moves the page, spotlight and card together over 650–1500 ms according to scroll distance. Next and Back interrupt from the current position. Escape stops the movement and reduced motion places the step immediately.
+
+Linux Chromium: with the synthetic Barnard field, all eight spotlight targets aligned at the seven agreed widths. Reviewed 390 and 1440 px screenshots. A separate frame sampling check at 390 px recorded a long downward move without a reversal and verified that Escape stopped an in-progress move. All scratch/test_*.mjs scripts, benchmark.mjs --check, e2e_smoke.mjs, a11y_audit.mjs, browser_navigation.cjs, browser_layout_audit.cjs, browser_tour_modal.cjs and 190 backend tests passed. Physical devices and live FITS were outside this check.
+
+## 2026-11-12 — Combine the viewing guide and tour
+
+Moved the visual motion cues into the existing eight-step tour. Settings and Layers share the viewer toolbar. Steps now position the highlight immediately and fade the card for 180 ms, with the fade disabled for reduced motion. Removed the delayed reposition callback and overlapping spotlight transitions.
+
+Linux verification used the synthetic Barnard field at 320, 390, 768, 1024, 1366, 1440 and 1920 px. Completed all steps and exercised rapid Back/Next with normal motion, checked card bounds and reviewed desktop and phone screenshots. Ran scratch/browser_tour_modal.cjs on the explicit Workspace route for reduced-motion modal checks. All 44 scratch/test_*.mjs scripts, benchmark.mjs --check, e2e_smoke.mjs, a11y_audit.mjs, browser_navigation.cjs, browser_layout_audit.cjs and 190 backend pytest cases passed. No live FITS, physical devices or screen readers were exercised.
+
+## 2026-11-12 — Workspace viewer tools
+
+Grouped Settings, Layers and Viewing guide in a labelled, tinted row above playback with theme-coloured icons. The buttons wrap on small screens.
+
+Linux Chromium with the built-in synthetic Barnard field: opened all three dialogs, dismissed each with Escape and verified focus returned to its button at 320, 390, 768, 1024, 1366, 1440 and 1920 px. No horizontal page overflow. Reviewed toolbar screenshots at 390 and 1440 px. Ran every scratch/test_*.mjs, benchmark.mjs --check (three matching digests), e2e_smoke.mjs, a11y_audit.mjs, browser_navigation.cjs and browser_layout_audit.cjs. All passed. The isolated backend pytest run passed 190 tests with one FITS keyword warning. Live FITS, external catalogues, physical phones and screen readers were outside this check.
+
 ## 2026-11-12 — Repair pass on branch `repair-docs` (documentation, Playwright scripts, CI)
 
 Fixed the seven findings of a read-only review of `main` at `4e207b8`:
