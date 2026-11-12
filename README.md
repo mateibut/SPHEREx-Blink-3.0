@@ -1,5 +1,7 @@
 # SPHEREx Blink 3.0
 
+[Open the SPHEREx Blink demo](https://iooonut.github.io/SPHEREx-Blink-3.0/)
+
 This repository carries the complete Blink 2.0 application and research tools with a restrained research interface. The source of the feature baseline is [SPHEREx-Blink-2.0](https://github.com/mateibut/SPHEREx-Blink-2.0); the appearance and default theme are the intended differences. The synthetic demo remains clearly labelled.
 
 > **Two lines of work were merged here on 10 Nov 2026** (the earlier Blink 2.0 of this repository and the branch `blink-2.0` of `mateibut/SPHEREx`). What came from where, what was chosen where they differ, and what was not re-measured: [docs/MERGE_NOTES.md](docs/MERGE_NOTES.md).
@@ -93,7 +95,7 @@ The frontend alone is a static site, so it can be published as a demo that runs 
 **Settings → Pages → Build and deployment → Source: GitHub Actions**; the next push to `main` deploys it.
 The page labels itself "Synthetic demo data"; keep it that way until real SPHEREx data is wired in.
 The local FITS option is disabled on the public site. Serve the frontend on your own machine with the Python backend to use local FITS files.
-**Public demo (synthetic data):** https://mateibut.github.io/SPHEREx-Blink-2.0/ (the Pages deployment workflow succeeded; check it from a private window and on a phone before relying on it). Results on real data, numbers only: `results.html` on the same site.
+[Public demo with synthetic data](https://iooonut.github.io/SPHEREx-Blink-3.0/) · [Results from real observations](https://iooonut.github.io/SPHEREx-Blink-3.0/results.html)
 
 **Sky map (section 4 of the page):** its survey pictures (2MASS, AllWISE, DSS2) come from the first of these that answers: ESA's public mirror of the CDS surveys (`skies.esac.esa.int`, no setup), our backend's relay of IRSA's copies (when the backend runs), CDS (Strasbourg) directly. Some networks block CDS; then only the first two give a picture (the catalogue circles show either way). The text under the map says which source is in use; "Re-centre sky map" checks again. Set `SKY_TILES` in `frontend/js/config.js` to force one source.
 

@@ -1,0 +1,103 @@
+/* Shared observing-tool typography, surfaces and controls. */
+html[data-theme] {
+  --font-head: Inter, Arial, sans-serif;
+  --font-body: Inter, Arial, sans-serif;
+  --radius: 5px;
+  --radius-sm: 4px;
+}
+html[data-theme="midnight"] {
+  --bg: #111213;
+  --bg-2: #171819;
+  --surface: #151617;
+  --raised: #252627;
+  --field: #1c1d1e;
+  --text: #f1f1ee;
+  --text-muted: #c4c4bf;
+  --text-faint: #aaa9a4;
+  --border: #424344;
+  --control-border: #757575;
+  --accent: #efb24f;
+  --accent-hi: #ffd18b;
+  --accent-text: #f5c16f;
+  --accent-2: #d1cec8;
+  --on-accent: #20180b;
+  --accent-rgb: 239 178 79;
+  --bg-rgb: 17 18 19;
+  --text-rgb: 241 241 238;
+  --surface-rgb: 21 22 23;
+}
+html[data-theme] body { background: var(--bg); font: 400 15px/1.45 var(--font-body); }
+html[data-theme] :is(h1,h2,h3) { font-weight: 650; letter-spacing: -.025em; line-height: 1.2; }
+html[data-theme] :is(.btn,.chip,.hero-cta,.stage-btn,select,input[type=text]) {
+  font: 500 .875rem/1.25 var(--font-body);
+  letter-spacing: normal;
+  text-transform: none;
+  border-radius: 4px;
+  box-shadow: none;
+}
+html[data-theme] :is(.btn,.chip) {
+  color: var(--text);
+  border: 1px solid var(--control-border);
+  background: var(--field);
+  padding: .43rem .82rem;
+  min-height: 32px;
+}
+html[data-theme] :is(.btn-primary,.mode-switch input:checked + span,.overview-item[aria-pressed=true]) {
+  border-color: var(--accent);
+}
+html[data-theme] :is(.btn-primary,.mode-switch input:checked + span) { background: var(--accent); color: var(--on-accent); }
+html[data-theme] .btn-primary:hover:not(:disabled) { background: var(--accent-hi); color: var(--on-accent); }
+html[data-theme] .chip[aria-pressed=true] { color: var(--accent-text); border-color: var(--accent); background: var(--raised); }
+html[data-theme] .btn:disabled { opacity: .55; }
+html[data-theme] .panel { min-width: 0; border: 1px solid var(--border); border-radius: 5px; padding: 16px; }
+html[data-theme] .panel h2 { font-size: 1.16rem; margin: 0 0 .7rem; }
+html[data-theme] .panel h3 { font-size: .95rem; }
+input[type=range] { accent-color: var(--accent); }
+input[type=range]::-webkit-slider-thumb { box-shadow: none; }
+
+/* Project pages share a masthead but retain their own navigation destinations. */
+:is(.overview-header,.rhead,.explore > header) {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .65rem 1.4rem;
+  padding-block: .75rem; margin-bottom: 0; border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+:is(.overview-header,.rhead,.explore > header) nav a {
+  display: inline-block; color: var(--text); padding: .45rem .15rem;
+  font: 500 .91rem/1.35 var(--font-body); letter-spacing: normal; text-transform: none;
+}
+:is(.overview-header,.rhead,.explore > header) nav a:is(:hover,[aria-current=page]) {
+  color: var(--accent-text); text-decoration: underline; text-underline-offset: .4em;
+}
+.overview-hero::after { display: none; }
+html[data-theme] .overview-copy h1 { font: 700 clamp(3rem,6vw,5.8rem)/.99 var(--font-head); letter-spacing: -.055em; }
+.overview-header .overview-open,.overview-actions .overview-primary {
+  background: var(--accent); color: var(--on-accent); border-radius: var(--radius-sm);
+}
+.overview-modes article:nth-child(n) .mode-image { border-top: 1px solid var(--border); }
+.overview-modes article:nth-child(n) p { color: var(--text); }
+.explore { max-width: 86rem; }
+.explore main > h1,.explore main > .sim-intro { margin-top: clamp(1.25rem,3vw,2.5rem); }
+.explore main > h1,.sim-intro h1,.rmain h1 { font-size: clamp(2rem,4vw,3.3rem); }
+.explore .tool-form,.explorer-inputs { gap: .7rem 1rem; }
+.explore .atlas-note { border-width: 0 0 0 1px; background: transparent; }
+.explore .sim-stage .plot { background: var(--field); border-color: var(--border); }
+.explore .sim-intro { display: grid; }
+.sim-coordinate-pair input { min-width: 0; width: 100%; }
+.explore .sim-readouts { border-inline: 0; }
+.explore #lab .panel > label { display: inline-grid; gap: .35rem; margin: .4rem 1rem .5rem 0; }
+.explore #lab table,.rmain table { font-variant-numeric: tabular-nums; }
+.rmain,.rhead { max-width: 80rem; }
+.rmain .rsec { padding: clamp(1rem,2.5vw,2rem); }
+.rmain .result-links { gap: .45rem 1rem; }
+.rmain .rlead { line-height: 1.6; }
+@media (max-width: 860px) {
+  .explore .sim-stage { grid-row: 1; }
+}
+@media (max-width: 700px) {
+  .explore .atlas-note { border-width: 1px 0 0; }
+  .explore .sim-stage .plot { min-height: 0; }
+  .overview-header nav { flex-basis: 100%; flex-wrap: wrap; }
+  .overview-header .theme-picker { display: inline-flex; }
+  .explore #lab .panel > label { width: 100%; margin-inline: 0; }
+}
+

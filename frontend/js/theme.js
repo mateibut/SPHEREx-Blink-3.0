@@ -5,7 +5,7 @@
     ["midnight", "Midnight / dark"], ["nebula", "Paper / violet"], ["deep-space", "Paper / blue"], ["observatory", "Paper / green"], ["light", "Paper / signal red"], ["classic", "Paper / earth"],
   ]);
   const key = "spherex-blink-theme";
-  const fallback = "light";
+  const fallback = "midnight";
   function apply(value) {
     const theme = palettes.has(value) ? value : fallback;
     document.documentElement.dataset.theme = theme;
