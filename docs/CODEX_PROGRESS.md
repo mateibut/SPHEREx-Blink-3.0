@@ -6,6 +6,10 @@
 > **superseded**. SPHEREx-Blink-2.0 holds a parallel line of work (service-failure handling, chance baselines, a release audit, a Paper-theme redesign) that is **not merged into
 > this repository yet**; what differs is listed in `docs/MERGE_NOTES.md` and has to be decided before the two are joined.
 
+## 2026-11-12 — Navigation kept dropping the data source (branch `fix-navigation`)
+
+Reported by the author: on a local server with the real backend, Workspace -> Overview -> Workspace landed on the synthetic demo. Cause: the links between the pages were written without the choices held in the address (`?data=api`, `?api=<backend>`, `?embed=1`, `?theme=`), so every page change reset them; `index.html#workspace` and the preset links of the Overview were the common case. Planet X Lab and the candidate links also wrote `data=api` without the backend address, which fell back to port 8001. Fix: `frontend/js/features/carryParams.js` (pure `carryLink`, plus `patchLinks`) is applied from `js/siteHeader.js`, which all six pages load, to every link to another page of the site now and to links added later (the pages build some when their data arrives). A link that already makes its own choice keeps it; nothing is added on the synthetic demo; a field (`ra`, `dec`, `fov`, `det`) is not carried. `scratch/test_carryparams.mjs` (14 checks). Checked in the browser against the real backend on port 8003: the click path Workspace -> Overview -> Workspace stays on `?data=api&api=...` with the data-source select on "api". Also run: all 45 `scratch/test_*.mjs`, `e2e_smoke`, `a11y_audit` and the nine frontend-only Playwright scripts. **Not changed:** the field itself (position, field of view, detector) is still not remembered between pages; it is in the address only while the workspace is open.
+
 ## 2026-11-12 — Repair pass on branch `repair-docs` (documentation, Playwright scripts, CI)
 
 Fixed the seven findings of a read-only review of `main` at `4e207b8`:

@@ -1,4 +1,5 @@
 import { setupThemeSwitcher, readTheme, applyTheme, STORAGE_KEY } from "./features/theme.js";
+import { patchLinks } from "./features/carryParams.js";
 
 const header = document.querySelector(".site-header");
 const current = header.dataset.page;
@@ -71,3 +72,7 @@ addEventListener("storage", event => {
   if (event.key !== STORAGE_KEY && event.key !== null) return;
   theme.value = applyTheme(readTheme({ search: location.search, storage: event.storageArea, defaultTheme: "midnight" }), { persist: false });
 });
+
+// Keep the choices of this visit (?data=api, ?api=..., ?embed=1, ?theme=...) on every link to another page, the links added later included (features/carryParams.js):
+// without it, Workspace -> Overview -> Workspace dropped a person from real data to the synthetic demo.
+patchLinks(document);
