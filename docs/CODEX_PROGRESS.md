@@ -1,5 +1,31 @@
 # Development progress
 
+## 2026-11-12 — Navigation and observing workflow cleanup
+
+Continued the contact-sheet checkout from 710256a. The six pages use the same project navigation, active destination, responsive menu and theme picker. The standalone research links now sit beside the field-specific tools. Settings, layers, simulation context and viewing help open in bounded dialogs. Playback and observation selection share a row above the square image. The Inspector contains the frame metadata and interactive timeline. Search findings follow their commands. Phone layouts start with field selection in the Workspace and the orbit in the Simulator.
+
+Verified the static frontend over HTTP in Chrome. Ran every `node scratch/test_*.mjs` script (44), `node scratch/benchmark.mjs --check` (three output digests matched), `node scratch/e2e_smoke.mjs`, `node scratch/a11y_audit.mjs`, `node scratch/browser_navigation.cjs` and `node scratch/browser_layout_audit.cjs` with the bundled Playwright and Chrome. All passed. Updated static expectations for the shared header, working Workspace URL, unnumbered tool heading and retained tooltip descriptions. The layout audit now selects actual saved themes and resolves the surface beneath a transparent panel. Installed the existing backend/requirements-dev.txt in an isolated Python environment and ran `python -m pytest backend -q`. All 190 tests passed with one Astropy FITS keyword warning.
+
+Additional local Playwright checks (`cleanup-final-review.cjs after`, `cleanup-public.cjs`, `cleanup-api-review.cjs` in the chat visualization folder) covered the six pages at 320, 390, 768, 1024, 1366, 1440 and 1920 px. No document-level horizontal overflow. Fixtures were the built-in synthetic Barnard and simulated Planet X fields, saved QR2 footprint records, archived candidates and injection-recovery JSON. At 1440 × 900 the canvas changed from 294 to 585 pixels square. Settings, guide, layer and simulation dialogs retained the canvas position, with focus restored after dismissal. Checked Simulator playback and projection, Sky target/saved product selection, Lab filtering, and candidate filtering/report generation. A touch-emulated public origin served local files and confirmed backend restrictions. Intercepted cutout loading, HTTP 503, retry and empty responses matched HEAD in request method, parameters and feedback. Before and after screenshots are in the chat visualization folder. Live FITS, external catalogues, survey tiles and physical-device/screen-reader testing were outside these checks.
+
+## Field controls follow-up
+
+Moved the existing tour and disclosures into a single row beneath the presets, with stacked touch targets on phones. The field collapse arrow now follows the vertical direction of the panel. Playwright opened and closed all three disclosures and collapsed and restored the field panel at 320, 390, 820, 1179, 1180 and 1440 px using the empty synthetic workspace. No document overflow was detected. The backend pytest run could not start because pytest was unavailable.
+
+## 2026-11-12 — Project-wide visual redesign
+
+Extended the workspace reference palette and control styles to the five companion pages. The field heading aligns with the coordinate form at the desktop breakpoint. The tablet simulator shows the orbit before the controls, and the Overview theme selector is available on phones.
+
+Checked the six routes with Playwright at 1440, 820 and 390 px using synthetic workspace frames, the saved QR2 field and archived experiment and candidate JSON. All six fit the viewport. The 44 frontend test scripts, browser layout and navigation regressions, workspace keyboard audit and synthetic end-to-end smoke test passed. Compared the original workspace control inventory and intercepted cutout requests through loading, HTTP 503, retry and empty responses. Backend pytest was unavailable. Live FITS and catalogue services were not tested. The pre-existing Planet X Lab header link labelled Workspace resolves to Overview through the original redirect.
+
+## 2026-11-11 — Contact Sheet workspace
+
+Restyled the image workspace on `redesign/contact-sheet` from `880777f`. The coordinate form and presets sit above the viewer, with frame metadata alongside it. Detector averages, search actions, exports, measurements and results use the existing controls. The first-visit workspace palette is charcoal and amber. Saved and URL-selected themes retain precedence.
+
+Ran all 44 `scratch/test_*.mjs` scripts, `node scratch/e2e_smoke.mjs`, `node scratch/a11y_audit.mjs`, and the Playwright navigation and layout checks in `scratch/browser_navigation.cjs` and `scratch/browser_layout_audit.cjs`. All passed. Playwright screenshots at 1536, 820, 390 and 320 px used the built-in WISE 0855 and simulated Planet X fields. A touch-emulated phone check exercised mode selection and display settings. A before-and-after comparison matched 129 static controls, links and forms, the cutout GET and parameters, and the loading, HTTP 503, retry and empty-field states using intercepted API responses.
+
+The frontend serves directly from `frontend/` with no build step. The available Python installations lacked pytest, so `python -m pytest backend -q` could not run. Live FITS, external catalogues and third-party sky map services were not exercised.
+
 ## 2026-11-11 — academic Overview refinement
 
 Simplified the public Overview into a quieter research-note presentation: reduced hero scale, more generous reading space, plain figure treatment, restrained monochrome illustration, compact capability line, hairline-separated mode descriptions, table-like target cards and a neutral workflow note. The formerly animated illustration is static by default, while the existing reduced-motion fallback remains. This is CSS-only; navigation, target deep links and all claims remain unchanged.
