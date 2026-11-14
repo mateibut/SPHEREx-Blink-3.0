@@ -8,13 +8,13 @@ html[data-theme] {
 html[data-theme] body { background: var(--bg); font: 400 15px/1.45 var(--font-body); }
 /* Still CSS starfield shared by the site: visual only, with no canvas or animation. */
 html[data-theme] {
-  --static-space-background:
+  --static-space-stars:
     radial-gradient(1px 1px at 13% 21%, rgb(var(--text-rgb) / .42) 50%, transparent 60%),
     radial-gradient(1.5px 1.5px at 72% 38%, rgb(var(--text-rgb) / .34) 50%, transparent 60%),
     radial-gradient(1px 1px at 42% 82%, rgb(var(--text-rgb) / .3) 50%, transparent 60%),
     radial-gradient(ellipse at 82% 8%, rgb(var(--accent-rgb) / .09), transparent 44%),
-    radial-gradient(ellipse at 12% 76%, rgb(var(--alt-rgb) / .06), transparent 42%),
-    url("../img/earth-spherex-static.svg");
+    radial-gradient(ellipse at 12% 76%, rgb(var(--alt-rgb) / .06), transparent 42%);
+  --static-space-background: var(--static-space-stars), url("../img/earth-spherex-static.svg");
   --panel-alpha: .87;
 }
 html[data-theme="midnight"] { --panel-alpha: .8; }

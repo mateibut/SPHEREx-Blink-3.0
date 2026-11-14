@@ -1,5 +1,9 @@
 # Development progress
 
+## 2026-11-14 — Remove static duplicate scene from Overview and Simulator
+
+Raised the Overview backdrop override to the shared theme rule's specificity so only its animated 3D scene appears. Kept the Simulator's shared static starfield while omitting the decorative Earth/SPHEREx image behind its own orbital model. `git diff --check` passed; browser review and tests were not run. This change is local and unpushed.
+
 ## 2026-11-14 — Keep only the animated Overview scene
 
 Cleared the shared static backdrop from Overview so its animated 3D Earth and SPHEREx telescope remain the only planet-and-spacecraft scene there. Bumped the Overview stylesheet cache version. `git diff --check` passed; browser review and tests were not run. This change is local and unpushed.

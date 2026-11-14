@@ -13,8 +13,8 @@
       overflow-x: hidden;
       min-height: 100vh;
     }
-    /* Let the animated 3D starfield and Earth model provide the backdrop on Overview. */
-    html[data-theme] body { background: transparent; }
+    /* Let the animated 3D scene provide the backdrop without the shared static planet illustration. */
+    html[data-theme]:not([data-contrast="high"]) body { background: transparent; }
 
     /* ── 3D CANVAS BACKGROUND ── */
     #bg-canvas {
