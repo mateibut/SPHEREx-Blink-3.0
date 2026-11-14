@@ -1,5 +1,9 @@
 # Development progress
 
+## 2026-11-14 — Refresh Sky Explorer and About
+
+Added a rotatable celestial globe with the five propagated challenge targets. Selecting a globe marker synchronizes the existing atlas selection and archive coordinate fields; arrow keys rotate the globe, and reduced-motion preferences disable its idle rotation. Restyled About with a colorful hero and more readable workflow/topic cards while retaining its science copy and links. The globe grid, star field and color band are decorative; only target markers represent documented coordinates. `git diff --check` passed; browser review was not run.
+
 > **Where things stand (12 Nov 2026): read this first.** The repository for later changes is **SPHEREx-Blink-3.0** (the author's decision of 12 Nov). The default theme is
 > **Midnight / dark** on all six pages (`DEFAULT_THEME` in `theme.js` is only the fallback; each page passes `midnight`). Entries below that say the destination is Blink 2.0
 > (the 8 Nov "return to SPHEREx-Blink-2.0" entry), that "Deep Space is the default theme", or that the work is "on the branch `blink-2.0`" were true when written and are
