@@ -2,7 +2,7 @@
    Deliberately leaves #scene, .plot and all SVG descendants untouched:
    the Sun, planets, orbital paths and sightlines keep their existing design. */
 
-.simulator-body {
+html[data-theme] body.simulator-body {
   min-height: 100vh;
   color-scheme: dark;
   background:
