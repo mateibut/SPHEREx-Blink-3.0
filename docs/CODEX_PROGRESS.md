@@ -1,5 +1,9 @@
 # Development progress
 
+## 2026-11-14 — Static space backdrop across the site
+
+Added a still CSS starfield and subtle nebula accents to the shared instrument pages, including Learn; translucent, blurred surfaces let it show through. The Simulator keeps its existing still starfield with lighter panels. No new canvas or animation was added; high-contrast mode keeps opaque surfaces. `git diff --check` passed; browser review and tests were not run. This change is local and unpushed.
+
 ## 2026-11-14 — Collapsible Workspace analysis group
 
 Grouped Distant-body analysis, Sky Explorer, Explain the selected candidate and Text analysis in one initially expanded native disclosure panel. Preserved each tool's existing ID and added reveal-on-navigation for links and the mover action. `git diff --check` passed; browser review and tests were not run. This change is local and unpushed.
