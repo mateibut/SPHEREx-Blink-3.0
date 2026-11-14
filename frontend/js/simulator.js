@@ -260,7 +260,13 @@ $("play").addEventListener("click", () => {
   }, 75);
 });
 document.addEventListener("visibilitychange", () => {
-  if (document.hidden) { stop(); stopTargetMotion(); }
+  if (document.hidden) {
+    stop(); stopTargetMotion();
+    if (desiredTargetShift) {
+      displayedTargetShift = { ...desiredTargetShift };
+      redrawSyntheticExposures();
+    }
+  }
 });
 window.addEventListener("pagehide", () => { stop(); stopTargetMotion(); });
 draw();
