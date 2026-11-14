@@ -28,7 +28,7 @@ async function checkNavigation() {
       ["Sky Explorer", "sky.html"], ["Workspace", "index.html#workspace"],   // leave the workspace first: its own link is a same-page jump
       ["Simulator", "simulator.html"], ["Results", "results.html"], ["About", "index.html#about"]
     ];
-    const labels = ["Home", "Workspace", "📌 Pin Board", "Sky Explorer", "Simulator", "Results", "About", "⇄ Switch to Learn Mode"];
+    const labels = ["Home", "Workspace", "Pin Board", "Sky Explorer", "Simulator", "Results", "About", "⇄ Switch to Learn Mode"];
     await page.goto(new URL("index.html", base).href);
     await page.waitForURL("**/overview.html");
     for (const width of [320, 390, 768, 1024, 1366, 1440, 1920]) {
