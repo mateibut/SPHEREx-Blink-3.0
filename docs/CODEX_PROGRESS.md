@@ -1,5 +1,9 @@
 # Development progress
 
+## 2026-11-14 — Widen Workspace Text analysis
+
+Made the Text analysis panel span both Workspace columns even before a report is built, removing the unused right-hand space in its empty state. Bumped the stylesheet URL to invalidate cached layout. `git diff --check` passed; browser review was not run. This change is local and unpushed.
+
 ## 2026-11-14 — Remove the Solar System panel from Workspace
 
 Removed the embedded “The Solar System, seen from above” section, its More tools link, page renderer and section-only styling. The standalone Simulator page remains. Removed the three Learn missions that depended on the deleted panel's controls and updated the remaining parallax learning goals. The validated `solarSystem.js` calculation and its tests remain as reference material. `git diff --check` and JavaScript syntax checks passed; browser review and tests were not run. This follow-up is local and unpushed.

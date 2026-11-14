@@ -100,6 +100,7 @@
 .analysis-workbench > .analysis-results, .analysis-workbench > .measure { grid-column: auto; min-width: 0; margin: 0; max-width: none; }
 .analysis-workbench > .ws-toc { grid-column: 1 / -1; margin: 0; }
 #workspace .measure, #workspace .analysis-results { grid-column: auto; }
+#workspace .textan { grid-column: 1 / -1; }
 #workspace :is(.sequence-controls,.info-aside) { grid-column: 1 / -1; }
 #workspace .info-aside { position: static; }
 #about .hero-title { padding: 12px 0; margin-bottom: 16px; }
