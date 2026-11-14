@@ -6,9 +6,9 @@
 > **superseded**. SPHEREx-Blink-2.0 holds a parallel line of work (service-failure handling, chance baselines, a release audit, a Paper-theme redesign) that is **not merged into
 > this repository yet**; what differs is listed in `docs/MERGE_NOTES.md` and has to be decided before the two are joined.
 
-## 2026-11-14 — Keep the Overview camera outside the model
+## 2026-11-14 — Add Earth behind the Overview telescope
 
-The 3D Overview starts its camera farther from the illustrative spacecraft and caps the scroll approach at `z=460`, so the camera no longer passes through the model. Scroll progress is clamped to the page range. The page does not contain a modeled Earth. `git diff --check` passed; browser review was not run.
+Added the missing procedural Earth, cloud layer, atmosphere and orbit behind the existing telescope model, following the source interface while keeping all scene elements labelled as illustration. The camera starts farther away and caps its scroll approach at `z=460`, before the Earth's front surface; scroll progress is clamped to the page range. `git diff --check` passed; browser review was not run.
 
 ## 2026-11-12 — Tour pacing follow-up
 
