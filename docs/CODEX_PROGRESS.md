@@ -1,5 +1,13 @@
 # Development progress
 
+## 2026-11-14 — Keep only the animated Overview scene
+
+Cleared the shared static backdrop from Overview so its animated 3D Earth and SPHEREx telescope remain the only planet-and-spacecraft scene there. Bumped the Overview stylesheet cache version. `git diff --check` passed; browser review and tests were not run. This change is local and unpushed.
+
+## 2026-11-14 — Match the Simulator page background
+
+Removed the Simulator's separate radial gradients and dot grid so it now uses the same shared static starfield and Earth/SPHEREx illustration as the other pages. Its controls and scene styling are unchanged. `git diff --check` passed; browser review and tests were not run. This change is local and unpushed.
+
 ## 2026-11-14 — Put Earth and SPHEREx in the static site backdrop
 
 Added a fixed SVG illustration of Earth and the SPHEREx telescope to the CSS starfield used across the site, including Sky Explorer and Learn, and bumped the shared stylesheet cache version. The artwork is decorative and static; the interactive Sky Explorer globe and Overview scene remain their own page content. `git diff --check` passed; browser review and tests were not run. This change is local and unpushed.

@@ -5,12 +5,6 @@
 html[data-theme] body.simulator-body {
   min-height: 100vh;
   color-scheme: dark;
-  background:
-    radial-gradient(ellipse at 78% 8%, rgba(75, 52, 91, .24), transparent 34rem),
-    radial-gradient(ellipse at 8% 42%, rgba(24, 76, 91, .16), transparent 38rem),
-    radial-gradient(circle at 1px 1px, rgba(255,255,255,.22) 1px, transparent 1.5px) 0 0 / 72px 72px,
-    url("../img/earth-spherex-static.svg") right -5vw bottom 8vh / min(52vw, 720px) auto no-repeat fixed,
-    #0b0f19;
 }
 
 .simulator-body .site-header {
@@ -376,4 +370,4 @@ html[data-contrast="high"] .simulator-body .simulator-layout > .panel { backgrou
 }
 
 /* The simulator page is always dark: the text tokens must be light in every theme (the Paper palettes set dark grey). */
-html[data-theme]:has(body.simulator-body) { --bg: #0B0F19; --text: #E8EBF2; --text-muted: #AEB7C6; --text-faint: #8D97A8; }
+html[data-theme]:has(body.simulator-body) { --bg: #0B0F19; --text: #E8EBF2; --text-rgb: 232 235 242; --text-muted: #AEB7C6; --text-faint: #8D97A8; --accent-rgb: 239 178 79; --alt-rgb: 174 183 198; }
