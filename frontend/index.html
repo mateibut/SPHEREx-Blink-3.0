@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="css/styles.css?v=22">
   <link rel="stylesheet" href="css/instrument.css">
   <link rel="stylesheet" href="css/lab-track.css">
-  <link rel="stylesheet" href="css/contact-sheet.css?v=24">
+  <link rel="stylesheet" href="css/contact-sheet.css?v=25">
   <link rel="stylesheet" href="css/telescope-redesign.css?v=1">
 </head>
 <body>
@@ -506,6 +506,13 @@
       </dialog>
     </section>
 
+    <details class="workspace-analysis" id="workspace-analysis" open>
+      <summary aria-controls="workspace-analysis-content">
+        <span class="workspace-analysis-title">Distant-body analysis and tools</span>
+        <span class="workspace-analysis-hint">Sky Explorer · Explain a candidate · Text analysis</span>
+      </summary>
+      <div class="workspace-analysis-content" id="workspace-analysis-content">
+
     <!-- ============ 5. Planet X Lab (features/planetLab.js, planetLabView.js, planetLabWorker.js) ============ -->
     <section class="panel lab" id="planet-lab" aria-labelledby="lab-title">
       <h2 id="lab-title">Distant-body analysis</h2>
@@ -614,6 +621,9 @@
       <p class="muted small" id="bundle-status" role="status" aria-live="polite">Load a field, run Find movers if you want its settings in the file, then press the button.</p>
       <div id="bundle-replay"></div>
     </section>
+
+      </div>
+    </details>
 
     <!-- ============ ABOUT THE PROJECT: beside the text analysis, in the space to its right ============ -->
     <section class="info info-aside" id="about" aria-labelledby="about-title">

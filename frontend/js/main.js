@@ -57,6 +57,15 @@ import { setupDiscoverPanel } from "./features/discoverPanel.js";
 // Small helper: document.getElementById is long, so we alias it.
 const $ = (id) => document.getElementById(id);
 
+// Links to a panel inside the collapsible analysis group should reveal it first.
+document.querySelectorAll('#workspace a[href^="#"]').forEach((link) => {
+  link.addEventListener("click", () => {
+    const target = $(link.hash.slice(1));
+    const group = $("workspace-analysis");
+    if (target && group?.contains(target)) group.open = true;
+  });
+});
+
 const form = $("search-form");
 const raInput = $("ra-input");
 const decInput = $("dec-input");
@@ -1504,6 +1513,7 @@ player.onFollowChange = (i) => {
 $("mover-lab-btn").addEventListener("click", () => {
   const candidate = movers[selectedMover];
   if (!candidate?.distant) return;
+  $("workspace-analysis").open = true;
   $("planet-lab").scrollIntoView({ block: "start", behavior: prefersReducedMotion ? "auto" : "smooth" });
   $("lab-compare-btn").focus({ preventScroll: true });
 });

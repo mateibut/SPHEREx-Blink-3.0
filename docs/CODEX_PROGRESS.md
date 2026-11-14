@@ -1,5 +1,9 @@
 # Development progress
 
+## 2026-11-14 — Collapsible Workspace analysis group
+
+Grouped Distant-body analysis, Sky Explorer, Explain the selected candidate and Text analysis in one initially expanded native disclosure panel. Preserved each tool's existing ID and added reveal-on-navigation for links and the mover action. `git diff --check` passed; browser review and tests were not run. This change is local and unpushed.
+
 ## 2026-11-14 — Widen Workspace Text analysis
 
 Made the Text analysis panel span both Workspace columns even before a report is built, removing the unused right-hand space in its empty state. Bumped the stylesheet URL to invalidate cached layout. `git diff --check` passed; browser review was not run. This change is local and unpushed.
