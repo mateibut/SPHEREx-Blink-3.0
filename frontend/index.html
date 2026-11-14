@@ -18,7 +18,7 @@
   <script>if (/[?&]embed=1(&|$)/.test(location.search)) document.documentElement.classList.add("embed");</script>   <!-- ?embed=1: workspace only, for an <iframe> -->
   <link rel="stylesheet" href="css/styles.css?v=21">
   <link rel="stylesheet" href="css/instrument.css">
-  <link rel="stylesheet" href="css/contact-sheet.css">
+  <link rel="stylesheet" href="css/contact-sheet.css?v=22">
 </head>
 <body>
   <a class="skip-link" href="#workspace">Skip to the workspace</a>
@@ -112,10 +112,9 @@
           </fieldset>
           <p class="mode-help" id="mode-help" aria-live="polite"></p>
         </div>
-        <div class="compare-controls" id="colour-controls" hidden>
+        <div class="compare-controls colour-controls" id="colour-controls" hidden>
           <label>Survey pass <select id="colour-pass"></select></label>
-          <span id="colour-status" role="status"></span>
-          <span id="colour-centre-status"></span>
+          <div class="colour-statuses"><span id="colour-status" role="status"></span><span id="colour-centre-status"></span></div>
         </div>
         <!-- Compare mode: pick image A, image B and the operation yourself (js/features/compare.js) -->
         <div class="compare-controls" id="compare-controls" hidden>
