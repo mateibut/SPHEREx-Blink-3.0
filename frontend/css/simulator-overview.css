@@ -368,3 +368,6 @@ html[data-theme] body.simulator-body {
   }
   .simulator-body .simulator-layout > .panel:hover { transform: none; }
 }
+
+/* The simulator page is always dark: the text tokens must be light in every theme (the Paper palettes set dark grey). */
+html[data-theme]:has(body.simulator-body) { --bg: #0B0F19; --text: #E8EBF2; --text-muted: #AEB7C6; --text-faint: #8D97A8; }
