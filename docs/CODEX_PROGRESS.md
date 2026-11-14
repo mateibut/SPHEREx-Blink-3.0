@@ -1,5 +1,9 @@
 # Development progress
 
+## 2026-11-14 — Refresh Sky Explorer and About
+
+Added a rotatable celestial globe with the five propagated challenge targets. Selecting a globe marker synchronizes the existing atlas selection and archive coordinate fields; arrow keys rotate the globe, and reduced-motion preferences disable its idle rotation. Restyled About with a colorful hero and more readable workflow/topic cards while retaining its science copy and links. The globe grid, star field and color band are decorative; only target markers represent documented coordinates. `git diff --check` passed; browser review was not run.
+
 > **Where things stand (12 Nov 2026): read this first.** The repository for later changes is **SPHEREx-Blink-3.0** (the author's decision of 12 Nov). The default theme is
 > **Midnight / dark** on all six pages (`DEFAULT_THEME` in `theme.js` is only the fallback; each page passes `midnight`). Entries below that say the destination is Blink 2.0
 > (the 8 Nov "return to SPHEREx-Blink-2.0" entry), that "Deep Space is the default theme", or that the work is "on the branch `blink-2.0`" were true when written and are
@@ -10,6 +14,9 @@
 
 Restyled the Simulator page with the Overview's dark space palette, warm gold accents, glass-like panels, hover illumination, responsive form controls and reduced-motion-aware transitions. The change is scoped to `simulator.html` and `simulator-overview.css`; it does not alter the SVG scene, Sun, planet markers, orbit paths, sightlines, geometry calculations, inputs or readouts. The existing simulator browser precision regression and a visual desktop/mobile review remain to be run.
 
+## 2026-11-12 — Navigation kept dropping the data source (branch `fix-navigation`)
+
+Reported by the author: on a local server with the real backend, Workspace -> Overview -> Workspace landed on the synthetic demo. Cause: the links between the pages were written without the choices held in the address (`?data=api`, `?api=<backend>`, `?embed=1`, `?theme=`), so every page change reset them; `index.html#workspace` and the preset links of the Overview were the common case. Planet X Lab and the candidate links also wrote `data=api` without the backend address, which fell back to port 8001. Fix: `frontend/js/features/carryParams.js` (pure `carryLink`, plus `patchLinks`) is applied from `js/siteHeader.js`, which all six pages load, to every link to another page of the site now and to links added later (the pages build some when their data arrives). A link that already makes its own choice keeps it; nothing is added on the synthetic demo; a field (`ra`, `dec`, `fov`, `det`) is not carried. `scratch/test_carryparams.mjs` (14 checks). Checked in the browser against the real backend on port 8003: the click path Workspace -> Overview -> Workspace stays on `?data=api&api=...` with the data-source select on "api". Also run: all 45 `scratch/test_*.mjs`, `e2e_smoke`, `a11y_audit` and the nine frontend-only Playwright scripts. **Not changed:** the field itself (position, field of view, detector) is still not remembered between pages; it is in the address only while the workspace is open.
 ## 2026-11-14 — Add Earth behind the Overview telescope
 
 Added the missing procedural Earth, cloud layer, atmosphere and orbit behind the existing telescope model, following the source interface while keeping all scene elements labelled as illustration. Dragging rotates Earth with the telescope; a restrained decorative beam and spotlight point toward Earth's surface. The camera starts farther away and caps its scroll approach at `z=460`, before the Earth's front surface; scroll progress is clamped to the page range. `git diff --check` passed; browser review was not run.
@@ -49,7 +56,6 @@ Linux verification used the synthetic Barnard field at 320, 390, 768, 1024, 1366
 Grouped Settings, Layers and Viewing guide in a labelled, tinted row above playback with theme-coloured icons. The buttons wrap on small screens.
 
 Linux Chromium with the built-in synthetic Barnard field: opened all three dialogs, dismissed each with Escape and verified focus returned to its button at 320, 390, 768, 1024, 1366, 1440 and 1920 px. No horizontal page overflow. Reviewed toolbar screenshots at 390 and 1440 px. Ran every scratch/test_*.mjs, benchmark.mjs --check (three matching digests), e2e_smoke.mjs, a11y_audit.mjs, browser_navigation.cjs and browser_layout_audit.cjs. All passed. The isolated backend pytest run passed 190 tests with one FITS keyword warning. Live FITS, external catalogues, physical phones and screen readers were outside this check.
-
 ## 2026-11-12 — Repair pass on branch `repair-docs` (documentation, Playwright scripts, CI)
 
 Fixed the seven findings of a read-only review of `main` at `4e207b8`:
