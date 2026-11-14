@@ -1,4 +1,17 @@
-# Feature inventory at the navigation milestone
+# SPHEREx Blink 4.0 · feature inventory
+
+## New in 4.0: Research + Education
+
+| Feature | Implementation | Status / limits |
+| --- | --- | --- |
+| Dual-mode landing page | `frontend/overview.html` | Science Mode preserves links and legacy query URLs; Learn Mode opens the beginner curriculum. |
+| Eight-level learning path | `frontend/learn.html`, `js/features/learning.js`, `js/learnPage.js` | Sequential unlocks, offline quizzes, per-level quiz scores, XP, ranks, badges, profiles, time and streaks stored locally. Quizzes are instructional checks, not validated assessments. |
+| Astra simple explanations | `js/features/spaceGuide.js`, `js/scienceExplain.js` | Curated offline explanations for glossary terms; not a connected LLM or unrestricted question answering. Unknown topics receive an honest fallback. |
+| Interactive education and classroom tools | `learn.html`, `css/learn.css`, `js/learnPage.js` | Spectrum, solar system and galaxy explorers; printable lesson and answer key; local profile dashboard. Illustrations are schematic, classroom aggregation stays on this device. |
+| Science Mode simple explanations | `index.html`, `js/scienceExplain.js`, `css/styles.css` | Keyboard-operable Explain Simply controls are attached to the research panels. Numeric values, analysis and provenance remain unchanged. |
+| High contrast | `js/features/highContrast.js`, `css/styles.css` | Saved contrast setting is available alongside the theme selector across the main research, learning and tool pages. |
+
+See [EDUCATION_MODE.md](EDUCATION_MODE.md) for architecture, storage and limits. The sections below preserve the 3.0 scientific feature inventory and validation history.
 
 All five retained theme identifiers now use paper-light presentations, each with a distinct signal colour, so saved preferences and `?theme=` links remain valid without retaining a dark application theme. The public Overview introduces the workspace, modes, documented test fields and model scope, then links into the existing tools. The workspace arranges the controls as a field definition panel, central image/player, immediate analysis command deck, and a persistent inspector. Settings, research links, and explanatory guidance are available through labelled disclosures. These are interface changes, not changes to scientific results.
 

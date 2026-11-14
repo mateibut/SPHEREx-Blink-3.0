@@ -1,20 +1,54 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="nebula">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#FBFBF9"><title>Overview · SPHEREx Blink</title>
+  <meta name="theme-color" content="#FCFAFF"><title>SPHEREx Blink 4.0 · Explore the Universe Your Way</title>
   <script>try{var t=new URLSearchParams(location.search).get("theme")||localStorage.getItem("spherex-blink-theme");if(/^(midnight|nebula|deep-space|observatory|light|classic)$/.test(t))document.documentElement.dataset.theme=t}catch(e){}</script>
-  <link rel="stylesheet" href="css/styles.css?v=21"><link rel="stylesheet" href="css/overview.css?v=1"><link rel="stylesheet" href="css/overview-academic.css?v=1">
+  <link rel="stylesheet" href="css/styles.css?v=22"><link rel="stylesheet" href="css/overview.css?v=2"><link rel="stylesheet" href="css/overview-academic.css?v=1">
 </head>
-<body><a class="skip-link" href="#overview-main">Skip to overview</a>
-<header class="overview-header"><a class="overview-brand" href="overview.html" aria-label="SPHEREx Blink overview"><span class="brand-logo" aria-hidden="true"></span><span>SPHEREx Blink</span></a><nav aria-label="Project pages"><a aria-current="page" href="overview.html">01 Overview</a><a href="index.html#workspace">02 Workspace</a><a href="sky.html">03 Sky Explorer</a><a href="planet-x.html">04 Planet X Lab</a><a href="simulator.html">05 Simulator</a><a href="results.html">06 Results</a></nav><label class="theme-picker"><span class="sr-only">Colour theme</span><select data-theme-picker></select></label><a class="overview-open" href="index.html#workspace">Open workspace <span aria-hidden="true">↗</span></a></header>
-<main id="overview-main">
-  <section class="overview-hero" aria-labelledby="overview-title"><div class="overview-copy"><p class="overview-kicker">Infrared time domain · synthetic demo</p><h1 id="overview-title">Find what<br>moves<span>.</span></h1><p>Blink through the infrared sky over time. Most stars stay put; the dot that jumps is worth investigating.</p><div class="overview-actions"><a class="overview-primary" href="index.html#workspace">Open the workspace <span aria-hidden="true">↗</span></a><a class="overview-secondary" href="sky.html">Explore the sky map</a></div><p class="overview-meta">Synthetic demo frames · Blink · Difference · Stack · Trail</p></div><figure class="overview-frame" aria-label="Illustration of a synthetic infrared image sequence"><div class="overview-frame-status"><span></span>Blinking · synthetic</div><div class="overview-stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><b></b></div><figcaption>Illustration only — not SPHEREx observations.</figcaption></figure></section>
-  <p class="overview-ticker" aria-label="SPHEREx Blink capabilities"><span>Infrared image sequences</span><b>◆</b><span>Six detectors</span><b>◆</b><span>Inspect what changes</span><b>◆</b><span>Export with provenance</span></p>
-  <section class="overview-section" aria-labelledby="modes-title"><p class="overview-kicker">The instrument</p><h2 id="modes-title">Four ways to look at the same sky.</h2><div class="overview-modes"><article><div class="mode-image mode-blink" aria-hidden="true"></div><p>Blink</p><span>Frames one after another — the classic view.</span></article><article><div class="mode-image mode-difference" aria-hidden="true"></div><p>Difference</p><span>Subtract frames so only changes survive.</span></article><article><div class="mode-image mode-stack" aria-hidden="true"></div><p>Stack</p><span>Median of the sequence — the still sky.</span></article><article><div class="mode-image mode-trail" aria-hidden="true"></div><p>Trail</p><span>Maximum of each frame — the moving path.</span></article></div></section>
-  <section class="overview-method" aria-labelledby="method-title"><p class="overview-kicker">Method</p><h2 id="method-title">How blinking works.</h2><ol><li><span>01</span><h3>Define a field</h3><p>Choose right ascension, declination, field of view and detector, or start from a documented challenge target.</p></li><li><span>02</span><h3>Play the sequence</h3><p>Inspect the same patch of sky across different dates with blink, difference, stack and trail views.</p></li><li><span>03</span><h3>Inspect what moves</h3><p>Measure, compare, export and keep the provenance; a candidate remains a lead, not a discovery.</p></li></ol></section>
-  <section class="overview-section overview-presets" aria-labelledby="preset-title"><p class="overview-kicker">Preset fields</p><h2 id="preset-title">Start where the movers are.</h2><div class="overview-preset-grid"><a href="index.html?ra=331.0441466&dec=-56.7828442&fov=5&det=D2#workspace"><h3>Epsilon Indi B <span>↗</span></h3><p class="preset-coords">331.0441° · −56.7828°</p><p>Nearby brown dwarf binary; a documented Blink test target.</p></a><a href="index.html?ra=269.452077&dec=4.693365&fov=5&det=D2#workspace"><h3>Barnard's Star <span>↗</span></h3><p class="preset-coords">269.4521° · +4.6934°</p><p>High proper-motion nearby star used to test the mover workflow.</p></a><a href="index.html?ra=133.8189083&dec=-7.247048&fov=5&det=D2#workspace"><h3>WISE 0855 <span>↗</span></h3><p class="preset-coords">133.8189° · −7.2470°</p><p>Cold brown-dwarf target from the documented challenge list.</p></a><a href="index.html?ra=76.956526&dec=30.401438&fov=5&det=D1#workspace"><h3>RW Aurigae <span>↗</span></h3><p class="preset-coords">76.9565° · +30.4014°</p><p>Variable young star in a star-forming region.</p></a><a href="index.html?ra=248.167611&dec=66.754979&fov=30&det=D4#workspace"><h3>R Draconis <span>↗</span></h3><p class="preset-coords">248.1676° · +66.7550°</p><p>Mira variable in a wide challenge field.</p></a></div></section>
-  <section class="overview-callout"><p class="overview-kicker">Research workflow</p><h2>A dot that jumps frame to frame is a candidate.</h2><p>Use Find Movers to link bright dots across a sequence. The page reports motion, significance and each supporting detection, while keeping synthetic and observed inputs clearly labelled.</p><a class="overview-secondary" href="index.html#workspace">Run the workspace <span aria-hidden="true">↗</span></a></section>
-</main>
-<footer class="overview-footer"><span>SPHEREx Blink · NASA Space Apps Challenge 2026</span><span>Demo pixels are synthetic unless stated otherwise.</span></footer>
-<script src="js/theme.js"></script></body></html>
+<body>
+  <a class="skip-link" href="#overview-main">Skip to main content</a>
+  <header class="overview-header">
+    <a class="overview-brand" href="overview.html" aria-label="SPHEREx Blink 4.0 home"><span class="brand-logo" aria-hidden="true"></span><span>SPHEREx Blink 4.0</span></a>
+    <nav aria-label="Project pages"><a aria-current="page" href="overview.html">Home</a><a href="index.html#workspace">Science Mode</a><a href="learn.html">Learn Mode</a><a href="sky.html">Sky Explorer</a><a href="planet-x.html">Planet X Lab</a><a href="simulator.html">Simulator</a><a href="results.html">Results</a></nav>
+    <label class="theme-picker"><span class="sr-only">Colour theme</span><select data-theme-picker></select></label>
+  </header>
+  <main id="overview-main">
+    <section class="overview-hero" aria-labelledby="overview-title">
+      <div class="overview-copy">
+        <p class="overview-kicker">NASA's infrared sky · two ways to explore</p>
+        <h1 id="overview-title">Explore the<br>Universe Your<br>Way<span>.</span></h1>
+        <p>Follow the evidence like a researcher, or learn the story one mission at a time. Start with the mode that fits you.</p>
+        <p class="overview-meta">Research tools · Guided lessons · Synthetic demo always labelled</p>
+      </div>
+      <figure class="overview-frame" aria-label="Illustration of a synthetic infrared image sequence">
+        <div class="overview-frame-status"><span></span>Illustration · synthetic</div><div class="overview-stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><b></b></div>
+        <figcaption>Illustration only — not SPHEREx observations.</figcaption>
+      </figure>
+    </section>
+
+    <section class="mode-choices" aria-label="Choose your experience">
+      <a class="mode-card mode-card-science" href="index.html#workspace">
+        <span class="mode-card-icon" aria-hidden="true">🔬</span><span class="mode-card-kicker">For researchers · students</span>
+        <h2>Science Mode</h2><p>Advanced analysis and research tools</p><span class="mode-card-detail">Blink images, find movers, compare detectors, inspect provenance and export evidence.</span><span class="mode-card-cta">Open research workspace <span aria-hidden="true">↗</span></span>
+      </a>
+      <a class="mode-card mode-card-learn" href="learn.html">
+        <span class="mode-card-icon" aria-hidden="true">🎓</span><span class="mode-card-kicker">For curious minds · all ages</span>
+        <h2>Learn Mode</h2><p>Guided lessons, missions and discoveries</p><span class="mode-card-detail">Start with the basics, explore interactive visuals, earn badges and ask Astra for a simple explanation.</span><span class="mode-card-cta">Start a space mission <span aria-hidden="true">↗</span></span>
+      </a>
+    </section>
+
+    <p class="overview-ticker" aria-label="SPHEREx Blink themes"><span>One sky</span><b>◆</b><span>Many wavelengths</span><b>◆</b><span>Curiosity for everyone</span></p>
+
+    <section class="overview-section" aria-labelledby="modes-title"><p class="overview-kicker">The same sky, different views</p><h2 id="modes-title">Find what moves. See what changes.</h2><div class="overview-modes"><article><div class="mode-image mode-blink" aria-hidden="true"></div><p>Blink</p><span>Watch images from different dates one after another.</span></article><article><div class="mode-image mode-difference" aria-hidden="true"></div><p>Difference</p><span>Compare images to make changes easier to spot.</span></article><article><div class="mode-image mode-stack" aria-hidden="true"></div><p>Stack</p><span>Combine images to see the still sky more clearly.</span></article><article><div class="mode-image mode-trail" aria-hidden="true"></div><p>Trail</p><span>See where a possible mover appears in the sequence.</span></article></div></section>
+
+    <section class="overview-method" aria-labelledby="method-title"><p class="overview-kicker">A careful way to explore</p><h2 id="method-title">From a question to evidence.</h2><ol><li><span>01</span><h3>Choose a path</h3><p>Go straight to the research workspace or begin a guided lesson with no astronomy background.</p></li><li><span>02</span><h3>Explore the light</h3><p>Compare pictures and wavelengths. SPHEREx measures infrared light our eyes cannot see.</p></li><li><span>03</span><h3>Check the clue</h3><p>A changing dot is a candidate to investigate. Keep the data source and uncertainty in view.</p></li></ol></section>
+
+    <section class="overview-section overview-presets" aria-labelledby="preset-title"><p class="overview-kicker">Science Mode · example fields</p><h2 id="preset-title">Start with a documented target.</h2><div class="overview-preset-grid"><a href="index.html?ra=331.0441466&amp;dec=-56.7828442&amp;fov=5&amp;det=D2#workspace"><h3>Epsilon Indi B <span>↗</span></h3><p class="preset-coords">331.0441° · −56.7828°</p><p>A nearby brown dwarf binary; a documented Blink test target.</p></a><a href="index.html?ra=269.452077&amp;dec=4.693365&amp;fov=5&amp;det=D2#workspace"><h3>Barnard's Star <span>↗</span></h3><p class="preset-coords">269.4521° · +4.6934°</p><p>A fast-moving nearby star used to check the mover workflow.</p></a><a href="index.html?ra=133.8189083&amp;dec=-7.247048&amp;fov=5&amp;det=D2#workspace"><h3>WISE 0855 <span>↗</span></h3><p class="preset-coords">133.8189° · −7.2470°</p><p>A very cold brown dwarf from the documented challenge targets.</p></a><a href="index.html?ra=76.956526&amp;dec=30.401438&amp;fov=5&amp;det=D1#workspace"><h3>RW Aurigae <span>↗</span></h3><p class="preset-coords">76.9565° · +30.4014°</p><p>A variable young star in a star-forming region.</p></a><a href="index.html?ra=248.167611&amp;dec=66.754979&amp;fov=30&amp;det=D4#workspace"><h3>R Draconis <span>↗</span></h3><p class="preset-coords">248.1676° · +66.7550°</p><p>A Mira variable in a wide challenge field.</p></a></div></section>
+
+    <section class="overview-callout"><p class="overview-kicker">Start wherever you are</p><h2>Big questions begin with a closer look.</h2><p>Every source is a clue. Every clue gets stronger when someone else can check it.</p><div class="overview-actions"><a class="overview-primary" href="learn.html">Learn the basics <span aria-hidden="true">↗</span></a><a class="overview-secondary" href="index.html#workspace">Open Science Mode <span aria-hidden="true">↗</span></a></div></section>
+  </main>
+  <footer class="overview-footer"><span>SPHEREx Blink 4.0 · Research + Education</span><span>Demo images are synthetic unless clearly stated otherwise.</span></footer>
+  <script src="js/theme.js"></script>
+<script type="module" src="js/features/highContrast.js"></script></body>
+</html>

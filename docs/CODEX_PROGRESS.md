@@ -1,5 +1,13 @@
 # Development progress
 
+## 2026-11-14 — SPHEREx Blink 4.0 dual-mode foundation
+
+Created a separate `codex/blink4-education` worktree from 3.0 commit `831a9cd`; no 4.0 directory existed, so this new checkout is the 4.0 destination and the 3.0 worktree remains unchanged. Recast Overview as the Science/Learn chooser, preserved the science workspace and query URLs, and added the first full Learn Mode foundation: an eight-level sequential path, local profiles/progress/XP/badges/streak/time, four quiz types, per-level quiz scores, Astra's reviewed offline glossary, simple explanations beside Science panels, interactive spectrum/planet/galaxy cards, classroom progress summaries, and printable worksheets with keys. Added a shared saved high-contrast setting. All Learn visuals are labelled schematic/synthetic. NASA educational sources are linked in the course and in CREDITS.md.
+
+Intentional implementation limit: Astra is not a connected language model and has a constrained offline response set. Teacher dashboard data remains on this device. See `docs/EDUCATION_MODE.md`.
+
+Verification so far: `node scratch/test_learning.mjs` and `node scratch/test_overview.mjs` passed at the landing/model stage before the final classroom-score and high-contrast additions. `node --check` passed on each new JavaScript module and `git diff --check` is clean. The full app/runtime, accessibility, browser, and preserved-science regressions have not been run for this integration.
+
 ## 2026-11-14 — leave-one-image-out candidate check
 
 Added an automatic consistency check to Find movers. For each candidate, one detected image is held out, a straight line is fitted to detections from the other images, and aperture S/N is measured at the held-out prediction. Same-detector, same-time duplicate frames are excluded together from the fit to avoid leakage, but are measured separately. The candidate list and inspector show supported / measurable counts; CSV and JSON carry the counts and provenance labels the combined algorithm version. Candidates need at least four detections spanning four survey passes. The check is not used for curved parallax candidates. Its threshold and behavior have synthetic module tests only; no real-data calibration or independent confirmation claim is made.

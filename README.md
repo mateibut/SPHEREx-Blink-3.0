@@ -1,10 +1,12 @@
-# SPHEREx Blink 3.0
+# SPHEREx Blink 4.0 · Research + Education
 
-This repository carries the complete Blink 2.0 application and research tools with a restrained research interface. The source of the feature baseline is [SPHEREx-Blink-2.0](https://github.com/mateibut/SPHEREx-Blink-2.0); the appearance and default theme are the intended differences. The synthetic demo remains clearly labelled.
+Blink 4.0 starts from the complete SPHEREx Blink 3.0 research application and adds a separate Learn Mode for beginners, families, teachers and outreach. The 3.0 scientific workspace, query URLs, analysis workflows, provenance and uncertainty tools remain available in **Science Mode**. **Learn Mode** adds a guided eight-level curriculum, quizzes, local learner profiles, classroom printouts, interactive diagrams and Astra's offline vocabulary guide. Progress is stored in the current browser; it is not synchronized to a server.
+
+The project's existing synthetic demo remains explicitly labelled. Learn Mode diagrams and examples are schematic illustrations, not SPHEREx observations. Astra uses prepared explanations in this repository; no language model or question is sent to an external service.
 
 > **Two lines of work were merged here on 10 Nov 2026** (the earlier Blink 2.0 of this repository and the branch `blink-2.0` of `mateibut/SPHEREx`). What came from where, what was chosen where they differ, and what was not re-measured: [docs/MERGE_NOTES.md](docs/MERGE_NOTES.md).
 
-The research workspace is in [the frontend](frontend/index.html). Additional entry points include [real-data results](frontend/results.html), [Sky Explorer](frontend/sky.html), [Planet X Lab](frontend/planet-x.html) and the [Solar System Simulator](frontend/simulator.html). [Feature status](docs/FEATURE_STATUS.md) and [scientific limitations](docs/SCIENTIFIC_LIMITATIONS.md) describe what has been verified.
+Start at [the landing page](frontend/overview.html) and choose [Science Mode](frontend/index.html) or [Learn Mode](frontend/learn.html). Additional research tools include [real-data results](frontend/results.html), [Sky Explorer](frontend/sky.html), [Planet X Lab](frontend/planet-x.html) and the [Solar System Simulator](frontend/simulator.html). [Feature status](docs/FEATURE_STATUS.md) and [scientific limitations](docs/SCIENTIFIC_LIMITATIONS.md) describe what has been verified.
 
 > **Notice:** this repository is a **personal practice / mock project** (built with AI assistance, Claude Code), started on 2026-11-05, **before** the NASA Space Apps 2026 hackathon (14-15 Nov 2026). It is not a competition submission.
 

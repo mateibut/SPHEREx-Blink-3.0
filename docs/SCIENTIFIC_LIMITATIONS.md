@@ -1,5 +1,13 @@
 # Scientific scope
 
+## Learn Mode and Astra
+
+- Learn Mode diagrams are schematic illustrations and synthetic examples, not SPHEREx observations. The page labels them and links the astronomy summaries to NASA learning sources.
+- The course contains eight short lessons and one progress check per level. These quizzes are not a validated measure of learning or mastery; XP, ranks, badges and streaks are motivational UI.
+- Astra is a small offline glossary and curated response guide. It is not a generative AI model, does not answer unrestricted questions reliably, and does not send user text anywhere. Unsupported questions get a fallback instead of an invented answer.
+- Progress and the classroom dashboard use local browser storage. There is no cloud backup, account, or cross-device teacher roster. If browser storage is disabled or cleared, progress may be lost.
+- Science Mode's Explain Simply controls translate panel titles and known glossary terms into prepared summaries. They do not change analysis values, uncertainty, provenance or scientific status.
+
 The default viewer generates synthetic frames. The results dashboard reads the saved real-data summary. Neither the navigation smoke test nor the offline module checks reproduce those observations.
 
 The imported validation report documents the small field sample, limitations of quick aperture fluxes, and confusion in blind parallax searches. Its targeted Makemake distance fit and its blind recovery experiment answer different questions. Keep their evidence separate. See [the original validation methods and results](VALIDATION.md).

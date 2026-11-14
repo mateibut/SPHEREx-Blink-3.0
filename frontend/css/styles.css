@@ -25,6 +25,28 @@
   --veil-bottom: .78;
   --chart-bg:     #0F2027;                   /* the Plotly palette in measure.js was validated against this surface */
 
+  /* Learn mode diagrams use a stable, color-blind-conscious palette across page themes. */
+  --learn-night: #111827; --learn-star: #FFF6CD; --learn-mover: #FF9B55;
+  --learn-sun: #F4B33D; --learn-mercury: #9A8F80; --learn-venus: #D9985D;
+  --learn-earth: #5095BD; --learn-mars: #C65D45; --learn-jupiter: #CAA875;
+  --learn-saturn: #D6BA84; --learn-uranus: #78B8C3; --learn-neptune: #497BB0;
+  --learn-galaxy: #6753BE; --learn-nebula: #A23B6D; --learn-nebula-warm: #EE8333;
+  --learn-success: #20653C; --learn-success-border: #2E7D4B; --learn-success-text: #17482B;
+  --learn-success-surface: #EAF5ED; --learn-retry: #A96A24; --learn-retry-text: #573616;
+  --learn-retry-surface: #FFF4E5; --learn-notice-border: #A5482E;
+  --learn-notice-surface: #FFF2E9; --learn-notice-text: #49291D;
+  --learn-teal: #29AAB5; --learn-check: #70D8A2; --learn-check-line: #D9D1ED;
+  --learn-spectrum-violet: #6753BE; --learn-spectrum-blue: #4D9DE2;
+  --learn-spectrum-green: #39AD78; --learn-spectrum-yellow: #E0C33E;
+  --learn-spectrum-orange: #EE8333; --learn-spectrum-red: #D95148;
+  --learn-spectrum-deep-violet: #74297E; --learn-spectrum-indigo: #2D316D;
+  --learn-galaxy-glow: #F7B96E; --learn-galaxy-arm: #9171C3; --learn-galaxy-dust: #342B58;
+  --learn-orbit-night: #101722; --learn-orbit-line: #DCC8FF;
+  --learn-orbit-line-rgb: 221 204 255; --learn-outline: #BD9AF3;
+  --learn-midnight-notice: #2B2019; --learn-midnight-notice-border: #FF9C6B; --learn-midnight-notice-text: #FFE6D8;
+  --learn-midnight-success: #173423; --learn-midnight-success-text: #C9F1D3;
+  --learn-midnight-retry: #352817; --learn-midnight-retry-text: #FFE2B0;
+
   --radius:      16px;
   --radius-sm:   10px;
   --shadow:      0 20px 50px -20px rgb(0 0 0 / .7);
@@ -94,6 +116,21 @@
   --panel-alpha: 1; --veil-top: 1; --veil-bottom: 1; --shadow: none; --display: "Georgia", "Times New Roman", serif; --font-head: "Georgia", "Times New Roman", serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
+
+/* Optional high-contrast setting, shared by Science and Learn modes. */
+html[data-contrast="high"] {
+  color-scheme: dark;
+  --bg: #000000; --bg-2: #000000; --surface: #000000; --raised: #111111; --field: #000000;
+  --border: #FFFFFF; --control-border: #FFFFFF; --text: #FFFFFF; --text-muted: #FFFFFF; --text-faint: #FFFFFF;
+  --accent: #FFFF00; --accent-hi: #FFFF00; --accent-text: #FFFF00; --accent-rgb: 255 255 0; --on-accent: #000000;
+  --bg-rgb: 0 0 0; --surface-rgb: 0 0 0; --text-rgb: 255 255 255;
+  --contrast-focus: #FFFF00;
+}
+html[data-contrast="high"] :focus-visible { outline: 4px solid var(--contrast-focus); outline-offset: 3px; }
+html[data-contrast="high"] a { text-decoration: underline; text-underline-offset: .2em; }
+.contrast-toggle { display: inline-flex; align-items: center; gap: .35rem; min-height: 2.5rem; color: var(--text); font: .75rem var(--font-body); white-space: nowrap; }
+.contrast-toggle input { width: 1rem; height: 1rem; accent-color: var(--accent); }
+@media (max-width: 900px) { header:has(.contrast-toggle) { flex-wrap: wrap; } }
 
 /* ---------- 2. Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -340,6 +377,13 @@ output { font-weight: 600; color: var(--accent); }
 .btn-retry { margin-top: 1rem; padding: .55rem 1.1rem; }
 .btn-retry:hover { border-color: var(--accent); }
 [hidden] { display: none !important; }
+
+/* Astra's local, child-friendly explanations are attached beside each Science Mode panel. */
+.science-explain { margin:.45rem 0 .8rem; padding:.45rem .65rem; border-left:2px solid var(--accent); background:rgb(var(--accent-rgb)/.045); }
+.science-explain-button { min-height:2.35rem; padding:.42rem .7rem; border:1px solid var(--control-border); border-radius:999px; background:var(--surface); color:var(--accent-text); font:600 .75rem var(--font-body); cursor:pointer; }
+.science-explain-button:hover,.science-explain-button:focus-visible { border-color:var(--accent); background:var(--raised); }
+.science-explain-button:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+.science-explain-answer { max-width:72ch; margin:.5rem 0 .2rem; color:var(--text-muted); font-size:.84rem; line-height:1.55; }
 
 .shortcuts {
   max-width: 640px; width: 100%; margin: .8rem auto 0;

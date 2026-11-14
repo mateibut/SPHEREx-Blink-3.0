@@ -4,7 +4,7 @@
 <script src="js/theme.js"></script><link rel="stylesheet" href="css/styles.css?v=21"><link rel="stylesheet" href="css/exploration.css">
 </head><body><div class="explore">
 <a class="skip-link" href="#simulation">Skip to simulation</a>
-<header><nav aria-label="Pages"><a href="index.html">SPHEREx Blink</a><a href="sky.html">Sky Explorer</a><a href="results.html">Results</a></nav>
+<header><nav aria-label="Pages"><a href="overview.html">Home</a><a href="index.html">Science Mode</a><a href="learn.html">Learn Mode</a><a href="sky.html">Sky Explorer</a><a href="results.html">Results</a></nav>
 <label class="theme-picker">Theme <select data-theme-picker></select></label></header>
 <main id="simulation" class="simulator-page" tabindex="-1"><header class="sim-intro"><p class="atlas-kicker">Orbit geometry lab</p><h1>Solar System Simulator</h1>
 <p>Move the observer through one year and inspect how Earth's orbit changes the apparent direction of a stationary, hypothetical target.</p></header>
@@ -22,4 +22,4 @@
 <dl class="tool-output sim-readouts"><div><dt>Observer epoch</dt><dd id="epoch"></dd></div><div><dt>Earth position</dt><dd id="earth"></dd></div><div><dt>Apparent offset</dt><dd id="offset"></dd></div><div><dt>Target distance</dt><dd id="range"></dd></div></dl>
 <p class="sim-note"><strong>Model scope.</strong> Earth-centred observer; approximate heliocentric Earth ephemeris on J2000 equatorial axes. Offsets are gnomonic tangent-plane arcseconds relative to the reference date. This is an educational geometric model, not a predicted source position; it omits spacecraft and target motion, aberration and light-travel time.</p>
 <p id="status" role="status"></p></section></div>
-</main></div><script type="module" src="js/simulator.js"></script></body></html>
+</main></div><script type="module" src="js/simulator.js"></script><script type="module" src="js/features/highContrast.js"></script></body></html>
