@@ -35,6 +35,7 @@ Suggested acknowledgement lines (check the exact wording on each archive's page 
 | **Plotly.js** (basic bundle) 2.35.2 | MIT | Spectrum and light-curve charts, loaded from jsDelivr on demand. |
 | **Three.js** r128 | MIT | Loaded from cdnjs on the Overview page for the optional illustrative 3D scene. |
 | **Inter**, **Oswald**, **Space Grotesk**, **JetBrains Mono** | SIL Open Font License 1.1 | Loaded from Google Fonts. |
+| **Playwright** 1.59.1 (test-only, `playwright` on npm) | Microsoft, Apache-2.0 | Drives a real browser in `scratch/browser_*.cjs` and in the advisory CI job `browser`. Installed outside the repository on every run (`npm install playwright@1.59.1`); nothing of it is shipped or served. Licence from the npm registry listing. |
 
 ## Adapted interface
 

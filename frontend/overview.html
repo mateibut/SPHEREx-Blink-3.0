@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="midnight">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,6 +20,7 @@
 
   <!-- App Styles -->
   <link rel="stylesheet" href="css/styles.css?v=21">
+  <link rel="stylesheet" href="css/instrument.css">
   <link rel="stylesheet" href="css/overview-3d.css">
 <!-- Three.js CDN; the rest of the overview remains usable if it is unavailable. -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -48,26 +49,11 @@
   </aside>
 
   <!-- Site Header -->
-  <header class="site-header" id="top">
-    <div class="site-brand-wrap">
-      <div class="brand-logo-mini" aria-hidden="true">✦</div>
-      <a class="site-brand" href="overview.html">SPHEREx <span>Blink 3.0</span></a>
-    </div>
-
-    <nav class="site-nav" id="siteNav" aria-label="Observatory navigation">
-      <a href="overview.html" class="active" aria-current="page">Overview</a>
-      <a href="index.html#workspace">Workspace</a>
-      <a href="sky.html">Sky Map</a>
-      <a href="results.html">Results</a>
-      <a href="planet-x.html">Planet X</a>
-      <a href="simulator.html">Simulator</a>
-      <div class="nav-line" id="navLine"></div>
-    </nav>
-
-    <div class="header-actions">
-<select id="theme-select" data-theme-picker data-default-theme="light" aria-label="Colour theme"></select>
-    </div>
+  <header class="site-header" id="top" data-page="overview">
+    <a class="site-brand" href="overview.html">SPHEREx <span>Blink 3.0</span></a>
+    <select id="theme-select" data-default-theme="midnight" aria-label="Colour theme"></select>
   </header>
+  <script type="module" src="js/siteHeader.js"></script>
 
   <main id="overview-main">
 
@@ -536,7 +522,7 @@
 
     window.addEventListener('pointerdown', (e) => {
       if (e.pointerType === 'touch' && e.target !== canvas) return;
-      if (e.target.closest('#overview-main button, #overview-main a, #siteNav, #model-hud')) return;
+      if (e.target.closest('#overview-main button, #overview-main a, .site-header, #model-hud')) return;
       isDragging = true;
       prevMouseX = e.clientX;
       prevMouseY = e.clientY;
@@ -692,26 +678,6 @@
       el.addEventListener('mouseleave', () => ring && ring.classList.remove('expanded'));
     });
 
-    // ── 10. MAGIC NAV LINE ──
-    const nav = document.getElementById('siteNav');
-    const navLine = document.getElementById('navLine');
-    if (nav && navLine) {
-      const links = nav.querySelectorAll('a');
-      links.forEach(link => {
-        link.addEventListener('mouseenter', () => {
-          const rect = link.getBoundingClientRect();
-          const navRect = nav.getBoundingClientRect();
-          navLine.style.width = rect.width + 'px';
-          navLine.style.left = (rect.left - navRect.left) + 'px';
-          navLine.style.opacity = '1';
-        });
-      });
-      nav.addEventListener('mouseleave', () => {
-        navLine.style.width = '0';
-        navLine.style.opacity = '0';
-      });
-    }
-
     // ── 11. CHARACTER ENTRANCE ON HERO TITLE ──
     const h1 = document.getElementById('overview-title');
     if (h1 && window.gsap) {
@@ -747,6 +713,5 @@
 
   })();
   </script>
-  <script src="js/theme.js"></script>
 </body>
 </html>
