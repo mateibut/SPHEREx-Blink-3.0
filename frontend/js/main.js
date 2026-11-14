@@ -1407,8 +1407,8 @@ function selectMover(k) {
   $("mover-colour").hidden = true;                  // belongs to the candidate that was selected before
   if (k < 0) return;
   const m = movers[k];
-  $("mover-spectrum-btn").hidden = Boolean(m.distant);
-  $("mover-lab-btn").hidden = !m.distant;          // the measurement follows a straight path: not for a swinging body
+  $("mover-lab-btn").hidden = !m.distant;
+  $("mover-spectrum-btn").hidden = Boolean(m.distant);          // the measurement follows a straight path: not for a swinging body
   if (m.distant) {
     $("mover-detail-text").textContent =
       `${m.label}: ${m.distant.text} Its apparent path (drawn on the image) is the Earth's parallax swing plus that drift; ` +
