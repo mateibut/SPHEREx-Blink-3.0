@@ -68,8 +68,8 @@ input[type=range]::-webkit-slider-thumb { box-shadow: none; }
   background: var(--bg); border-bottom: 1px solid var(--border);
 }
 .site-brand { white-space: nowrap; color: var(--text); font: 700 1.3rem var(--font-head); letter-spacing: -.04em; text-decoration: none; }
-.project-menu { flex: 1; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
-.project-menu nav { display: flex; align-items: center; gap: clamp(4px, 1vw, 18px); }
+.project-menu { flex: 1; min-width: 0; display: flex; align-items: center; justify-content: flex-start; gap: 14px; }
+.project-menu nav { flex: 1; min-width: 0; display: flex; align-items: center; gap: clamp(4px, 1vw, 18px); }
 .project-menu nav a {
   display: flex; align-items: center; min-height: 59px; padding: 0 5px;
   border-bottom: 2px solid transparent; color: var(--text-muted); text-decoration: none;
