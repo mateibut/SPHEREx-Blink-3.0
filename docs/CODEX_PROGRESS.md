@@ -6,6 +6,10 @@
 > **superseded**. SPHEREx-Blink-2.0 holds a parallel line of work (service-failure handling, chance baselines, a release audit, a Paper-theme redesign) that is **not merged into
 > this repository yet**; what differs is listed in `docs/MERGE_NOTES.md` and has to be decided before the two are joined.
 
+## 2026-11-14 — Keep the Overview camera outside the model
+
+The 3D Overview starts its camera farther from the illustrative spacecraft and caps the scroll approach at `z=460`, so the camera no longer passes through the model. Scroll progress is clamped to the page range. The page does not contain a modeled Earth. `git diff --check` passed; browser review was not run.
+
 ## 2026-11-12 — Tour pacing follow-up
 
 Reduced travel time by another 15% to 415–960 ms. Linux Chromium with the synthetic Barnard field passed all eight steps at the seven agreed widths, including a downward scroll without reversals and Escape during motion. All scratch/test_*.mjs scripts, benchmark.mjs --check, the smoke, accessibility, navigation, layout and tour modal checks, and 190 backend tests passed. Physical devices were outside this check.
