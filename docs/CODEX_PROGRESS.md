@@ -1,3 +1,7 @@
+## 2026-11-14 — Give About its own page
+
+Moved the project and SPHEREx telescope information out of the Workspace into `frontend/about.html`, updated the shared navigation, and made the Workspace analysis group start collapsed. Existing analysis actions can still open it when needed. `git diff --check` passed; tests and browser review were not run. This change is local and unpushed.
+
 # Development progress
 
 ## 2026-11-14 — Unify page background colours across Science and Learn

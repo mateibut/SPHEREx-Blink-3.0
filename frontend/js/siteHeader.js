@@ -12,7 +12,7 @@ const saveMode = (m) => { try { localStorage.setItem(MODE_KEY, m); } catch {} };
 const params = new URLSearchParams(location.search);
 let mode = readMode();
 if (current === "learn" || params.has("mission")) mode = "learn";
-else if (["sky", "simulator", "results"].includes(current)) mode = "science";
+else if (["sky", "simulator", "results", "about"].includes(current)) mode = "science";
 else if (current === "index" && !mode) mode = "science";
 if (mode && current !== "overview") saveMode(mode);
 document.documentElement.dataset.mode = mode ?? "none";
@@ -31,7 +31,7 @@ const MODES = {
     ["sky", "Sky Explorer", "sky.html"],
     ["simulator", "Simulator", "simulator.html"],
     ["results", "Results", "results.html"],
-    ["about", "About", "index.html#about"],
+    ["about", "About", "about.html"],
   ] },
 };
 // On the home page no mode is active: the menu shows only Home and the page's two mode cards choose one.
@@ -42,7 +42,7 @@ const overviewPages = [
   ["sky", "Sky Explorer", "sky.html"],
   ["simulator", "Simulator", "simulator.html"],
   ["results", "Results", "results.html"],
-  ["about", "About", "index.html#about"],
+  ["about", "About", "about.html"],
 ];
 const pages = current === "overview"
   ? overviewPages
@@ -131,7 +131,7 @@ matchMedia("(max-width: 75rem)").addEventListener("change", () => setOpen(false)
 setupThemeSwitcher(theme);
 addEventListener("storage", event => {
   if (event.key !== STORAGE_KEY && event.key !== null) return;
-  theme.value = applyTheme(readTheme({ search: location.search, storage: event.storageArea, defaultTheme: "light" }), { persist: false });
+  theme.value = applyTheme(readTheme({ search: location.search, storage: event.storageArea, defaultTheme: "midnight" }), { persist: false });
 });
 
 // Keep the choices of this visit (?data=api, ?api=..., ?embed=1, ?theme=...) on every link to another page, the links added later included (features/carryParams.js):

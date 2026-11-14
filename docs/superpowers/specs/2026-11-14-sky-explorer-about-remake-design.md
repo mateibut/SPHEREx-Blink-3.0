@@ -26,7 +26,7 @@ Make Sky Explorer more inviting, colorful, and interactive, and give the About s
 
 ## Design
 
-Use the existing Midnight theme and shared tokens as the base, with more saturated cyan, violet, blue, and warm accent treatments for the atlas, target markers, status cards, and About artwork. Keep text contrast and the other saved themes intact. Prefer the project's vanilla HTML, CSS, and JavaScript; draw the globe without a new runtime dependency. Drag rotates it, pointer selection chooses a target, and the accessible target buttons remain available for keyboard and touch use. The 2D atlas remains labeled as an orientation aid, not a coverage map. The About section remains at `index.html#about` and retains its current scientific explanation, data caveat, and route to the workspace.
+Use the existing Midnight theme and shared tokens as the base, with more saturated cyan, violet, blue, and warm accent treatments for the atlas, target markers, status cards, and About artwork. Keep text contrast and the other saved themes intact. Prefer the project's vanilla HTML, CSS, and JavaScript; draw the globe without a new runtime dependency. Drag rotates it, pointer selection chooses a target, and the accessible target buttons remain available for keyboard and touch use. The 2D atlas remains labeled as an orientation aid, not a coverage map. The About information lives on `about.html`, outside the Workspace, and retains its scientific explanation, data caveat, telescope details, and route to the workspace.
 
 ## Constraints
 

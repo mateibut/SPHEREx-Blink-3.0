@@ -26,7 +26,7 @@ async function checkNavigation() {
     // Overview keeps the classic project navigation without the removed standalone Planet X page.
     const destinations = [
       ["Sky Explorer", "sky.html"], ["Workspace", "index.html#workspace"],   // leave the workspace first: its own link is a same-page jump
-      ["Simulator", "simulator.html"], ["Results", "results.html"], ["About", "index.html#about"]
+      ["Simulator", "simulator.html"], ["Results", "results.html"], ["About", "about.html"]
     ];
     const labels = ["Home", "Workspace", "Pin Board", "Sky Explorer", "Simulator", "Results", "About", "⇄ Switch to Learn Mode"];
     await page.goto(new URL("index.html", base).href);
