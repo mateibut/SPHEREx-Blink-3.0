@@ -92,8 +92,8 @@ Object.assign(haloPlayer, {
 assert.equal(haloPlayer._drawLightCentre().kind, "measured");
 assert.equal(gradientStops.length, 6);
 haloPlayer._colourMasks.set(0, mask);
-assert.equal(haloPlayer._drawLightCentre().kind, "predicted");
+assert.equal(haloPlayer._drawLightCentre(), undefined);
 haloPlayer.candidates = [];
 haloPlayer.selectedCandidate = -1;
 assert.equal(haloPlayer._drawLightCentre(), undefined);
-console.log("PASS  halo distinguishes measured, predicted and unavailable positions");
+console.log("PASS  halo draws only when a light centre can be measured");

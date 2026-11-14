@@ -289,9 +289,8 @@ export class BlinkPlayer {
       }
     }
     const measured = canMeasure ? lightCentre(grey, size, point, this._colourMasks.get(this.index)) : null;
-    const centre = measured ?? (fitted || predicted ? point : null);
-    if (!centre) return;
-    const [x, y] = this._px(centre.fx, centre.fy);
+    if (!measured) return;
+    const [x, y] = this._px(measured.fx, measured.fy);
     const pulse = this.playing && !this.reduceMotion?.matches ? Math.sin(performance.now() / 420) : 0;
     const radius = 29 + 3 * pulse;
     const { ctx } = this;
@@ -303,7 +302,6 @@ export class BlinkPlayer {
     glow.addColorStop(.81, "rgba(44, 133, 149, .44)");
     glow.addColorStop(1, "rgba(44, 133, 149, 0)");
     ctx.save();
-    ctx.globalAlpha = measured ? 1 : .48;
     ctx.fillStyle = glow;
     ctx.fillRect(x - radius, y - radius, radius * 2, radius * 2);
     ctx.restore();

@@ -12,7 +12,7 @@ import { skyToCanvas, tanCanvasToSky, mjdToYear } from "./geometry.js";
 import { readUrlState, writeUrlState } from "./urlState.js";
 import { getCutouts, listDetectors } from "./data/getCutouts.js";
 import { DATA_SOURCE, API_BASE, CAN_USE_LOCAL_BACKEND } from "./config.js";
-import { BlinkPlayer, MODES, loadImage, meanImageData } from "./player.js?v=6";
+import { BlinkPlayer, MODES, loadImage, meanImageData } from "./player.js?v=7";
 import { canvasToSky, measureAndPlot, clearMeasurement, setSpectrumStyle, APERTURE_RADIUS_PX } from "./features/measure.js";
 import { setupViewer } from "./features/viewerControls.js";
 import { setupWorkspace } from "./features/workspaceView.js";
@@ -287,8 +287,7 @@ player.setFps(speedInput.value);
 player.onLightCentre = ({ kind, measurement } = {}) => {
   const status = $("colour-centre-status");
   const message = kind === "measured" ? "Halo · estimated light centre"
-    : kind === "predicted" ? "Faint halo · predicted position"
-      : "No halo in this frame";
+    : "No reliable light centre in this frame";
   if (status.textContent !== message) status.textContent = message;
 
   const frame = player.frames[player.index];
@@ -493,7 +492,7 @@ const MODE_HELP = {
   diff: 'Each image minus the median of the images from <em>other</em> dates: still stars vanish. <span class="swatch" style="background:#ff9e33"></span> brighter than usual – the object is here now · <span class="swatch" style="background:#409eff"></span> fainter than usual.',
   mean: "Average of all images: deeper and less noisy. Moving objects get smeared or fade out.",
   max: "Brightest value of every pixel over all dates: a moving object leaves a <strong>trail of dots</strong>, a still star stays one dot.",
-  colour: "Blink from shorter to longer wavelengths within one survey pass. The coloured halo marks the local brightness centre near the selected candidate, a marked position, a single test target, or the field centre. A faint halo marks the predicted position when the light centre is unavailable.",
+  colour: "Blink from shorter to longer wavelengths within one survey pass. The coloured halo marks the local brightness centre near the selected candidate, a marked position, a single test target, or the field centre. The halo appears only when a light centre can be measured.",
   compare: 'Pick two images, or whole survey passes. <strong>A / B</strong>: drag Split position to compare A on the left and B on the right. <strong>A − B</strong>: <span class="swatch" style="background:#ff9e33"></span> brighter in A · <span class="swatch" style="background:#409eff"></span> fainter in A – a mover is an orange dot next to a blue one, still stars vanish. <strong>A + B</strong>: the average of both, a deeper picture. Other dates are also other wavelengths, so bright stars can leave a faint leftover even if they did not move.',
 };
 
