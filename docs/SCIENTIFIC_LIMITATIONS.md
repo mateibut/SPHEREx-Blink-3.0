@@ -31,6 +31,7 @@ A candidate is a lead with its evidence, never a discovery. Nothing this applica
 ## Overview illustration
 
 - The Overview's procedural Earth, orbit, spacecraft, scan beam and starfield are decorative illustrations. They are not to scale and do not encode flight geometry, instrument specifications, live Earth imagery, telescope pointing, or SPHEREx observations. Only the separately labelled synthetic demo is synthetic image data; the 3D scene itself is not a data product.
+- The Sky Explorer globe and its star field, grid and colored band are also decorative orientation graphics. Only the five labeled markers use the documented challenge target coordinates; the globe is not an all-sky survey image, coverage map, or live observation.
 
 ## Find movers
 
