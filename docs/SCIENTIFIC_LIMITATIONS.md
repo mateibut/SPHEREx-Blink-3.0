@@ -33,6 +33,7 @@ A candidate is a lead with its evidence, never a discovery. Nothing this applica
 - Needs images from at least 3 survey passes about 6 months apart; motion below about 0.8 pixel (5″) over the baseline looks like a still star.
 - In a field with a saturated star it is 20-30 times less sensitive; one image reaches about 0.6-0.9 mJy in a clean field.
 - The "chance lines expected" number is conservative in the empty-sky tests; it is not a probability of being real.
+- The leave-one-image-out check needs at least 4 detections spanning 4 survey passes. For each held-out detected image it refits a straight line from the other dots and measures aperture S/N at the predicted position; S/N ≥ 5 counts as supported. It reuses the detections that proposed the candidate, assumes a straight path and the existing image registration, and has only synthetic test coverage so far. A high count is consistency evidence, not independent confirmation or a probability that the source is real. It is not applied to the curved parallax candidates.
 
 ## Planet X mode
 

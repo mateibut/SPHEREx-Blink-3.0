@@ -37,6 +37,7 @@ import { FLAGGED_LIMIT } from "./features/timeline.js";
 import { SkyContext } from "./features/skyContext.js";
 import { setupFullscreen } from "./features/fullscreen.js";
 import { detectSources, describeMover, matchKnownObject, moverPositionAtMjd, passIndices, trackSupport, blendWarning, VERSION as MOVERS_VERSION, DEFAULTS as MOVER_DEFAULTS, ERROR_MODEL } from "./features/movers.js";
+import { blindCheckCandidate, VERSION as BLIND_CHECK_VERSION } from "./features/blindCheck.js";
 import { buildProvenance, provenanceText, pictureCaption } from "./features/provenance.js";
 import { colourHint } from "./features/spectrum.js";
 import { describeDistant, classifyApparentMotion, VERSION as PARALLAX_VERSION, DISTANT_DEFAULTS } from "./features/parallax.js";
@@ -1089,6 +1090,9 @@ $("find-movers-btn").addEventListener("click", async () => {
     endSearch();
     if (token !== loadToken) return;
     addSupport(result.candidates, frames, arrays, player.naturalSize, { ...(isFloat ? { sigmaFloor: 1e-9 } : {}) });
+    for (const candidate of result.candidates) {
+      candidate.blindCheck = blindCheckCandidate(candidate, frames.map((f) => ({ ...f, id: frameId(f) })), arrays, player.naturalSize);
+    }
     attachDotDates(result.candidates, frames);
     // Known objects: the test list always, and real SIMBAD objects too when we have real data.
     if (DATA_SOURCE === "api") status.textContent = "Checking SIMBAD and SkyBoT for known objects…";
@@ -1096,7 +1100,7 @@ $("find-movers-btn").addEventListener("click", async () => {
     if (token !== loadToken) return;
     showMovers(result, objects);
     // the options the search ran with: the defaults of movers.js, with the noise floor of real (float) pixels when it was used
-    moversRun = recordRun("find-movers", MOVERS_VERSION, frames, { ...MOVER_DEFAULTS, ...ERROR_MODEL, ...(isFloat ? { sigmaFloor: 1e-9 } : {}), allDetectors: useAllDetectors() }, startedAt, isFloat);
+    moversRun = recordRun("find-movers", `${MOVERS_VERSION}+${BLIND_CHECK_VERSION}`, frames, { ...MOVER_DEFAULTS, ...ERROR_MODEL, ...(isFloat ? { sigmaFloor: 1e-9 } : {}), allDetectors: useAllDetectors() }, startedAt, isFloat);
   } catch (err) {
     endSearch();
     if (isCancelled(err)) { status.textContent = "The search was cancelled. No candidate was kept (the list was cleared when the search started); the images are unchanged."; return; }
@@ -1235,6 +1239,7 @@ function showMovers({ candidates, stats, reason }, catalogueObjects = null, { di
       textContent: `RA ${formatRA(m.ra)}  Dec ${formatDec(m.dec)} · seen in ${m.nDet} of ${m.nFrames} images · ${m.significance > 100 ? ">100" : Math.round(m.significance)}σ` +
         (Number.isFinite(m.falseAlarm) ? ` · chance: ${chanceText(m.falseAlarm)}` : "") +
         (m.support?.measurable ? ` · on its path in ${m.support.supported}/${m.support.measurable}` : "") +
+        (m.blindCheck?.checked ? ` · blind check ${m.blindCheck.supported}/${m.blindCheck.checked}` : "") +
         (m.foundIn && hasSeveralDetectors() ? ` · found with ${m.foundIn === "all detectors" ? "all detectors together" : m.foundIn + " alone"}` : "") });
     btn.append(rank, main, sub);
     btn.addEventListener("click", () => selectMover(selectedMover === k ? -1 : k));
@@ -1329,8 +1334,15 @@ function selectMover(k) {
     (m.known ? `This is ${m.known}, a known object: the search found it on its own. `
       : moversCatalogueChecked
         ? "No SIMBAD object or test object sits within 18″ of it (catalogue positions moved to this date). It may be an asteroid, a faint star SIMBAD lacks, or something new: check the sky map and the other detectors. "
-        : "Not one of the five test objects (SIMBAD was not consulted: synthetic data, or it did not answer). Catalogues list year-2000 positions, so a fast mover can sit a little away from where it is catalogued. ") +
-    (m.known ? "" : classifyApparentMotion(m.speedArcsecPerYear) + asteroidSentence(m)) + supportSentence(m);
+      : "Not one of the five test objects (SIMBAD was not consulted: synthetic data, or it did not answer). Catalogues list year-2000 positions, so a fast mover can sit a little away from where it is catalogued. ") +
+    (m.known ? "" : classifyApparentMotion(m.speedArcsecPerYear) + asteroidSentence(m)) + supportSentence(m) + blindCheckSentence(m);
+}
+
+function blindCheckSentence(m) {
+  const check = m.blindCheck;
+  if (!check) return "";
+  if (!check.checked) return " Leave-one-image-out check: not enough detections in four separate survey passes to make a blind prediction.";
+  return ` Leave-one-image-out check: the path was fitted without each held-out image, then measured at its predicted position; signal reached S/N 5 in ${check.supported} of ${check.checked} measurable held-out images. This reuses detections that proposed the candidate and is a consistency check, not independent confirmation.`;
 }
 
 /**

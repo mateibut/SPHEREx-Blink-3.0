@@ -1,5 +1,11 @@
 # Development progress
 
+## 2026-11-14 — leave-one-image-out candidate check
+
+Added an automatic consistency check to Find movers. For each candidate, one detected image is held out, a straight line is fitted to detections from the other images, and aperture S/N is measured at the held-out prediction. Same-detector, same-time duplicate frames are excluded together from the fit to avoid leakage, but are measured separately. The candidate list and inspector show supported / measurable counts; CSV and JSON carry the counts and provenance labels the combined algorithm version. Candidates need at least four detections spanning four survey passes. The check is not used for curved parallax candidates. Its threshold and behavior have synthetic module tests only; no real-data calibration or independent confirmation claim is made.
+
+Verification: all 45 `scratch/test_*.mjs` files passed, including `test_blindcheck.mjs`, `test_export.mjs` and `test_movers.mjs`; `git diff --check` passed. `scratch/e2e_smoke.mjs` could not start because its browser exited before readiness (code 4294930433). Backend pytest could not start: the `python` and `py` launchers point to unavailable WindowsApps executables, and this checkout has no `backend/.venv`. The blind check has synthetic module coverage, not a browser or real-data calibration yet.
+
 ## 2026-11-11 — academic Overview refinement
 
 Simplified the public Overview into a quieter research-note presentation: reduced hero scale, more generous reading space, plain figure treatment, restrained monochrome illustration, compact capability line, hairline-separated mode descriptions, table-like target cards and a neutral workflow note. The formerly animated illustration is static by default, while the existing reduced-motion fallback remains. This is CSS-only; navigation, target deep links and all claims remain unchanged.
