@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="midnight">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="css/styles.css?v=21">
   <link rel="stylesheet" href="css/instrument.css">
   <link rel="stylesheet" href="css/overview-3d.css">
+  <link rel="stylesheet" href="css/mode-choice.css">
 <!-- Three.js CDN; the rest of the overview remains usable if it is unavailable. -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
@@ -115,6 +116,18 @@
     </div>
 
     <!-- ── ACTIVE MISSIONS SECTION ── -->
+    <!-- Learn Mode or Science Mode (Blink 4.0): choosing one sets the menu (js/siteHeader.js) -->
+    <section class="mode-choices mode-choices-3d" aria-label="Choose your experience">
+      <a class="mode-card mode-card-science" href="index.html#workspace">
+        <span class="mode-card-icon" aria-hidden="true">🔬</span><span class="mode-card-kicker">For researchers · students</span>
+        <h2>Science Mode</h2><p>Advanced analysis and research tools</p><span class="mode-card-detail">Blink images, find movers, compare detectors, inspect provenance and export evidence.</span><span class="mode-card-cta">Open research workspace <span aria-hidden="true">↗</span></span>
+      </a>
+      <a class="mode-card mode-card-learn" href="learn.html">
+        <span class="mode-card-icon" aria-hidden="true">🎓</span><span class="mode-card-kicker">For curious minds · all ages</span>
+        <h2>Learn Mode</h2><p>Guided lessons, missions and discoveries</p><span class="mode-card-detail">Start with the basics, explore interactive visuals, earn badges and ask Astra for a simple explanation.</span><span class="mode-card-cta">Start a space mission <span aria-hidden="true">↗</span></span>
+      </a>
+    </section>
+
     <section class="section-3d" id="missions" aria-labelledby="missions-title">
       <p class="section-kicker">Documented test fields</p>
       <h2 class="section-heading" id="missions-title">
@@ -911,5 +924,6 @@
 
   })();
   </script>
+  <script type="module" src="js/features/highContrast.js"></script>
 </body>
 </html>

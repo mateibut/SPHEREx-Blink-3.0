@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="midnight">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0B0F19">
+  <meta name="theme-color" content="#FBFBF9">
   <!-- Colour theme, applied before the first paint (js/features/theme.js does the same and handles the switch; keep the key and the names in step) -->
   <script>try{var t=new URLSearchParams(location.search).get("theme")||localStorage.getItem("spherex-blink-theme");if(/^(midnight|nebula|deep-space|observatory|light|classic)$/.test(t))document.documentElement.dataset.theme=t}catch(e){}</script>
   <title>Real-data results and candidate explorer – SPHEREx Blink</title>
@@ -22,7 +22,7 @@
 
   <header class="site-header" id="top" data-page="results">
     <a class="site-brand" href="overview.html">SPHEREx Blink</a>
-    <select id="theme-select" data-default-theme="midnight" aria-label="Colour theme"></select>
+    <select id="theme-select" data-default-theme="light" aria-label="Colour theme"></select>
   </header>
   <script type="module" src="js/siteHeader.js"></script>
 
@@ -368,5 +368,5 @@
   </footer>
 
   <script type="module" src="js/results.js"></script>
-</body>
+<script type="module" src="js/features/highContrast.js"></script></body>
 </html>
