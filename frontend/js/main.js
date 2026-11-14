@@ -1301,7 +1301,7 @@ function showMovers({ candidates, stats, reason }, catalogueObjects = null, { di
         (m.blindCheck?.checked ? ` · blind check ${m.blindCheck.supported}/${m.blindCheck.checked}` : "") +
         (m.foundIn && hasSeveralDetectors() ? ` · found with ${m.foundIn === "all detectors" ? "all detectors together" : m.foundIn + " alone"}` : "") });
     // the finder card: a verdict badge, a direction arrow (north up, east left, as on the picture) and two evidence bars
-    const verdict = m.known ? ["is-known", "🔎 Known object"] : m.distant ? ["is-distant", DATA_SOURCE === "api" ? "🪐 Distant-body candidate" : "🪐 Simulated distant body"] : ["is-new", "❓ Unexplained: check it"];
+    const verdict = m.known ? ["is-known", "Known object"] : m.distant ? ["is-distant", DATA_SOURCE === "api" ? "Distant-body candidate" : "Simulated distant body"] : ["is-new", "Unexplained: check it"];
     const badge = Object.assign(document.createElement("span"), { className: `mover-verdict ${verdict[0]}`, textContent: verdict[1] });
     const arrow = document.createElement("span");
     arrow.className = "mover-arrow";
