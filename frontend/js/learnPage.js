@@ -3,7 +3,7 @@ import {
   unlockedLevel, progressPercent, rankForXp, earnedAchievements, gradeAnswer,
   completeLevel, addProfile, selectProfile, renameActiveProfile, addLearningTime, recordQuizScore,
 } from "./features/learning.js";
-import { answerAstra, explanationFor } from "./features/spaceGuide.js";
+import { explanationFor, askAstra, aiAvailability } from "./features/spaceGuide.js";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -290,15 +290,53 @@ if ($("#learner-profile")) {
 }
 $("#classroom-name")?.addEventListener("change", (event) => { state.classroomName = event.target.value.trim().slice(0, 60) || "My classroom"; save(); });
 
+// ---- Astra: prepared notes, or the AI built into the browser when the person turns it on (features/spaceGuide.js)
+const AI_KEY = "spherex-blink-astra-ai";
+let astraJob = null;
+async function setupAstraAi() {
+  const box = $("#astra-ai-on"), status = $("#astra-ai-status");
+  const state = await aiAvailability();
+  if (state === "unavailable") { status.textContent = "This browser has no built-in AI, so Astra answers from its prepared notes. (Recent Chrome on a computer has one.)"; return; }
+  box.disabled = false;
+  try { box.checked = localStorage.getItem(AI_KEY) === "on"; } catch { /* storage blocked: stays off */ }
+  const say = () => {
+    status.textContent = box.checked ? "On: the AI on this device writes the answer from Astra's notes. It can make mistakes; the notes it used are named under the answer."
+      : state === "available" ? "Off: answers come from the prepared notes. The built-in AI is ready to use."
+      : "Off: answers come from the prepared notes. The first use downloads the browser's AI model (once; it can take a few minutes).";
+  };
+  say();
+  box.addEventListener("change", () => { try { localStorage.setItem(AI_KEY, box.checked ? "on" : "off"); } catch { /* not remembered */ } say(); });
+}
+async function ask(question) {
+  question = String(question ?? "").trim();
+  if (!question) return;
+  astraJob?.abort();
+  const job = astraJob = new AbortController();
+  const answer = $("#astra-answer"), source = $("#astra-source"), useAi = $("#astra-ai-on").checked;
+  if (useAi) answer.textContent = "Astra is thinking…";
+  source.textContent = "";
+  try {
+    const result = await askAstra(question, { model: useAi ? globalThis.LanguageModel : null, signal: job.signal,
+      onChunk: (text) => { if (astraJob === job) answer.textContent = text; },
+      onDownload: (f) => { if (astraJob === job) answer.textContent = `Downloading the browser's AI model: ${Math.round(f * 100)} %`; } });
+    if (astraJob !== job) return;
+    answer.textContent = result.text;
+    source.textContent = result.source === "ai"
+      ? `Written by the AI in your browser, which can be wrong.${result.notes.length ? ` Notes it was given: ${result.notes.join(", ")}.` : " No prepared note matched, so check it elsewhere."}`
+      : result.source === "notes"
+        ? `From Astra's prepared notes${result.error ? " (the browser's AI could not answer this time)" : ""}.${result.notes.length > 1 ? ` Related: ${result.notes.slice(1).join(", ")}.` : ""}`
+        : `No prepared note matches this question.${$("#astra-ai-on").disabled ? "" : " Turn on the browser's AI below for a fuller answer."}`;
+  } catch { /* a newer question replaced this one */ }
+}
+setupAstraAi();
 $("#astra-form").addEventListener("submit", (event) => {
   event.preventDefault();
-  const question = $("#astra-question").value.trim();
-  if (question) $("#astra-answer").textContent = answerAstra(question);
+  ask($("#astra-question").value);
 });
 $$('[data-ask]').forEach((button) => button.addEventListener("click", () => {
   const question = button.dataset.ask;
   $("#astra-question").value = question;
-  $("#astra-answer").textContent = answerAstra(question);
+  ask(question);
 }));
 $$('[data-explain]').forEach((button) => button.addEventListener("click", () => {
   const explanation = explanationFor(button.dataset.explain);
