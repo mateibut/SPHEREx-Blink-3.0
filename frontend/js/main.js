@@ -1506,16 +1506,8 @@ player.onFollowChange = (i) => {
 $("mover-lab-btn").addEventListener("click", () => {
   const candidate = movers[selectedMover];
   if (!candidate?.distant) return;
-  const points = candidateTrackPoints(candidate);
-  try {
-    sessionStorage.setItem("spherex-lab-candidate", JSON.stringify({
-      label: candidate.label, distance: candidate.distanceAU, range: candidate.distant.rangeText,
-      points, synthetic: DATA_SOURCE !== "api", n: player.naturalSize,
-    }));
-    location.href = "planet-x.html?inspect=candidate#body-inspector";
-  } catch {
-    $("mover-detail-text").textContent += " Browser storage is unavailable. The candidate could not be sent to Planet X Lab.";
-  }
+  $("planet-lab").scrollIntoView({ block: "start", behavior: prefersReducedMotion ? "auto" : "smooth" });
+  $("lab-compare-btn").focus({ preventScroll: true });
 });
 
 $("mover-map-btn").addEventListener("click", async () => {

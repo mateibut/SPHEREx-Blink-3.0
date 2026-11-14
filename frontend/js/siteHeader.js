@@ -12,7 +12,7 @@ const saveMode = (m) => { try { localStorage.setItem(MODE_KEY, m); } catch {} };
 const params = new URLSearchParams(location.search);
 let mode = readMode();
 if (current === "learn" || params.has("mission")) mode = "learn";
-else if (["sky", "simulator", "planet-x", "results"].includes(current)) mode = "science";
+else if (["sky", "simulator", "results"].includes(current)) mode = "science";
 else if (current === "index" && !mode) mode = "science";
 if (mode && current !== "overview") saveMode(mode);
 document.documentElement.dataset.mode = mode ?? "none";
@@ -30,7 +30,6 @@ const MODES = {
     ["pins", "📌 Pin Board", "index.html#pin-board"],
     ["sky", "Sky Explorer", "sky.html"],
     ["simulator", "Simulator", "simulator.html"],
-    ["planet-x", "Planet X Lab", "planet-x.html"],
     ["results", "Results", "results.html"],
     ["about", "About", "index.html#about"],
   ] },
@@ -42,7 +41,6 @@ const overviewPages = [
   ["index", "Workspace", "index.html#workspace"],
   ["sky", "Sky Explorer", "sky.html"],
   ["simulator", "Simulator", "simulator.html"],
-  ["planet-x", "Planet X Lab", "planet-x.html"],
   ["results", "Results", "results.html"],
   ["about", "About", "index.html#about"],
 ];
