@@ -1,7 +1,7 @@
 /* ── BASE & RESET ── */
     html {
       scroll-behavior: smooth;
-      background: #0B0F19;
+      background: var(--bg);
       color: #f1f1ee;
     }
     *, *::before, *::after { box-sizing: border-box; }
@@ -13,6 +13,8 @@
       overflow-x: hidden;
       min-height: 100vh;
     }
+    /* Let the animated 3D scene provide the backdrop without the shared static planet illustration. */
+    html[data-theme]:not([data-contrast="high"]) body { background: transparent; }
 
     /* ── 3D CANVAS BACKGROUND ── */
     #bg-canvas {
@@ -278,7 +280,7 @@
     /* ── 3D CONTROLS OVERLAY HINT ── */
     .spacecraft-hint {
       position: absolute;
-      right: 8vw;
+      right: 4vw;
       top: 30%;
       transform: translateY(-50%);
       display: flex;
@@ -315,6 +317,7 @@
       flex-direction: column;
       gap: 0.4rem;
       align-items: flex-end;
+      translate: 4px 0;
     }
     .component-tag {
       background: rgba(21, 22, 23, 0.75);

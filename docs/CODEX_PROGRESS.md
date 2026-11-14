@@ -1,4 +1,40 @@
+## 2026-11-14 — Give About its own page
+
+Moved the project and SPHEREx telescope information out of the Workspace into `frontend/about.html`, updated the shared navigation, and made the Workspace analysis group start collapsed. Existing analysis actions can still open it when needed. `git diff --check` passed; tests and browser review were not run. This change is local and unpushed.
+
 # Development progress
+
+## 2026-11-14 — Unify page background colours across Science and Learn
+
+Set all six pages and both modes to the same Midnight / dark default. The body, Simulator and Overview root now use the shared `--bg` token instead of page-specific overrides; saved themes and `?theme=` still apply consistently. Updated the existing theme checks to describe the new default. `git diff --check` passed; tests and browser review were not run. This change is local and unpushed.
+
+## 2026-11-14 — Remove static duplicate scene from Overview and Simulator
+
+Raised the Overview backdrop override to the shared theme rule's specificity so only its animated 3D scene appears. Kept the Simulator's shared static starfield while omitting the decorative Earth/SPHEREx image behind its own orbital model. `git diff --check` passed; browser review and tests were not run. This change is local and unpushed.
+
+## 2026-11-14 — Keep only the animated Overview scene
+
+Cleared the shared static backdrop from Overview so its animated 3D Earth and SPHEREx telescope remain the only planet-and-spacecraft scene there. Bumped the Overview stylesheet cache version. `git diff --check` passed; browser review and tests were not run. This change is local and unpushed.
+
+## 2026-11-14 — Match the Simulator page background
+
+Removed the Simulator's separate radial gradients and dot grid so it now uses the same shared static starfield and Earth/SPHEREx illustration as the other pages. Its controls and scene styling are unchanged. `git diff --check` passed; browser review and tests were not run. This change is local and unpushed.
+
+## 2026-11-14 — Put Earth and SPHEREx in the static site backdrop
+
+Added a fixed SVG illustration of Earth and the SPHEREx telescope to the CSS starfield used across the site, including Sky Explorer and Learn, and bumped the shared stylesheet cache version. The artwork is decorative and static; the interactive Sky Explorer globe and Overview scene remain their own page content. `git diff --check` passed; browser review and tests were not run. This change is local and unpushed.
+
+## 2026-11-14 — Static space backdrop across the site
+
+Added a still CSS starfield and subtle nebula accents to the shared instrument pages, including Learn; translucent, blurred surfaces let it show through. The Simulator keeps its existing still starfield with lighter panels. No new canvas or animation was added; high-contrast mode keeps opaque surfaces. `git diff --check` passed; browser review and tests were not run. This change is local and unpushed.
+
+## 2026-11-14 — Collapsible Workspace analysis group
+
+Grouped Distant-body analysis, Sky Explorer, Explain the selected candidate and Text analysis in one initially expanded native disclosure panel. Preserved each tool's existing ID and added reveal-on-navigation for links and the mover action. `git diff --check` passed; browser review and tests were not run. This change is local and unpushed.
+
+## 2026-11-14 — Widen Workspace Text analysis
+
+Made the Text analysis panel span both Workspace columns even before a report is built, removing the unused right-hand space in its empty state. Bumped the stylesheet URL to invalidate cached layout. `git diff --check` passed; browser review was not run. This change is local and unpushed.
 
 ## 2026-11-14 — Remove the Solar System panel from Workspace
 
@@ -483,3 +519,21 @@ Verification: 46 `scratch/test_*.mjs` scripts passed (the new one has 56 checks,
 ## 2026-11-14 – Cosmic Missions and Discovery Pin Board (branch `missions-pinboard`)
 Added `features/missions.js`, `pinBoard.js`, `missionsPinView.js`, two panels in index.html, a pin button in the mover detail, `scratch/test_missions_pins.mjs`.
 Untested: the Node suite could not run on this machine (Node 18.15; the repo's ES modules need Node 22, every existing test_*.mjs fails here too). The same checks were run by hand in the browser (served by scripts/serve_frontend.py on 8765): 19 missions, Math.random reaches all, SHA-256("abc") correct, Find movers → select #1 → pin as Alex_Space99 → marker + list item, hash verifies, no console errors. Playwright regressions and pytest not run.
+
+
+## 2026-11-14 – SPHEREx synthetic monthly imaging (branch `codex/simulator-spherex-monthly-imaging`)
+Added a symbolic SPHEREx marker to the standalone simulator's Earth-centred orbit diagram and month 0/6/12 shortcuts. New deterministic, explicitly **synthetic** star fields show a reference exposure, a current exposure with an arbitrary camera-pointing offset, and a tunable blend. The Align & blend button registers the background stars by removing only the artificial pointing offset; the hypothetical target's apparent displacement comes from the existing `orbitScene` parallax output and remains visible. The source-to-image scale is exaggerated for education, not an instrument pixel calibration. No existing geometry, discovery algorithms or scientific thresholds were changed.
+
+Validation: source parsing of `simulator.js` and `simulatorFrames.js` passed; nine direct checks of actual source functions (zero at month 0, visible month-6 shift, approximate year return, repeatable stars, registration preserving parallax and invalid-input guard) passed, as did ten simulated-DOM interaction checks (render path, month presets, alignment and blend slider). The new repeatable Node test is `scratch/test_simulator_frames.mjs` and has not been executed by Node in a repository checkout in this environment. Not run: the complete `scratch/test_*.mjs` suite, backend pytest, Playwright/browser visual regression or human accessibility review; these require a runnable checkout and should be checked before merge.
+
+
+## 2026-11-14 – Map cursor coordinates → Blink Workspace (branch `codex/pin-map-click-to-workspace`)
+On the existing Discovery Pin Board in Science Mode, the live RA/Dec readout is also shown next to the pointer in both all-sky and current-field projections. Left-clicking empty sky writes decimal RA/Dec into the existing Workspace search form, submits the normal field loader, scrolls to the Blink Workspace, and attempts to copy the pair to the clipboard; a browser denied clipboard does not block the transfer. Existing pin-marker click-to-details, zoom/pan and data-source labels stay in place. The inverse sky projection accounts for the RA seam and field angular scale, and mouse coordinates use the SVG screen CTM where available (also for fullscreen letterboxing). Cache query versions bumped for the changed JS/CSS. Nothing is claimed about new observations.
+
+Validation performed here: source-based syntax checks for modified Pin Board modules; 8 pure inverse-projection checks (RA wrap, field round-trip, poles and out-of-map cases), and 9 exercised event-handler checks (hover label, click prefill, copy, submit, scroll, preserved pin click and leave hiding) passed in an isolated JavaScript harness. Added assertions to `scratch/test_missions_pins.mjs`. Not run: the full Node suite, Python pytest, actual-browser layout/navigation regression, screen-reader and mobile touch tests, since this environment has no repository checkout with network access.
+
+
+## 2026-11-15 – Sky Context cursor → Blink Workspace (draft branch `codex/sky-context-click-to-workspace`)
+The existing Aladin Lite Sky Context map now shows a small RA/Dec label beside the cursor in addition to its existing fixed readout and overhead-country explanation. Left-clicking empty sky copies the ICRS coordinates (with a clipboard fallback), fills the existing RA and Dec Workspace form fields, submits the ordinary Blink image loader, and navigates back to Workspace. Zoom/drag, SIMBAD object popups, country readout, selected survey, FOV and the data-source setting remain unchanged. The click handler checks Aladin's `isDragging` flag and `objectClicked` event so panning and selecting sources do not navigate. Exiting native/CSS map fullscreen is handled before the Workspace scroll.
+
+Verification in the available connected-source environment: syntax parsing for updated JS modules and 16 executable pure-helper/mocked-event checks (ICRS coordinate conversion, RA wrap, invalid declination, copy fallbacks, hover, drag/right-click/objects ignored, left-click selection). `scratch/test_skycontext_click.mjs` added with independent Node assertions and static wiring checks, but standalone Node, complete Node suite, backend pytest, browser visual/layout/navigation regression and screen-reader audit remain **not run** (no runnable checkout in this environment).

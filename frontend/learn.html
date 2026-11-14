@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="en" data-theme="nebula">
+<html lang="en" data-theme="midnight">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#FCFAFF">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0B0F19">
   <title>Learn Mode · SPHEREx Blink 4.0</title>
   <script>try{var t=new URLSearchParams(location.search).get("theme")||localStorage.getItem("spherex-blink-theme");if(/^(midnight|nebula|deep-space|observatory|light|classic)$/.test(t))document.documentElement.dataset.theme=t}catch(e){}</script>
-  <link rel="stylesheet" href="css/styles.css?v=23"><link rel="stylesheet" href="css/instrument.css"><link rel="stylesheet" href="css/overview.css?v=2"><link rel="stylesheet" href="css/learn.css?v=1">
+  <link rel="stylesheet" href="css/styles.css?v=25"><link rel="stylesheet" href="css/instrument.css?v=3"><link rel="stylesheet" href="css/overview.css?v=2"><link rel="stylesheet" href="css/learn.css?v=3">
 </head>
 <body class="learn-page">
   <a class="skip-link" href="#missions">Skip to your missions</a>
   <header class="site-header overview-header learn-header" id="top" data-page="learn">
     <a class="site-brand overview-brand" href="overview.html" aria-label="SPHEREx Blink home"><span class="brand-logo" aria-hidden="true"></span><span>SPHEREx Blink 4.0</span></a>
-    <select id="theme-select" data-default-theme="nebula" aria-label="Colour theme"></select>
+    <select id="theme-select" data-default-theme="midnight" aria-label="Colour theme"></select>
   </header>
   <main id="learn-main">
     <section class="learn-hero" aria-labelledby="learn-title">
@@ -34,7 +34,6 @@
 
       <article class="cm-card" id="mission-card" aria-live="polite">
         <div class="cm-card-side">
-          <span class="cm-icon" id="mission-icon" aria-hidden="true"></span>
           <p class="cm-category" id="mission-category"></p>
           <p class="cm-meta" id="mission-meta"></p>
         </div>
@@ -71,16 +70,15 @@
     </div>
 
     <section class="learn-section astra-section" id="astra" aria-labelledby="astra-title">
-      <div class="section-heading"><p class="learn-kicker">Your offline guide</p><h2 id="astra-title">Astra, your space guide</h2><p>Ask about a space topic, or choose a quick question. Astra uses prepared explanations on this page; it does not send your question to an AI service.</p></div>
-      <div class="astra-card"><form id="astra-form"><label for="astra-question">What are you curious about?</label><div class="astra-input-row"><input id="astra-question" maxlength="180" placeholder="Try: What is infrared light?" autocomplete="off"><button class="learn-button learn-button-primary" type="submit">Ask Astra</button></div></form><div class="astra-quick" aria-label="Ask a suggested question"><button type="button" data-ask="What is infrared light?">What is infrared?</button><button type="button" data-ask="What is a candidate mover?">What is a moving object?</button><button type="button" data-ask="What is redshift?">What is redshift?</button></div><p id="astra-answer" class="astra-answer" role="status" aria-live="polite">Astra is ready. Pick a topic to begin.</p></div>
-      <div class="glossary-grid" aria-label="Simple science explanations"><article><h3>Redshift</h3><p>Light waves stretch as space expands. This can shift distant light toward longer, infrared wavelengths.</p></article><article><h3>Spectral signature</h3><p>A pattern in light, like fingerprints, that can give clues about the material around an object.</p></article><article><h3>Signal-to-noise ratio</h3><p>How clearly a signal stands above random background. A strong signal is easier to see, but it is not proof by itself.</p></article><article><h3>Candidate mover</h3><p>A point that seems to change position between images. It is a clue that deserves checking.</p></article></div>
+      <div class="section-heading"><p class="learn-kicker">Your space guide</p><h2 id="astra-title">Astra, your space guide</h2><p>Ask anything about space, light or this telescope. Astra answers from about sixty prepared notes. Turn on the AI below and it can answer any question, free: the AI runs on your own computer (the browser's built-in one, or a free model it downloads once). Your question is never sent to a server.</p></div>
+      <div class="astra-card"><form id="astra-form"><label for="astra-question">What are you curious about?</label><div class="astra-input-row"><input id="astra-question" maxlength="300" placeholder="Ask in English, e.g. What is a black hole?" autocomplete="off"><button class="learn-button learn-button-primary" type="submit">Ask Astra</button></div></form><div class="astra-quick" aria-label="Ask a suggested question"><button type="button" data-ask="What is infrared light?">What is infrared?</button><button type="button" data-ask="What is a candidate mover?">What is a moving object?</button><button type="button" data-ask="What is redshift?">What is redshift?</button></div><ol id="astra-log" class="astra-log" aria-label="Your conversation with Astra" hidden></ol><p id="astra-answer" class="astra-answer" role="status" aria-live="polite">Astra is ready. Pick a topic to begin.</p><p id="astra-source" class="astra-source"></p><div class="astra-ai"><label class="astra-ai-toggle"><input type="checkbox" id="astra-ai-on" disabled> <span id="astra-ai-label">Let the AI in this browser write the answer</span></label><p id="astra-ai-status" class="astra-ai-status">Checking whether this browser has a built-in AI…</p></div></div>
     </section>
 
     <section class="learn-section explorer-section" aria-labelledby="explorer-title"><div class="section-heading"><p class="learn-kicker">Touch, compare, discover</p><h2 id="explorer-title">Interactive space explorers</h2><p>These visual models teach ideas. The drawings are schematic and are not observations or to scale.</p></div>
       <div class="explorer-grid">
         <article class="explorer-card" id="infrared-explorer"><p class="explorer-number">01 · Light</p><h3>Visible vs infrared</h3><p>Slide through the spectrum. Infrared sits just beyond the red light our eyes can see.</p><label for="spectrum-slider">Choose a wavelength region</label><input id="spectrum-slider" type="range" min="0" max="2" step="1" value="0"><div class="spectrum-visual" aria-hidden="true"><span class="spectrum-visible"></span><span class="spectrum-infrared"></span><span class="spectrum-marker" id="spectrum-marker"></span></div><p class="explorer-readout" id="spectrum-readout" aria-live="polite">Visible light · about 380–700 nanometres · the rainbow our eyes detect.</p><button class="text-button" type="button" data-explain="infrared">Explain simply</button></article>
         <article class="explorer-card" id="solar-system-explorer"><p class="explorer-number">02 · Our neighborhood</p><h3>Solar System Explorer</h3><p>Choose a planet to meet it. Spacing in this picture is not to scale.</p><svg class="orbit-art" viewBox="0 0 520 140" role="img" aria-label="Schematic row of the eight planets, not to scale"><path d="M24 70H496" stroke="currentColor" stroke-opacity=".25" stroke-dasharray="4 8"/><circle cx="34" cy="70" r="17" fill="var(--learn-sun)"/><circle cx="90" cy="70" r="7" fill="var(--learn-mercury)"/><circle cx="146" cy="70" r="11" fill="var(--learn-venus)"/><circle cx="202" cy="70" r="12" fill="var(--learn-earth)"/><circle cx="258" cy="70" r="9" fill="var(--learn-mars)"/><circle cx="318" cy="70" r="20" fill="var(--learn-jupiter)"/><circle cx="382" cy="70" r="17" fill="var(--learn-saturn)"/><circle cx="438" cy="70" r="14" fill="var(--learn-uranus)"/><circle cx="488" cy="70" r="14" fill="var(--learn-neptune)"/></svg><div id="planet-picker" class="planet-picker" role="group" aria-label="Choose a planet"></div><p class="explorer-readout" id="planet-readout" aria-live="polite">Choose a planet to read its short profile.</p></article>
-        <article class="explorer-card" id="galaxy-explorer"><p class="explorer-number">03 · Beyond our galaxy</p><h3>Galaxy Explorer</h3><p>Open a galaxy card to learn its shape, distance, and what astronomers know about its stars.</p><div class="galaxy-art" aria-hidden="true"><span></span><span></span><span></span></div><div class="galaxy-picker" role="group" aria-label="Choose a galaxy"><button type="button" data-galaxy="andromeda" aria-pressed="true">Andromeda</button><button type="button" data-galaxy="milky-way" aria-pressed="false">Milky Way</button></div><p class="explorer-readout" id="galaxy-readout" aria-live="polite">Andromeda · spiral galaxy · about 2.5 million light-years away. Its halo stars span a wide range of ages, roughly 6–13 billion years.</p></article>
+        <article class="explorer-card" id="galaxy-explorer"><p class="explorer-number">03 · Beyond our galaxy</p><h3>Galaxy Explorer</h3><p>Open a galaxy card to learn its shape, distance, and what astronomers know about its stars.</p><svg class="galaxy-svg" id="galaxy-svg" viewBox="0 0 400 220" role="img" aria-label="Illustration of the chosen galaxy, not to scale"></svg><p class="galaxy-caption" id="galaxy-caption"></p><div class="galaxy-picker" role="group" aria-label="Choose a galaxy"><button type="button" data-galaxy="andromeda" aria-pressed="true">Andromeda</button><button type="button" data-galaxy="milky-way" aria-pressed="false">Milky Way</button></div><p class="explorer-readout" id="galaxy-readout" aria-live="polite">Andromeda · spiral galaxy · about 2.5 million light-years away. Its halo stars span a wide range of ages, roughly 6–13 billion years.</p></article>
       </div>
     </section>
 

@@ -12,7 +12,7 @@ import { skyToCanvas, tanCanvasToSky, mjdToYear } from "./geometry.js";
 import { readUrlState, writeUrlState } from "./urlState.js";
 import { getCutouts, listDetectors } from "./data/getCutouts.js";
 import { DATA_SOURCE, API_BASE, CAN_USE_LOCAL_BACKEND } from "./config.js";
-import { BlinkPlayer, MODES, loadImage, meanImageData } from "./player.js?v=8";
+import { BlinkPlayer, MODES, loadImage, meanImageData } from "./player.js?v=9";
 import { canvasToSky, measureAndPlot, clearMeasurement, setSpectrumStyle, APERTURE_RADIUS_PX } from "./features/measure.js";
 import { setupViewer } from "./features/viewerControls.js";
 import { setupWorkspace } from "./features/workspaceView.js";
@@ -23,19 +23,20 @@ import { setupTextAnalysis } from "./features/textAnalysisView.js";
 import { setupBundle } from "./features/bundleView.js";
 import { fetchSurvey as askSurvey } from "./features/surveyCoverage.js";
 import { setupAssistant } from "./features/assistantView.js";
-import { setupPinBoard } from "./features/missionsPinView.js";
+import { setupPinBoard } from "./features/missionsPinView.js?v=2";
+import { setupPredict } from "./features/predictView.js";
 import { startMissionRunner } from "./features/missionRunner.js";
 import { runTask, isCancelled } from "./features/workerClient.js";
 import { estimateSearch, describeEstimate } from "./features/searchCost.js";
 import { runSearchTask } from "./features/searchTasks.js";
 import { MARK_IDLE, markText } from "./features/workspace.js";
-import { EXPECTED_DETECTORS, detectorCoverage, coverageText } from "./features/spectral.js";
+import { detectorCoverage, coverageText } from "./features/spectral.js";
 import { setupTooltips } from "./features/tooltip.js";
 import { applyIcons } from "./features/ui.js";
 import { openDialog, shortcutsHtml } from "./features/dialog.js";
 import { setupTimeline } from "./features/timelineView.js";
 import { FLAGGED_LIMIT } from "./features/timeline.js";
-import { SkyContext } from "./features/skyContext.js?v=3";
+import { SkyContext } from "./features/skyContext.js?v=5";
 import { setupFullscreen } from "./features/fullscreen.js";
 import { detectSources, describeMover, matchKnownObject, moverPositionAtMjd, passIndices, trackSupport, blendWarning, VERSION as MOVERS_VERSION, DEFAULTS as MOVER_DEFAULTS, ERROR_MODEL } from "./features/movers.js";
 import { blindCheckCandidate, VERSION as BLIND_CHECK_VERSION } from "./features/blindCheck.js";
@@ -55,6 +56,15 @@ import { setupDiscoverPanel } from "./features/discoverPanel.js";
 
 // Small helper: document.getElementById is long, so we alias it.
 const $ = (id) => document.getElementById(id);
+
+// Links to a panel inside the collapsible analysis group should reveal it first.
+document.querySelectorAll('#workspace a[href^="#"]').forEach((link) => {
+  link.addEventListener("click", () => {
+    const target = $(link.hash.slice(1));
+    const group = $("workspace-analysis");
+    if (target && group?.contains(target)) group.open = true;
+  });
+});
 
 const form = $("search-form");
 const raInput = $("ra-input");
@@ -185,35 +195,6 @@ function renderQuickPicks() {
     list.appendChild(btn);
   }
 }
-
-/** Interactive wavelength guide for the telescope section. */
-function setupDetectorBand() {
-  const strip = $("detector-band-strip");
-  const range = $("detector-band-range");
-  const demo = $("detector-band-demo");
-  const target = TARGETS.find(({ id }) => id === "barnard");
-  const { ra, dec } = positionAtEpoch(target);
-  const buttons = EXPECTED_DETECTORS.map(({ id, wlMin, wlMax }, index) => {
-    const button = document.createElement("button");
-    const band = `${wlMin.toFixed(2)}–${wlMax.toFixed(2)} µm`;
-    button.type = "button";
-    button.textContent = id;
-    button.setAttribute("aria-label", `${id}, approximately ${band}`);
-    button.style.setProperty("--band-width", String(wlMax - wlMin));
-    button.style.setProperty("--band-tint", String(.08 + index * .04));
-    button.addEventListener("click", () => {
-      for (const segment of buttons) segment.setAttribute("aria-pressed", String(segment === button));
-      range.textContent = `Detector ${id} · approximately ${band}`;
-      const query = new URLSearchParams({ ra: ra.toFixed(5), dec: dec.toFixed(5), fov: "5", det: id });
-      demo.href = `index.html?${query}#workspace`;
-    });
-    return button;
-  });
-  strip.replaceChildren(...buttons);
-  buttons[0].click();
-  $("detector-band").hidden = false;
-}
-setupDetectorBand();
 
 /** Fill RA/Dec with the target's position at the SPHEREx epoch, then submit. */
 function selectTarget(target) {
@@ -813,7 +794,29 @@ function clearMarker() {
 // ---------------------------------------------------------------
 // Sky context (Aladin Lite)
 // ---------------------------------------------------------------
-const sky = new SkyContext($("aladin-box"), $("aladin-status"), $("sky-geo-note"), { matchField: true });
+const sky = new SkyContext($("aladin-box"), $("aladin-status"), $("sky-geo-note"), {
+  matchField: true,
+  selectionStatusEl: $("sky-selection-status"),
+  onSelectPosition: ({ raText, decText }) => {
+    // Same field form and loader used by the Pin Board; keep FOV and data source unchanged.
+    raInput.value = raText;
+    decInput.value = decText;
+    raInput.dispatchEvent(new Event("input", { bubbles: true }));
+    decInput.dispatchEvent(new Event("input", { bubbles: true }));
+    if ($("controls-body").hidden) $("panel-left-btn").click();
+    form.requestSubmit();
+    const scrollToBlink = () => $("workspace").scrollIntoView({
+      block: "start", behavior: prefersReducedMotion ? "auto" : "smooth"
+    });
+    // Fullscreen must close first, or the Workspace remains hidden behind the sky map.
+    const skyFrame = $("sky-frame");
+    const wasFullscreen = skyFrame.classList.contains("is-fullscreen");
+    const nativeFullscreen = document.fullscreenElement === skyFrame || document.webkitFullscreenElement === skyFrame;
+    if (nativeFullscreen) document.addEventListener("fullscreenchange", scrollToBlink, { once: true });
+    if (wasFullscreen) $("sky-full-btn").click();
+    if (!nativeFullscreen) scrollToBlink();
+  }
+});
 setupFullscreen($("sky-frame"), $("sky-full-btn"));   // map + its controls fill the screen
 /** Open (or re-centre) the sky map on a position { ra, dec, fov }. */
 async function openSkyMap(q) {
@@ -964,6 +967,10 @@ let moverPreviews = [];
 let movers = [];                           // candidates for the detector on screen, best first
 let selectedMover = -1;
 startMissionRunner({ getCandidate: () => (selectedMover >= 0 ? movers[selectedMover] ?? null : null), getCount: () => movers.length });
+const predict = setupPredict({
+  getCandidate: () => (selectedMover >= 0 ? movers[selectedMover] ?? null : null),
+  getContext: () => (currentQuery && currentFrames?.length ? { scaleArcsec: currentFrames[0].pixelScaleArcsec ?? (currentQuery.fov * 60) / player.naturalSize, field: { ra: currentQuery.ra, dec: currentQuery.dec, fov: currentQuery.fov } } : null),
+});
 const pinBoard = setupPinBoard({
   getCandidate: () => (selectedMover >= 0 ? movers[selectedMover] ?? null : null),
   getContext: () => ({ realData: DATA_SOURCE === "api", field: currentQuery ? { ra: currentQuery.ra, dec: currentQuery.dec, fov: currentQuery.fov, det: currentQuery.det } : null }),
@@ -1523,6 +1530,7 @@ function selectMover(k) {
   planetLab?.refresh();                             // the lab compares the motions of the one selected
   assistant?.refresh();
   pinBoard?.refresh();
+  predict?.refresh();
   document.querySelectorAll("#mover-list .mover-item").forEach((b) =>
     b.setAttribute("aria-pressed", String(Number(b.dataset.index) === k)));
   player.setCandidates(movers, k);
@@ -1630,6 +1638,7 @@ player.onFollowChange = (i) => {
 $("mover-lab-btn").addEventListener("click", () => {
   const candidate = movers[selectedMover];
   if (!candidate?.distant) return;
+  $("workspace-analysis").open = true;
   $("planet-lab").scrollIntoView({ block: "start", behavior: prefersReducedMotion ? "auto" : "smooth" });
   $("lab-compare-btn").focus({ preventScroll: true });
 });
