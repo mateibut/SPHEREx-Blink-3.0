@@ -1,5 +1,9 @@
 # Development progress
 
+## 2026-11-14 — Refresh Sky Explorer and About
+
+Added a rotatable celestial globe with the five propagated challenge targets. Selecting a globe marker synchronizes the existing atlas selection and archive coordinate fields; arrow keys rotate the globe, and reduced-motion preferences disable its idle rotation. Restyled About with a colorful hero and more readable workflow/topic cards while retaining its science copy and links. The globe grid, star field and color band are decorative; only target markers represent documented coordinates. `git diff --check` passed; browser review was not run.
+
 > **Where things stand (12 Nov 2026): read this first.** The repository for later changes is **SPHEREx-Blink-3.0** (the author's decision of 12 Nov). The default theme is
 > **Midnight / dark** on all six pages (`DEFAULT_THEME` in `theme.js` is only the fallback; each page passes `midnight`). Entries below that say the destination is Blink 2.0
 > (the 8 Nov "return to SPHEREx-Blink-2.0" entry), that "Deep Space is the default theme", or that the work is "on the branch `blink-2.0`" were true when written and are
@@ -9,7 +13,45 @@
 ## 2026-11-12 — Navigation kept dropping the data source (branch `fix-navigation`)
 
 Reported by the author: on a local server with the real backend, Workspace -> Overview -> Workspace landed on the synthetic demo. Cause: the links between the pages were written without the choices held in the address (`?data=api`, `?api=<backend>`, `?embed=1`, `?theme=`), so every page change reset them; `index.html#workspace` and the preset links of the Overview were the common case. Planet X Lab and the candidate links also wrote `data=api` without the backend address, which fell back to port 8001. Fix: `frontend/js/features/carryParams.js` (pure `carryLink`, plus `patchLinks`) is applied from `js/siteHeader.js`, which all six pages load, to every link to another page of the site now and to links added later (the pages build some when their data arrives). A link that already makes its own choice keeps it; nothing is added on the synthetic demo; a field (`ra`, `dec`, `fov`, `det`) is not carried. `scratch/test_carryparams.mjs` (14 checks). Checked in the browser against the real backend on port 8003: the click path Workspace -> Overview -> Workspace stays on `?data=api&api=...` with the data-source select on "api". Also run: all 45 `scratch/test_*.mjs`, `e2e_smoke`, `a11y_audit` and the nine frontend-only Playwright scripts. **Not changed:** the field itself (position, field of view, detector) is still not remembered between pages; it is in the address only while the workspace is open.
+## 2026-11-14 — Add Earth behind the Overview telescope
 
+Added the missing procedural Earth, cloud layer, atmosphere and orbit behind the existing telescope model, following the source interface while keeping all scene elements labelled as illustration. Dragging rotates Earth with the telescope; a restrained decorative beam and spotlight point toward Earth's surface. The camera starts farther away and caps its scroll approach at `z=460`, before the Earth's front surface; scroll progress is clamped to the page range. `git diff --check` passed; browser review was not run.
+
+## 2026-11-14 — Blink in colours in the player
+
+Moved wavelength blinking into the observation player. Playback orders the selected pass by wavelength and respects the timeline filters. Selecting a candidate uses its existing fitted track to follow it on the canvas. The previous standalone synthetic illustration was removed.
+
+All 45 Node test scripts passed. The colour playback test also checks candidate following and resetting on mode changes. Chromium could not start in this environment, and no real FITS data were used for verification.
+
+## 2026-11-14 — Blink in colours
+
+Added a linked workspace demo comparing centroids across two illustrative bands or two dates. It generates Gaussian stamps for a fixed blended pair, a moving source and a fixed reference star. The reference-corrected shifts passed `node scratch/test_colour_blink.mjs`. The fixture contains only synthetic pixels.
+
+## 2026-11-12 — Tour pacing follow-up
+
+Reduced travel time by another 15% to 415–960 ms. Linux Chromium with the synthetic Barnard field passed all eight steps at the seven agreed widths, including a downward scroll without reversals and Escape during motion. All scratch/test_*.mjs scripts, benchmark.mjs --check, the smoke, accessibility, navigation, layout and tour modal checks, and 190 backend tests passed. Physical devices were outside this check.
+
+## 2026-11-12 — Quicker tour transitions
+
+Shortened spotlight travel by about 25%, to 490–1125 ms according to scroll distance. With the synthetic Barnard field, the Linux Chromium tour check aligned each of the eight steps at all seven agreed widths. At 390 px a long downward move advanced through 43 distinct scroll positions without reversing, and Escape stopped it in progress. All 44 Node test scripts, the three benchmark comparisons and 190 backend pytest cases passed. Physical devices were outside this timing check.
+
+## 2026-11-12 — Restore guided tour movement
+
+A single animation moves the page, spotlight and card together over 650–1500 ms according to scroll distance. Next and Back interrupt from the current position. Escape stops the movement and reduced motion places the step immediately.
+
+Linux Chromium: with the synthetic Barnard field, all eight spotlight targets aligned at the seven agreed widths. Reviewed 390 and 1440 px screenshots. A separate frame sampling check at 390 px recorded a long downward move without a reversal and verified that Escape stopped an in-progress move. All scratch/test_*.mjs scripts, benchmark.mjs --check, e2e_smoke.mjs, a11y_audit.mjs, browser_navigation.cjs, browser_layout_audit.cjs, browser_tour_modal.cjs and 190 backend tests passed. Physical devices and live FITS were outside this check.
+
+## 2026-11-12 — Combine the viewing guide and tour
+
+Moved the visual motion cues into the existing eight-step tour. Settings and Layers share the viewer toolbar. Steps now position the highlight immediately and fade the card for 180 ms, with the fade disabled for reduced motion. Removed the delayed reposition callback and overlapping spotlight transitions.
+
+Linux verification used the synthetic Barnard field at 320, 390, 768, 1024, 1366, 1440 and 1920 px. Completed all steps and exercised rapid Back/Next with normal motion, checked card bounds and reviewed desktop and phone screenshots. Ran scratch/browser_tour_modal.cjs on the explicit Workspace route for reduced-motion modal checks. All 44 scratch/test_*.mjs scripts, benchmark.mjs --check, e2e_smoke.mjs, a11y_audit.mjs, browser_navigation.cjs, browser_layout_audit.cjs and 190 backend pytest cases passed. No live FITS, physical devices or screen readers were exercised.
+
+## 2026-11-12 — Workspace viewer tools
+
+Grouped Settings, Layers and Viewing guide in a labelled, tinted row above playback with theme-coloured icons. The buttons wrap on small screens.
+
+Linux Chromium with the built-in synthetic Barnard field: opened all three dialogs, dismissed each with Escape and verified focus returned to its button at 320, 390, 768, 1024, 1366, 1440 and 1920 px. No horizontal page overflow. Reviewed toolbar screenshots at 390 and 1440 px. Ran every scratch/test_*.mjs, benchmark.mjs --check (three matching digests), e2e_smoke.mjs, a11y_audit.mjs, browser_navigation.cjs and browser_layout_audit.cjs. All passed. The isolated backend pytest run passed 190 tests with one FITS keyword warning. Live FITS, external catalogues, physical phones and screen readers were outside this check.
 ## 2026-11-12 — Repair pass on branch `repair-docs` (documentation, Playwright scripts, CI)
 
 Fixed the seven findings of a read-only review of `main` at `4e207b8`:
@@ -49,6 +91,12 @@ Restyled the image workspace on `redesign/contact-sheet` from `880777f`. The coo
 Ran all 44 `scratch/test_*.mjs` scripts, `node scratch/e2e_smoke.mjs`, `node scratch/a11y_audit.mjs`, and the Playwright navigation and layout checks in `scratch/browser_navigation.cjs` and `scratch/browser_layout_audit.cjs`. All passed. Playwright screenshots at 1536, 820, 390 and 320 px used the built-in WISE 0855 and simulated Planet X fields. A touch-emulated phone check exercised mode selection and display settings. A before-and-after comparison matched 129 static controls, links and forms, the cutout GET and parameters, and the loading, HTTP 503, retry and empty-field states using intercepted API responses.
 
 The frontend serves directly from `frontend/` with no build step. The available Python installations lacked pytest, so `python -m pytest backend -q` could not run. Live FITS, external catalogues and third-party sky map services were not exercised.
+
+## 2026-11-14 — 3D Overview interface port
+
+Replaced the public Overview presentation with the 3D experience adapted from `EmanuelGeorge-c/proiect-nasa` (MIT-licensed), while keeping Blink 3.0 routes, target-field links, theme storage, and the synthetic-data notice. The procedural spacecraft scene is labelled as illustrative and not to scale; its component panel avoids engineering specifications or observation claims. Removed the source page's unverified live-backend status, retained the shared theme script, added a static WebGL fallback, keyboard focus handling and reduced-motion behavior, and kept the mobile project navigation available as a scrollable row. Updated CREDITS, feature status, and display limitations. No analysis, backend, query, or data code changed.
+
+Review: `git diff --check` passed for the tracked diff after removing the only added trailing whitespace. Tests and browser review were not run for this port; the responsive layout, screen-reader behavior, and WebGL fallback remain to be checked in a browser.
 
 ## 2026-11-11 — academic Overview refinement
 

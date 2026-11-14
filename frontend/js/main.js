@@ -12,7 +12,7 @@ import { skyToCanvas, tanCanvasToSky, mjdToYear } from "./geometry.js";
 import { readUrlState, writeUrlState } from "./urlState.js";
 import { getCutouts, listDetectors } from "./data/getCutouts.js";
 import { DATA_SOURCE, API_BASE, CAN_USE_LOCAL_BACKEND } from "./config.js";
-import { BlinkPlayer, MODES, loadImage, meanImageData } from "./player.js";
+import { BlinkPlayer, MODES, loadImage, meanImageData } from "./player.js?v=5";
 import { canvasToSky, measureAndPlot, clearMeasurement, setSpectrumStyle, APERTURE_RADIUS_PX } from "./features/measure.js";
 import { setupViewer } from "./features/viewerControls.js";
 import { setupWorkspace } from "./features/workspaceView.js";
@@ -32,6 +32,7 @@ import { detectorCoverage, coverageText } from "./features/spectral.js";
 import { setupTooltips } from "./features/tooltip.js";
 import { applyIcons } from "./features/ui.js";
 import { openDialog, shortcutsHtml } from "./features/dialog.js";
+import { colourSequences } from "./features/colourBlink.js?v=3";
 import { setupTimeline } from "./features/timelineView.js";
 import { FLAGGED_LIMIT } from "./features/timeline.js";
 import { SkyContext } from "./features/skyContext.js";
@@ -280,6 +281,25 @@ const player = new BlinkPlayer(canvas, {
   },
 });
 player.setFps(speedInput.value);
+player.onLightCentre = ({ kind, measurement } = {}) => {
+  const status = $("colour-centre-status");
+  const message = kind === "measured" ? "Halo · estimated light centre"
+    : kind === "predicted" ? "Faint halo · predicted position"
+      : "No halo in this frame";
+  if (status.textContent !== message) status.textContent = message;
+
+  const frame = player.frames[player.index];
+  const values = {
+    "colour-wavelength": ((frame.wavelengthMinUm + frame.wavelengthMaxUm) / 2).toFixed(3) + " µm",
+    "colour-peak": measurement ? String(measurement.peak) : "—",
+    "colour-background": measurement ? String(measurement.background) : "—",
+    "colour-offset": measurement ? measurement.offsetPx.toFixed(2) + " px" : "—",
+  };
+  for (const [id, value] of Object.entries(values)) {
+    const field = $(id);
+    if (field.textContent !== value) field.textContent = value;
+  }
+};
 
 // Zoom, pan, the readout under the pointer and the layer list (features/viewerControls.js). Set up BEFORE the click handler that measures:
 // a click that ends a drag must stop in the viewer's own handler and never reach the measuring.
@@ -334,6 +354,7 @@ const timeline = setupTimeline({
   root: $("timeline"), player,
   onFilterChange: () => {
     if (!player.length) return;
+    updateColourPlayback();
     setPlayerEnabled(true);                                  // Play needs two images that pass the filter
     updateFrameInfo(player.index, player.frames[player.index]);
   },
@@ -359,7 +380,10 @@ function updateFrameInfo(i, frame) {
   $("meta-mjd").textContent = frame.mjd.toFixed(3);
 
   if (player.isAnimated) {
-    $("frame-counter").textContent = `Frame ${i + 1} / ${player.length}`;
+    const colourIndex = player.mode === "colour" ? player.colourOrder.indexOf(i) : -1;
+    $("frame-counter").textContent = colourIndex >= 0
+      ? `Band ${colourIndex + 1} / ${player.playbackCount}`
+      : `Frame ${i + 1} / ${player.length}`;
     $("frame-date").textContent = fmtDate(frame.dateISO);
     $("meta-wl").textContent = `${frame.wavelengthMinUm.toFixed(2)}–${frame.wavelengthMaxUm.toFixed(2)} µm`;
     $("meta-flags").textContent = !frame.flags ? "n/a"
@@ -409,13 +433,13 @@ function updateFrameInfo(i, frame) {
 /** Enable/disable the player controls according to frames + mode. */
 function setPlayerEnabled(enabled) {
   const animated = enabled && player.isAnimated && player.length > 1;
-  playBtn.disabled = !animated || player.activeCount < 2;     // the timeline filter may leave fewer than two images to step through
+  playBtn.disabled = !animated || player.playbackCount < 2;     // the timeline filter may leave fewer than two images to step through
   if (playBtn.disabled && player.playing) player.pause();
   frameSlider.disabled = !animated;
   observations.disabled = !enabled || !player.isAnimated;
   speedInput.disabled = !animated;
   $("save-png-btn").disabled = !enabled;
-  $("record-btn").disabled = !animated || !canRecord();
+  $("record-btn").disabled = !animated || player.playbackCount < 2 || !canRecord();
   // Modes that combine frames need at least 2 of them.
   document.querySelectorAll('#mode-switch input:not([value="blink"])')
     .forEach((r) => { r.disabled = !enabled || player.length < 2; });
@@ -448,7 +472,7 @@ document.addEventListener("keydown", (e) => {
   if (e.shiftKey && e.key.startsWith("Arrow")) return;   // Shift + arrows move a zoomed picture (viewerControls.js)
   if (e.key === "Escape" && player.marker) { clearMarker(); return; }
   if (!player.isAnimated) return;
-  const onButton = !!e.target.closest("button");
+  const onButton = !!e.target.closest("button, a");
   if (e.key === " " && !onButton) { e.preventDefault(); player.toggle(); }
   else if (e.key === "ArrowRight") { player.pause(); player.next(); }
   else if (e.key === "ArrowLeft") { player.pause(); player.prev(); }
@@ -465,8 +489,33 @@ const MODE_HELP = {
   diff: 'Each image minus the median of the images from <em>other</em> dates: still stars vanish. <span class="swatch" style="background:#ff9e33"></span> brighter than usual – the object is here now · <span class="swatch" style="background:#409eff"></span> fainter than usual.',
   mean: "Average of all images: deeper and less noisy. Moving objects get smeared or fade out.",
   max: "Brightest value of every pixel over all dates: a moving object leaves a <strong>trail of dots</strong>, a still star stays one dot.",
+  colour: "Blink from shorter to longer wavelengths within one survey pass. The coloured halo marks the local brightness centre near the selected candidate, a marked position, a single test target, or the field centre. A faint halo marks the predicted position when the light centre is unavailable.",
   compare: 'Pick two images, or whole survey passes. <strong>A − B</strong>: <span class="swatch" style="background:#ff9e33"></span> brighter in A · <span class="swatch" style="background:#409eff"></span> fainter in A – a mover is an orange dot next to a blue one, still stars vanish. <strong>A + B</strong>: the average of both, a deeper picture. Other dates are also other wavelengths, so bright stars can leave a faint leftover even if they did not move.',
 };
+
+const colourPass = $("colour-pass");
+
+function updateColourPlayback({ restart = false } = {}) {
+  const enabled = player.mode === "colour";
+  $("colour-controls").hidden = !enabled;
+  $("colour-measurements").hidden = !enabled;
+  if (!enabled) return;
+  const sequences = colourSequences(player.frames, player.activeIndices);
+  const previous = colourPass.value;
+  const selected = sequences.find(pass => String(pass.id) === previous)
+    ?? sequences.find(pass => pass.indices.includes(player.index)) ?? sequences[0];
+  colourPass.replaceChildren(...sequences.map(pass => new Option(`${pass.label} · ${pass.when}`, pass.id)));
+  colourPass.disabled = !selected;
+  if (selected) colourPass.value = String(selected.id);
+  player.setColourOrder(selected?.indices ?? [], { restart });
+  $("colour-status").textContent = selected
+    ? `${selected.indices.length} frames · short to long wavelength. Dates can differ within a pass.`
+    : "No pass has two distinct wavelengths in the current filters. Try another detector or show all frames.";
+}
+colourPass.addEventListener("change", () => {
+  updateColourPlayback({ restart: true });
+  setPlayerEnabled(Boolean(player.length));
+});
 
 function setMode(mode, { updateUrl = true } = {}) {
   if (!MODES.includes(mode)) mode = "blink";
@@ -474,6 +523,7 @@ function setMode(mode, { updateUrl = true } = {}) {
   if (radio.disabled) mode = "blink";
   document.querySelector(`#mode-switch input[value="${mode}"]`).checked = true;
   player.setMode(mode);
+  updateColourPlayback();
   $("mode-help").innerHTML = MODE_HELP[mode];
   $("compare-controls").hidden = mode !== "compare";
   if (updateUrl) writeUrlState({ mode: mode === "blink" ? null : mode });
@@ -619,6 +669,7 @@ async function showDetector(detector) {
   if (!current()) return;
 
   setupCompare();
+  colourPass.replaceChildren();
   timeline.setFrames(currentFrames);     // the timeline of the images now in the player
   frameSlider.max = String(currentFrames.length - 1);
   player.setField({ ra: currentQuery.ra, dec: currentQuery.dec,                                              // for the scale bar and the grid

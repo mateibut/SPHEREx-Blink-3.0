@@ -108,11 +108,14 @@
             <label><input type="radio" name="mode" value="mean"><span>Stack</span></label>
             <label><input type="radio" name="mode" value="max"><span>Trail</span></label>
             <label><input type="radio" name="mode" value="compare"><span>Compare</span></label>
+            <label><input type="radio" name="mode" value="colour"><span>Blink in colours</span></label>
           </fieldset>
-          <button type="button" class="btn btn-small" data-open-panel="viewer-settings" aria-controls="viewer-settings" aria-haspopup="dialog">Settings</button>
-          <button type="button" class="btn btn-small" data-open-panel="image-layers" aria-controls="image-layers" aria-haspopup="dialog">Layers</button>
-          <button type="button" class="btn btn-small" data-open-panel="moving-guide" aria-controls="moving-guide" aria-haspopup="dialog">Viewing guide</button>
           <p class="mode-help" id="mode-help" aria-live="polite"></p>
+        </div>
+        <div class="compare-controls" id="colour-controls" hidden>
+          <label>Survey pass <select id="colour-pass"></select></label>
+          <span id="colour-status" role="status"></span>
+          <span id="colour-centre-status"></span>
         </div>
         <!-- Compare mode: pick image A, image B and the operation yourself (js/features/compare.js) -->
         <div class="compare-controls" id="compare-controls" hidden>
@@ -124,6 +127,16 @@
             </select>
           </label>
           <label>Image B <select id="cmp-b"></select></label>
+        </div>
+
+        <div class="viewer-tools" role="group" aria-labelledby="viewer-tools-label">
+          <span id="viewer-tools-label">Viewer tools</span>
+          <button type="button" class="btn btn-small" data-open-panel="viewer-settings" aria-controls="viewer-settings" aria-haspopup="dialog">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 5h4m4 0h10M3 12h10m4 0h4M3 19h4m4 0h10 M9 3v4m6 3v4m-6 3v4"/></svg>
+            Settings</button>
+          <button type="button" class="btn btn-small" data-open-panel="image-layers" aria-controls="image-layers" aria-haspopup="dialog">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3 2 8l10 5 10-5-10-5Zm-9 10 9 4.5 9-4.5M3 17l9 4.5 9-4.5"/></svg>
+            Layers</button>
         </div>
 
         <div class="playback-strip">
@@ -213,6 +226,19 @@
               <div><dt>MJD</dt><dd id="meta-mjd">—</dd></div>
               <div><dt>Flags</dt><dd id="meta-flags">—</dd></div>
             </dl>
+          </section>
+          <section id="colour-measurements" class="insp-sec" aria-labelledby="colour-measurements-title" hidden>
+            <h3 id="colour-measurements-title">Light in this frame</h3>
+            <dl class="meta">
+              <div><dt>Band centre</dt><dd id="colour-wavelength">—</dd></div>
+              <div><dt>Peak pixel (0–255)</dt><dd id="colour-peak">—</dd></div>
+              <div><dt>Background (0–255)</dt><dd id="colour-background">—</dd></div>
+              <div><dt>Light centre offset</dt><dd id="colour-offset">—</dd></div>
+            </dl>
+            <details class="muted small">
+              <summary>About these values</summary>
+              <p>These values use the display stretch. Estimating temperature requires calibrated fluxes across multiple bands and a model of the source.</p>
+            </details>
           </section>
           <section class="timeline" id="timeline" aria-labelledby="timeline-title" hidden>
             <div class="tl-head">
@@ -701,24 +727,6 @@
     <div class="dlg-head"><h2 id="simulation-note-title">About the simulation</h2><form method="dialog"><button class="btn btn-small">Close</button></form></div>
     <p class="dlg-body">The Planet X preset uses a simulated body 600 AU away. Its position is invented for testing the distant-body search.</p>
   </dialog>
-  <dialog id="moving-guide" class="dlg workspace-dialog" aria-labelledby="moving-guide-title">
-    <div class="dlg-head"><h2 id="moving-guide-title">How to spot a moving object</h2><form method="dialog"><button class="btn btn-small">Close</button></form></div>
-    <div class="dlg-body">
-      <p class="workspace-intro">Load a coordinate pair, then inspect the image sequence and run a search from the workspace.</p>
-      <p>Blink, compare and measure one field without losing its provenance.</p>
-
-      <small class="help">Blink always compares the <em>same</em> detector at different dates.</small>
-      <ol>
-        <li>Quick way: press <strong>Find movers</strong> under the player &mdash; it lists the dots that changed position.</li>
-        <li>Or by eye: press <kbd>Play</kbd> &mdash; images from different dates flash one after another.</li>
-        <li>Most stars stay put. Look for a dot that <strong>jumps</strong> or <strong>drifts</strong>.</li>
-        <li>A dot that only gets <strong>brighter/fainter</strong> in place is probably a variable star.</li>
-        <li>Slow down the speed or step frame by frame with <kbd>←</kbd> <kbd>→</kbd>.</li>
-        <li>Too faint? Try <strong>Difference</strong> (still stars vanish) or <strong>Trail</strong> (a mover leaves a line of dots).</li>
-        <li>Found something? <strong>Click it</strong> to see its spectrum and light curve, and check the sky map: is it a known object?</li>
-      </ol>
-    </div>
-  </dialog>
-  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/main.js?v=5"></script>
 </body>
 </html>

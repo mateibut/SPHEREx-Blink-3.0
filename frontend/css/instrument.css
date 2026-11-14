@@ -35,6 +35,31 @@ input[type=range] { accent-color: var(--accent); }
 input[type=range]::-webkit-slider-thumb { box-shadow: none; }
 
 
+/* Viewer tools stay together above the observation and playback controls. */
+.viewer-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+  border-top: 1px solid var(--border);
+}
+.viewer-tools > span { font-weight: 650; margin-inline-end: 6px; }
+.viewer-tools .btn { display: inline-flex; align-items: center; gap: 6px; }
+.viewer-tools svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: var(--accent-text);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+@media (max-width: 540px) {
+  .viewer-tools > span { flex-basis: 100%; }
+}
+
 /* One application masthead. The compact menu overlays the page in normal tab order. */
 .site-header {
   position: relative; z-index: 6; min-height: 60px; display: flex;
