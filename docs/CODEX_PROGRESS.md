@@ -1,5 +1,9 @@
 # Development progress
 
+## 2026-11-14 — Put Earth and SPHEREx in the static site backdrop
+
+Added a fixed SVG illustration of Earth and the SPHEREx telescope to the CSS starfield used across the site, including Sky Explorer and Learn, and bumped the shared stylesheet cache version. The artwork is decorative and static; the interactive Sky Explorer globe and Overview scene remain their own page content. `git diff --check` passed; browser review and tests were not run. This change is local and unpushed.
+
 ## 2026-11-14 — Static space backdrop across the site
 
 Added a still CSS starfield and subtle nebula accents to the shared instrument pages, including Learn; translucent, blurred surfaces let it show through. The Simulator keeps its existing still starfield with lighter panels. No new canvas or animation was added; high-contrast mode keeps opaque surfaces. `git diff --check` passed; browser review and tests were not run. This change is local and unpushed.

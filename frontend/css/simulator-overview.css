@@ -9,6 +9,7 @@ html[data-theme] body.simulator-body {
     radial-gradient(ellipse at 78% 8%, rgba(75, 52, 91, .24), transparent 34rem),
     radial-gradient(ellipse at 8% 42%, rgba(24, 76, 91, .16), transparent 38rem),
     radial-gradient(circle at 1px 1px, rgba(255,255,255,.22) 1px, transparent 1.5px) 0 0 / 72px 72px,
+    url("../img/earth-spherex-static.svg") right -5vw bottom 8vh / min(52vw, 720px) auto no-repeat fixed,
     #0b0f19;
 }
 
