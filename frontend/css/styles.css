@@ -57,7 +57,7 @@
   --ease:        cubic-bezier(.2, .8, .2, 1);
 }
 
-/* NEBULA (default since 10 Nov 2026): indigo-black ground, orchid / magenta accent, cyan secondary. Also the palette of the dark "islands" (the photo banner, the
+/* NEBULA: indigo-black ground, orchid / magenta accent, cyan secondary. Also the palette of the dark "islands" (the photo banner, the
    image stage, the charts) inside the light theme: they stay dark so that the images and the validated chart colours keep their ground. */
 [data-theme="nebula"] {
   color-scheme: light;
@@ -109,10 +109,10 @@
 /* MIDNIGHT: one intentionally dark alternative to the Paper palettes. */
 [data-theme="midnight"] {
   color-scheme: dark;
-  --bg: #111213; --bg-2: #171819; --surface: #151617; --raised: #252627; --field: #1c1d1e;
+  --bg: #0B0F19; --bg-2: #171819; --surface: #151617; --raised: #252627; --field: #1c1d1e;
   --border: #424344; --control-border: #757575; --text: #f1f1ee; --text-muted: #c4c4bf; --text-faint: #aaa9a4;
   --accent: #efb24f; --accent-hi: #ffd18b; --accent-text: #f5c16f; --accent-rgb: 239 178 79; --accent-2: #d1cec8; --alt-rgb: 209 206 200; --rust: #D85C74; --on-accent: #20180b;
-  --warn: #FFD17A; --warn-rgb: 255 209 122; --danger: #FF9AA7; --success: #76E0A9; --bg-rgb: 17 18 19; --surface-rgb: 21 22 23; --text-rgb: 241 241 238;
+  --warn: #FFD17A; --warn-rgb: 255 209 122; --danger: #FF9AA7; --success: #76E0A9; --bg-rgb: 11 15 25; --surface-rgb: 21 22 23; --text-rgb: 241 241 238;
   --panel-alpha: 1; --veil-top: 1; --veil-bottom: 1; --shadow: none; --display: "Georgia", "Times New Roman", serif; --font-head: "Georgia", "Times New Roman", serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }

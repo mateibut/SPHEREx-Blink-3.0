@@ -13,7 +13,6 @@ html[data-theme]:not([data-contrast="high"]):has(body.simulator-body) body.simul
   background-repeat: repeat, repeat, repeat, no-repeat, no-repeat;
   background-attachment: fixed;
 }
-
 .simulator-body .site-header {
   position: sticky;
   top: 0;
@@ -375,6 +374,3 @@ html[data-contrast="high"] .simulator-body .simulator-layout > .panel { backgrou
   }
   .simulator-body .simulator-layout > .panel:hover { transform: none; }
 }
-
-/* The simulator page is always dark: the text tokens must be light in every theme (the Paper palettes set dark grey). */
-html[data-theme]:has(body.simulator-body) { --bg: #0B0F19; --text: #E8EBF2; --text-rgb: 232 235 242; --text-muted: #AEB7C6; --text-faint: #8D97A8; --accent-rgb: 239 178 79; --alt-rgb: 174 183 198; }

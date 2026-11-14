@@ -1,7 +1,7 @@
 /* ── BASE & RESET ── */
     html {
       scroll-behavior: smooth;
-      background: #0B0F19;
+      background: var(--bg);
       color: #f1f1ee;
     }
     *, *::before, *::after { box-sizing: border-box; }

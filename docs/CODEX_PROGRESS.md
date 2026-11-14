@@ -1,5 +1,9 @@
 # Development progress
 
+## 2026-11-14 — Unify page background colours across Science and Learn
+
+Set all six pages and both modes to the same Midnight / dark default. The body, Simulator and Overview root now use the shared `--bg` token instead of page-specific overrides; saved themes and `?theme=` still apply consistently. Updated the existing theme checks to describe the new default. `git diff --check` passed; tests and browser review were not run. This change is local and unpushed.
+
 ## 2026-11-14 — Remove static duplicate scene from Overview and Simulator
 
 Raised the Overview backdrop override to the shared theme rule's specificity so only its animated 3D scene appears. Kept the Simulator's shared static starfield while omitting the decorative Earth/SPHEREx image behind its own orbital model. `git diff --check` passed; browser review and tests were not run. This change is local and unpushed.
