@@ -8,7 +8,7 @@
 
 ## 2026-11-14 — Add Earth behind the Overview telescope
 
-Added the missing procedural Earth, cloud layer, atmosphere and orbit behind the existing telescope model, following the source interface while keeping all scene elements labelled as illustration. The camera starts farther away and caps its scroll approach at `z=460`, before the Earth's front surface; scroll progress is clamped to the page range. `git diff --check` passed; browser review was not run.
+Added the missing procedural Earth, cloud layer, atmosphere and orbit behind the existing telescope model, following the source interface while keeping all scene elements labelled as illustration. Dragging rotates Earth with the telescope; a restrained decorative beam and spotlight point toward Earth's surface. The camera starts farther away and caps its scroll approach at `z=460`, before the Earth's front surface; scroll progress is clamped to the page range. `git diff --check` passed; browser review was not run.
 
 ## 2026-11-12 — Tour pacing follow-up
 
