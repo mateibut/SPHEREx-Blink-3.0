@@ -75,16 +75,6 @@ All 45 Node test scripts passed. The colour playback test also checks candidate 
 
 Added a linked workspace demo comparing centroids across two illustrative bands or two dates. It generates Gaussian stamps for a fixed blended pair, a moving source and a fixed reference star. The reference-corrected shifts passed `node scratch/test_colour_blink.mjs`. The fixture contains only synthetic pixels.
 
-## 2026-11-14 — Blink in colours in the player
-
-Moved wavelength blinking into the observation player. Playback orders the selected pass by wavelength and respects the timeline filters. Selecting a candidate uses its existing fitted track to follow it on the canvas. The previous standalone synthetic illustration was removed.
-
-All 45 Node test scripts passed. The colour playback test also checks candidate following and resetting on mode changes. Chromium could not start in this environment, and no real FITS data were used for verification.
-
-## 2026-11-14 — Blink in colours
-
-Added a linked workspace demo comparing centroids across two illustrative bands or two dates. It generates Gaussian stamps for a fixed blended pair, a moving source and a fixed reference star. The reference-corrected shifts passed `node scratch/test_colour_blink.mjs`. The fixture contains only synthetic pixels.
-
 ## 2026-11-12 — Tour pacing follow-up
 ## 2026-11-14 — SPHEREx Blink 4.0 dual-mode foundation
 

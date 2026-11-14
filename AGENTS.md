@@ -1,6 +1,6 @@
 # Developing SPHEREx Blink
 
-Work in this checkout. This copy is SPHEREx-Blink-3.0; push only to the remote for `Andrei25Ciuta/SPHEREx-Blink-3.0` when the user requests publication. Treat SPHEREx-Blink-2.0 as the feature baseline. Read docs/CODEX_PROGRESS.md, docs/IMPLEMENTATION_ROADMAP.md and docs/FEATURE_STATUS.md, then verify HEAD and the working tree. Historical instructions imported below describe earlier repositories; the current user's destination and scope take precedence.
+Work in this checkout. This is SPHEREx-Blink-4.0 on `codex/blink4-education`, derived from Blink 3.0 and synced to its published `main` interface at `06ac378`. Learn Mode is an addition to the Science Mode baseline. Read docs/CODEX_PROGRESS.md, docs/IMPLEMENTATION_ROADMAP.md and docs/FEATURE_STATUS.md, then verify HEAD and the working tree. Historical instructions imported below describe earlier repositories; the current user's destination and scope take precedence. Do not publish unless the user asks.
 
 Serve frontend/ over HTTP. Preserve index.html, results.html, query parameters and embedded mode. Keep Science Mode tools and analysis intact. The default workspace is synthetic and must remain explicitly labelled. Learn Mode progress is local to the browser; do not imply cloud sync or a connected AI model. Read docs/VALIDATION.md before changing scientific methods, units, or thresholds.
 
@@ -30,7 +30,7 @@ modules in `frontend/` (no build step, no npm), a FastAPI + astropy backend in `
    command that can be re-run (`docs/VALIDATION.md` names it). Facts written from memory are marked as such. A candidate is a lead, never a discovery.
 3. **Do not download new FITS files** without the author's explicit yes (file, source, size first). Catalogue queries (SIMBAD, Gaia, IRSA TAP, SkyBoT) are fine.
 4. **Never force-push, rewrite history or delete branches.** Push only after the author's fresh, explicit yes, as a plain push to this repository
-   (`Andrei25Ciuta/SPHEREx-Blink-3.0`, the branch the author names; an approval for one push does not cover the next). Work on a branch, not on `main`. (The text that stood
+   (`mateibut/SPHEREx-Blink-3.0`, the branch the author names; an approval for one push does not cover the next). Work on a branch, not on `main`. (The text that stood
    here said "never push, work on the branch `blink-2.0`": that came from an earlier repository and is replaced.) Commit only when asked or when a task says to;
    messages end with the co-author line the tool gives you.
 5. **Keep it working.** Existing URLs (`?ra=&dec=&fov=&det=&mode=`, `?data=api&api=`, `?embed=1`) and existing features stay. Run the tests before and after.
