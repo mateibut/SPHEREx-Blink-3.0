@@ -6,6 +6,10 @@
 > **superseded**. SPHEREx-Blink-2.0 holds a parallel line of work (service-failure handling, chance baselines, a release audit, a Paper-theme redesign) that is **not merged into
 > this repository yet**; what differs is listed in `docs/MERGE_NOTES.md` and has to be decided before the two are joined.
 
+## 2026-11-14 — Overview-inspired Solar System Simulator interface
+
+Restyled the Simulator page with the Overview's dark space palette, warm gold accents, glass-like panels, hover illumination, responsive form controls and reduced-motion-aware transitions. The change is scoped to `simulator.html` and `simulator-overview.css`; it does not alter the SVG scene, Sun, planet markers, orbit paths, sightlines, geometry calculations, inputs or readouts. The existing simulator browser precision regression and a visual desktop/mobile review remain to be run.
+
 ## 2026-11-14 — Add Earth behind the Overview telescope
 
 Added the missing procedural Earth, cloud layer, atmosphere and orbit behind the existing telescope model, following the source interface while keeping all scene elements labelled as illustration. Dragging rotates Earth with the telescope; a restrained decorative beam and spotlight point toward Earth's surface. The camera starts farther away and caps its scroll approach at `z=460`, before the Earth's front surface; scroll progress is clamped to the page range. `git diff --check` passed; browser review was not run.
