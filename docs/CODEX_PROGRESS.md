@@ -32,20 +32,23 @@ All 45 Node test scripts passed. The colour playback test also checks candidate 
 Added a linked workspace demo comparing centroids across two illustrative bands or two dates. It generates Gaussian stamps for a fixed blended pair, a moving source and a fixed reference star. The reference-corrected shifts passed `node scratch/test_colour_blink.mjs`. The fixture contains only synthetic pixels.
 
 ## 2026-11-12 — Tour pacing follow-up
+## 2026-11-14 — SPHEREx Blink 4.0 dual-mode foundation
 
-Reduced travel time by another 15% to 415–960 ms. Linux Chromium with the synthetic Barnard field passed all eight steps at the seven agreed widths, including a downward scroll without reversals and Escape during motion. All scratch/test_*.mjs scripts, benchmark.mjs --check, the smoke, accessibility, navigation, layout and tour modal checks, and 190 backend tests passed. Physical devices were outside this check.
+Created a separate `codex/blink4-education` worktree from 3.0 commit `831a9cd`; no 4.0 directory existed, so this new checkout is the 4.0 destination and the 3.0 worktree remains unchanged. Recast Overview as the Science/Learn chooser, preserved the science workspace and query URLs, and added the first full Learn Mode foundation: an eight-level sequential path, local profiles/progress/XP/badges/streak/time, four quiz types, per-level quiz scores, Astra's reviewed offline glossary, simple explanations beside Science panels, interactive spectrum/planet/galaxy cards, classroom progress summaries, and printable worksheets with keys. Added a shared saved high-contrast setting. All Learn visuals are labelled schematic/synthetic. NASA educational sources are linked in the course and in CREDITS.md.
 
-## 2026-11-12 — Quicker tour transitions
+Intentional implementation limit: Astra is not a connected language model and has a constrained offline response set. Teacher dashboard data remains on this device. See `docs/EDUCATION_MODE.md`.
 
-Shortened spotlight travel by about 25%, to 490–1125 ms according to scroll distance. With the synthetic Barnard field, the Linux Chromium tour check aligned each of the eight steps at all seven agreed widths. At 390 px a long downward move advanced through 43 distinct scroll positions without reversing, and Escape stopped it in progress. All 44 Node test scripts, the three benchmark comparisons and 190 backend pytest cases passed. Physical devices were outside this timing check.
+## 2026-11-14 — Science interface aligned with published Blink 3.0
 
-## 2026-11-12 — Restore guided tour movement
+The user supplied the live Blink 3.0 workspace as the visual reference. Merged current 3.0 `main` at `06ac378` into the 4.0 worktree so Science uses the current workspace structure, instrumentation stylesheet, shared responsive project menu and matching light signal-red default. Added Learn Mode to the shared menu, retained the 4.0 mode chooser and Learn identity, and reattached high-contrast and Science simple-explanation controls. The 4.0-specific blind mover check remains in place. Science query URLs continue to work.
 
-A single animation moves the page, spotlight and card together over 650–1500 ms according to scroll distance. Next and Back interrupt from the current position. Escape stops the movement and reduced motion places the step immediately.
+Verification for this alignment is pending: source syntax and responsive/browser navigation checks have not yet been run after the merge.
 
-Linux Chromium: with the synthetic Barnard field, all eight spotlight targets aligned at the seven agreed widths. Reviewed 390 and 1440 px screenshots. A separate frame sampling check at 390 px recorded a long downward move without a reversal and verified that Escape stopped an in-progress move. All scratch/test_*.mjs scripts, benchmark.mjs --check, e2e_smoke.mjs, a11y_audit.mjs, browser_navigation.cjs, browser_layout_audit.cjs, browser_tour_modal.cjs and 190 backend tests passed. Physical devices and live FITS were outside this check.
+Verification so far: `node scratch/test_learning.mjs` and `node scratch/test_overview.mjs` passed at the landing/model stage before the final classroom-score and high-contrast additions. `node --check` passed on each new JavaScript module and `git diff --check` is clean. The full app/runtime, accessibility, browser, and preserved-science regressions have not been run for this integration.
 
-## 2026-11-12 — Combine the viewing guide and tour
+## 2026-11-14 — leave-one-image-out candidate check
+
+Added an automatic consistency check to Find movers. For each candidate, one detected image is held out, a straight line is fitted to detections from the other images, and aperture S/N is measured at the held-out prediction. Same-detector, same-time duplicate frames are excluded together from the fit to avoid leakage, but are measured separately. The candidate list and inspector show supported / measurable counts; CSV and JSON carry the counts and provenance labels the combined algorithm version. Candidates need at least four detections spanning four survey passes. The check is not used for curved parallax candidates. Its threshold and behavior have synthetic module tests only; no real-data calibration or independent confirmation claim is made.
 
 Moved the visual motion cues into the existing eight-step tour. Settings and Layers share the viewer toolbar. Steps now position the highlight immediately and fade the card for 180 ms, with the fade disabled for reduced motion. Removed the delayed reposition callback and overlapping spotlight transitions.
 
@@ -95,6 +98,7 @@ Restyled the image workspace on `redesign/contact-sheet` from `880777f`. The coo
 Ran all 44 `scratch/test_*.mjs` scripts, `node scratch/e2e_smoke.mjs`, `node scratch/a11y_audit.mjs`, and the Playwright navigation and layout checks in `scratch/browser_navigation.cjs` and `scratch/browser_layout_audit.cjs`. All passed. Playwright screenshots at 1536, 820, 390 and 320 px used the built-in WISE 0855 and simulated Planet X fields. A touch-emulated phone check exercised mode selection and display settings. A before-and-after comparison matched 129 static controls, links and forms, the cutout GET and parameters, and the loading, HTTP 503, retry and empty-field states using intercepted API responses.
 
 The frontend serves directly from `frontend/` with no build step. The available Python installations lacked pytest, so `python -m pytest backend -q` could not run. Live FITS, external catalogues and third-party sky map services were not exercised.
+Verification: all 45 `scratch/test_*.mjs` files passed, including `test_blindcheck.mjs`, `test_export.mjs` and `test_movers.mjs`; `git diff --check` passed. `scratch/e2e_smoke.mjs` could not start because its browser exited before readiness (code 4294930433). Backend pytest could not start: the `python` and `py` launchers point to unavailable WindowsApps executables, and this checkout has no `backend/.venv`. The blind check has synthetic module coverage, not a browser or real-data calibration yet.
 
 ## 2026-11-14 — 3D Overview interface port
 
@@ -309,9 +313,6 @@ Verification: all 17 `scratch/test_*.mjs` scripts passed; `python -m pytest back
 
 # Progress: SPHEREx Blink 2.0
 
-> *Historical note (12 Nov 2026):* this second half was written on the branch `blink-2.0` on 10 Nov. Its statements about the branch, "`main` still has the old page", "Deep Space is the default theme" and
-> "where Blink 2.0 lives" are superseded by the block at the top of this file and by `AGENTS.md`. The descriptions of the code, the tests and the validation still apply.
-
 Read `AGENTS.md` first. Update this file after every working session. Last update: **10 Nov 2026**, branch `blink-2.0`.
 Verify what is written here against `git log` and the test commands in `AGENTS.md`; do not trust it blindly.
 
@@ -461,3 +462,6 @@ Branch `results-from-file` (from `fix-navigation`, `41269d3`). Asked: the Result
 Changed on purpose: `candidateEvidence.js` accepts the detector `"all"` (the workspace writes it for a search over every detector, and such an export could not be loaded before), keeps more numbers in each row, and a run of an unknown field has no workspace link instead of crashing; `selectRows` has a kind filter and more orders; `buildCharts` tries each numbered block on its own. No existing check was weakened.
 
 Verification: 46 `scratch/test_*.mjs` scripts passed (the new one has 56 checks, and three deliberate breakages of the code were each caught), 190 pytest passed, `scratch/e2e_smoke.mjs` passed. In the in-app browser: the default page, a list of sources, a candidate JSON equal to the one of `browser_candidate_roundtrip.cjs` ("Candidate export loaded.", 1 of 1 records, 3 centroid rows, the report, the workspace link), a refused text file, a validation file (12 charts), the way back to the archive, no horizontal overflow at 375 px, no control under 24 px. **Not run:** the Playwright scripts (`browser_*.cjs`, no Playwright here), a screenshot review of every theme (the pane would not draw most screenshots).
+## 2026-11-14 – Cosmic Missions and Discovery Pin Board (branch `missions-pinboard`)
+Added `features/missions.js`, `pinBoard.js`, `missionsPinView.js`, two panels in index.html, a pin button in the mover detail, `scratch/test_missions_pins.mjs`.
+Untested: the Node suite could not run on this machine (Node 18.15; the repo's ES modules need Node 22, every existing test_*.mjs fails here too). The same checks were run by hand in the browser (served by scripts/serve_frontend.py on 8765): 19 missions, Math.random reaches all, SHA-256("abc") correct, Find movers → select #1 → pin as Alex_Space99 → marker + list item, hash verifies, no console errors. Playwright regressions and pytest not run.

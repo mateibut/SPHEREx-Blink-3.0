@@ -79,7 +79,7 @@ input[type=range]::-webkit-slider-thumb { box-shadow: none; }
 .project-menu nav a[aria-current] { color: var(--accent-text); border-color: var(--accent); }
 .project-menu select { width: auto; max-width: 12rem; min-height: 36px; }
 #pages-toggle,.embed .site-header { display: none; }
-@media (max-width: 64rem) {
+@media (max-width: 75rem) {   /* was 64rem: the mode menu needs about 1200px on one line */
   .site-header { justify-content: space-between; min-height: 56px; }
   #pages-toggle { display: inline-flex; align-items: center; min-height: 44px; }
   .project-menu { display: none; position: absolute; top: 100%; right: 8px;
