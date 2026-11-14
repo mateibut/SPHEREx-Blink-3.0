@@ -240,3 +240,14 @@ p.rcaveat {
 .rdrop input { min-height: 28px; }
 #candidate-viewer { display: inline-flex; align-items: center; min-height: 32px; }
 #sources-explorer :is(button, input, select) { min-height: 28px; min-width: 24px; }
+
+/* narrow phones (320 px): nothing may be wider than the screen */
+@media (max-width: 480px) {
+  .rdrop, .rload-body, .rdrop > *, .rload-body > * { min-width: 0; max-width: 100%; }
+  .rdrop input[type="file"] { width: 100%; }
+  .rdrop-title, .rdrop-hint { overflow-wrap: anywhere; }
+  .rmain li, .rmain code { overflow-wrap: anywhere; min-width: 0; }
+  .dscatter { grid-template-columns: minmax(0, 1fr); }
+  .dscatter > * { min-width: 0; }
+  .dsc-plot { max-width: 100%; }
+}
