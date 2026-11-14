@@ -348,8 +348,8 @@
       // Materials
       const goldMLI = new THREE.MeshStandardMaterial({
         color: 0xd4af37,
-        metalness: 0.88,
-        roughness: 0.22,
+        metalness: 0.68,
+        roughness: 0.4,
         emissive: 0x2a2005,
         emissiveIntensity: 0.2
       });
@@ -369,8 +369,8 @@
 
       const solarCellMat = new THREE.MeshStandardMaterial({
         color: 0x0c1e38,
-        metalness: 0.85,
-        roughness: 0.18
+        metalness: 0.55,
+        roughness: 0.38
       });
 
       // A) Service Module (Hexagonal Bus)
@@ -492,15 +492,25 @@
           );
           panel.position.set(side * (48 + p * 24), -35, 0);
 
-          // Gold frame around panel
-          const frame = new THREE.Mesh(
-            new THREE.BoxGeometry(46, 2.2, 29),
-            goldMLI
-          );
-          frame.position.copy(panel.position);
-          frame.scale.set(1.02, 0.9, 1.02);
-          wing.add(frame);
           wing.add(panel);
+
+          // Gold perimeter rails sit just above each panel face. A single
+          // filled frame box overlapped the panel surface and caused z-fighting
+          // (visible as rapid gold/blue flicker while the spacecraft rotated).
+          for (const face of [-1, 1]) {
+            const railY = panel.position.y + face * 1.4;
+            const rails = [
+              [new THREE.BoxGeometry(46, 0.35, 1), panel.position.x, railY, panel.position.z - 14],
+              [new THREE.BoxGeometry(46, 0.35, 1), panel.position.x, railY, panel.position.z + 14],
+              [new THREE.BoxGeometry(1, 0.35, 27), panel.position.x - 22.5, railY, panel.position.z],
+              [new THREE.BoxGeometry(1, 0.35, 27), panel.position.x + 22.5, railY, panel.position.z],
+            ];
+            for (const [geometry, x, y, z] of rails) {
+              const rail = new THREE.Mesh(geometry, goldMLI);
+              rail.position.set(x, y, z);
+              wing.add(rail);
+            }
+          }
         });
 
         wingsGroup.add(wing);

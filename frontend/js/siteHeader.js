@@ -37,7 +37,18 @@ const MODES = {
 };
 // On the home page no mode is active: the menu shows only Home and the page's two mode cards choose one.
 const showMode = mode && current !== "overview";
-const pages = [["overview", "Home", "overview.html"], ...(showMode ? MODES[mode].pages : [])];
+const overviewPages = [
+  ["overview", "Overview", "overview.html"],
+  ["index", "Workspace", "index.html#workspace"],
+  ["sky", "Sky Explorer", "sky.html"],
+  ["simulator", "Simulator", "simulator.html"],
+  ["planet-x", "Planet X Lab", "planet-x.html"],
+  ["results", "Results", "results.html"],
+  ["about", "About", "index.html#about"],
+];
+const pages = current === "overview"
+  ? overviewPages
+  : [["overview", "Home", "overview.html"], ...(showMode ? MODES[mode].pages : [])];
 
 const nav = document.createElement("nav");
 nav.id = "project-nav";
