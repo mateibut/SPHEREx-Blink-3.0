@@ -46,6 +46,7 @@ import { colourHint } from "./features/spectrum.js";
 import { describeDistant, classifyApparentMotion, VERSION as PARALLAX_VERSION, DISTANT_DEFAULTS } from "./features/parallax.js";
 import { candidatesToCsv, candidatesToJson, exportFileName } from "./features/export.js";
 import { startTour, WORKSPACE_STEPS } from "./features/tour.js";
+import { drawTrack, candidateTrackPoints, datedTrackPoints } from "./features/labTrackView.js";
 import { PLANET_X_DEMO } from "./data/mockSource.js";
 import { compareChoices, membersFor, defaultChoice, shortLabel, OPERATIONS } from "./features/compare.js";
 import { fetchCatalogue, catalogueTracks } from "./features/catalogue.js";
@@ -1025,6 +1026,7 @@ function clearMovers() {
   moversRun = null;
   $("movers-provenance").hidden = true;
   selectedMover = -1;
+  updateObservationTrack(null);
   player.setCandidates([]);
   $("mover-list").hidden = true;
   $("mover-list").replaceChildren();
@@ -1375,9 +1377,25 @@ $("export-json-btn").addEventListener("click", () => {
 });
 
 /** Highlight one candidate on the image (ring + path) and describe it; -1 = none. */
+function updateObservationTrack(candidate) {
+  const summary = $("observation-track-summary");
+  const figure = $("observation-track-figure");
+  const points = candidate?.distant ? candidateTrackPoints(candidate) : [];
+  const size = player.naturalSize;
+  figure.hidden = !points.length || !size;
+  if (figure.hidden) {
+    $("observation-track-plot").replaceChildren();
+    summary.textContent = "Run Look for a distant body and select a result to see its trajectory.";
+    return;
+  }
+  summary.textContent = `Candidate ${candidate.label} · fitted distance ${candidate.distanceAU.toFixed(1)} AU · ${points.length} supporting detections`;
+  drawTrack($("observation-track-plot"), datedTrackPoints(points), size);
+}
+
 function selectMover(k) {
   player.stopFollow();                              // the view followed the one selected before
   selectedMover = k;
+  updateObservationTrack(movers[k]);
   planetLab?.refresh();                             // the lab compares the motions of the one selected
   assistant?.refresh();
   pinBoard?.refresh();
@@ -1389,7 +1407,8 @@ function selectMover(k) {
   $("mover-colour").hidden = true;                  // belongs to the candidate that was selected before
   if (k < 0) return;
   const m = movers[k];
-  $("mover-spectrum-btn").hidden = Boolean(m.distant);          // the measurement follows a straight path: not for a swinging body
+  $("mover-spectrum-btn").hidden = Boolean(m.distant);
+  $("mover-lab-btn").hidden = !m.distant;          // the measurement follows a straight path: not for a swinging body
   if (m.distant) {
     $("mover-detail-text").textContent =
       `${m.label}: ${m.distant.text} Its apparent path (drawn on the image) is the Earth's parallax swing plus that drift; ` +
@@ -1483,6 +1502,21 @@ player.onFollowChange = (i) => {
   b.setAttribute("aria-pressed", String(i !== null));
   b.textContent = i !== null ? "Stop following" : "Follow it";
 };
+
+$("mover-lab-btn").addEventListener("click", () => {
+  const candidate = movers[selectedMover];
+  if (!candidate?.distant) return;
+  const points = candidateTrackPoints(candidate);
+  try {
+    sessionStorage.setItem("spherex-lab-candidate", JSON.stringify({
+      label: candidate.label, distance: candidate.distanceAU, range: candidate.distant.rangeText,
+      points, synthetic: DATA_SOURCE !== "api", n: player.naturalSize,
+    }));
+    location.href = "planet-x.html?inspect=candidate#body-inspector";
+  } catch {
+    $("mover-detail-text").textContent += " Browser storage is unavailable. The candidate could not be sent to Planet X Lab.";
+  }
+});
 
 $("mover-map-btn").addEventListener("click", async () => {
   const m = movers[selectedMover];

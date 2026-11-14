@@ -18,6 +18,7 @@
   <script>if (/[?&]embed=1(&|$)/.test(location.search)) document.documentElement.classList.add("embed");</script>   <!-- ?embed=1: workspace only, for an <iframe> -->
   <link rel="stylesheet" href="css/styles.css?v=21">
   <link rel="stylesheet" href="css/instrument.css">
+  <link rel="stylesheet" href="css/lab-track.css">
   <link rel="stylesheet" href="css/contact-sheet.css?v=22">
 </head>
 <body>
@@ -318,6 +319,7 @@
           <p id="mover-colour" class="mover-colour" role="status" aria-live="polite" hidden></p>
           <button type="button" class="btn btn-small" id="mover-centre-btn" title="Zoom the picture in on this candidate and put it in the middle (where it is on the image shown; in Stack and Trail, the middle of its path)">Centre the picture on it</button>
           <button type="button" class="btn btn-small" id="mover-follow-btn" aria-pressed="false" title="Keep the candidate in the middle of the picture while the images change (Blink and Difference). Moving the picture by hand, or Fit, stops it">Follow it</button>
+          <button type="button" class="btn btn-small" id="mover-lab-btn" hidden>Inspect in Planet X Lab</button>
           <button type="button" class="btn btn-small" id="mover-map-btn">Check in sky map</button>
           <button type="button" class="btn btn-small" id="mover-spectrum-btn" title="Measure the candidate in every image, where it is on that image's date, and plot flux against wavelength">Spectrum along its path</button>
           <button type="button" class="btn btn-small btn-primary" id="pin-report-btn" title="Pin this candidate to the Discovery Pin Board under your observer name (kept in this browser only)" disabled>📌 Pin &amp; Report Object</button>
@@ -398,6 +400,14 @@
 
     <section class="panel sequence-controls" id="observation-tools" aria-labelledby="observation-tools-title">
       <h2 id="observation-tools-title">Observation tools</h2>
+      <section class="observation-track" aria-labelledby="observation-track-title">
+        <h3 id="observation-track-title">Planet X trajectory</h3>
+        <p id="observation-track-summary" role="status">Run Look for a distant body and select a result to see its trajectory.</p>
+        <figure id="observation-track-figure" hidden>
+          <svg class="recovery-plot" id="observation-track-plot" viewBox="0 0 420 420" role="img" aria-label="Supporting detections of the selected distant-body candidate"></svg>
+          <figcaption>Positions are shown in the registered image plane. Background stars are illustrative.</figcaption>
+        </figure>
+      </section>
       <details class="detector-pair" id="detector-pair" hidden>
         <summary>Compare two observations side by side</summary>
         <p class="muted small">Each cutout is labelled with its own observation time and wavelength range. Use the source inspector for flux measurements.</p>
@@ -777,7 +787,7 @@
     <div class="dlg-head"><h2 id="simulation-note-title">About the simulation</h2><form method="dialog"><button class="btn btn-small">Close</button></form></div>
     <p class="dlg-body">The Planet X preset uses a simulated body 600 AU away. Its position is invented for testing the distant-body search.</p>
   </dialog>
-  <script type="module" src="js/main.js?v=5"></script>
+  <script type="module" src="js/main.js?v=8"></script>
   <script type="module" src="js/scienceExplain.js"></script>
   <script type="module" src="js/features/highContrast.js"></script>
 </body>
