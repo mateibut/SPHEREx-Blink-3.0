@@ -33,7 +33,7 @@
 
   <!-- 3D Three.js WebGL canvas -->
   <canvas id="bg-canvas" aria-hidden="true"></canvas>
-  <p class="model-caption">Illustrative Earth and SPHEREx model · not to scale. Demo image data are synthetic.</p>
+  <p class="model-caption">Illustration only — not SPHEREx observations. Earth and SPHEREx model not to scale. Demo image data are synthetic.</p>
 
   <!-- 3D Component Inspection HUD Card -->
   <aside id="model-hud" role="region" aria-label="Model component details" aria-hidden="true">
@@ -636,15 +636,46 @@
     }
 
     // ── 5. INTERACTIVE 3D ORBIT & DRAG ROTATION ──
-    let isDragging = false;
+    let dragPointerId = null;
     let prevMouseX = 0, prevMouseY = 0;
     let rotVelX = 0, rotVelY = 0;
-    let mouseNDC = { x: 0, y: 0 };
+    const mouseNDC = { x: 0, y: 0 };
+    const dragRay = new THREE.Raycaster();
+    const dragPoint = new THREE.Vector2();
+
+    function hitsSatellite(e) {
+      const bounds = canvas.getBoundingClientRect();
+      if (!bounds.width || !bounds.height) return false;
+      dragPoint.set(
+        ((e.clientX - bounds.left) / bounds.width) * 2 - 1,
+        1 - ((e.clientY - bounds.top) / bounds.height) * 2
+      );
+      camera.updateMatrixWorld();
+      observatory.updateWorldMatrix(true, true);
+      dragRay.setFromCamera(dragPoint, camera);
+      return dragRay.intersectObject(observatory, true).length > 0;
+    }
 
     window.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0 || dragPointerId !== null) return;
       if (e.pointerType === 'touch' && e.target !== canvas) return;
-      if (e.target.closest('#overview-main button, #overview-main a, .site-header, #model-hud')) return;
-      isDragging = true;
+      const target = e.target;
+      if (target.closest('a, button, input, select, textarea, [contenteditable], .site-header, #model-hud')) return;
+      // Foreground text can overlap the background model. Let a drag starting on text select it.
+      if (target !== canvas) {
+        const caret = document.caretPositionFromPoint?.(e.clientX, e.clientY);
+        const text = caret?.offsetNode ?? document.caretRangeFromPoint?.(e.clientX, e.clientY)?.startContainer;
+        if (text?.nodeType === Node.TEXT_NODE) {
+          const textRange = document.createRange();
+          textRange.selectNodeContents(text);
+          if (Array.from(textRange.getClientRects()).some(rect =>
+            e.clientX >= rect.left && e.clientX < rect.right &&
+            e.clientY >= rect.top && e.clientY < rect.bottom)) return;
+        }
+      }
+      if (!hitsSatellite(e)) return;
+      dragPointerId = e.pointerId;
+      if (e.pointerType === 'mouse') e.preventDefault();
       prevMouseX = e.clientX;
       prevMouseY = e.clientY;
       rotVelX = 0; rotVelY = 0;
@@ -652,17 +683,28 @@
       if (ring) ring.classList.add('is-dragging');
     });
 
-    window.addEventListener('pointerup', () => {
-      isDragging = false;
+    function stopDrag() {
+      dragPointerId = null;
       const ring = document.getElementById('cursorRing');
       if (ring) ring.classList.remove('is-dragging');
+    }
+
+    function endPointerDrag(e) {
+      if (e.pointerId === dragPointerId) stopDrag();
+    }
+
+    window.addEventListener('pointerup', endPointerDrag);
+    window.addEventListener('pointercancel', endPointerDrag);
+    window.addEventListener('blur', stopDrag);
+    document.addEventListener('selectstart', (e) => {
+      if (dragPointerId !== null) e.preventDefault();
     });
 
     window.addEventListener('pointermove', (e) => {
       mouseNDC.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouseNDC.y = -(e.clientY / window.innerHeight) * 2 + 1;
 
-      if (isDragging) {
+      if (e.pointerId === dragPointerId) {
         const dx = e.clientX - prevMouseX;
         const dy = e.clientY - prevMouseY;
         rotVelY = dx * 0.006;
@@ -702,7 +744,7 @@
         earthSystem.cloudLayer.rotation.y += 0.00065;
         stars.rotation.y += 0.0002;
         stars.rotation.z = scrollProgress * 0.5;
-        if (!isDragging) {
+        if (dragPointerId === null) {
           observatory.rotation.y += 0.0025 + rotVelY;
           observatory.rotation.x += rotVelX;
           rotVelX *= 0.92;
