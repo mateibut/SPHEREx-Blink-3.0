@@ -30,7 +30,9 @@ const modes = [...html.matchAll(/<input type="radio" name="mode" value="([^"]+)"
 assert.deepEqual(Object.keys(MODE_EXPLANATIONS).sort(), modes.sort(), "all five view modes have clear descriptions");
 assert.ok(Object.values(MODE_EXPLANATIONS).every(text => typeof text === "string" && text.length > 100 && text.length < 520));
 assert.ok(main.includes('$("mode-help").textContent = MODE_EXPLANATIONS[mode];'), "mode help updates when modes change");
-assert.ok(html.includes('src="js/scienceExplain.js?v=2"') && html.includes('js/main.js?v=26'), "bust cached JS");
+assert.ok(main.includes('$("mode-help").textContent = MODE_EXPLANATIONS[player.mode];'), "restored mode from deep link updates guidance");
+assert.doesNotMatch(main, /\\bMODE_HELP\\b/, "old undefined mode-help object is not referenced");
+assert.ok(html.includes('src="js/scienceExplain.js?v=2"') && html.includes('js/main.js?v=27'), "bust cached JS");
 // Exercise the actual Explain Simply script with a small DOM mock: all 13 panels
 // must render three useful parts and their buttons must open and close the card.
 function fakeElement(tagName) {
