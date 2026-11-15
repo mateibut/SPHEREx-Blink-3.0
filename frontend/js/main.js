@@ -38,7 +38,7 @@ import { applyIcons } from "./features/ui.js";
 import { openDialog, shortcutsHtml } from "./features/dialog.js";
 import { setupTimeline } from "./features/timelineView.js";
 import { FLAGGED_LIMIT } from "./features/timeline.js";
-import { SkyContext } from "./features/skyContext.js?v=12";
+import { SkyContext } from "./features/skyContext.js?v=13";
 import { setupFullscreen } from "./features/fullscreen.js";
 import { MODE_EXPLANATIONS } from "./features/workspaceExplanations.js";
 import { detectSources, describeMover, matchKnownObject, moverPositionAtMjd, passIndices, trackSupport, blendWarning, VERSION as MOVERS_VERSION, DEFAULTS as MOVER_DEFAULTS, ERROR_MODEL } from "./features/movers.js";
@@ -2013,7 +2013,7 @@ function applyUrlState() {
     player.setMode(state.mode);
     document.querySelector(`#mode-switch input[value="${state.mode}"]`).checked = true;
   }
-  $("mode-help").innerHTML = MODE_HELP[player.mode];
+  $("mode-help").textContent = MODE_EXPLANATIONS[player.mode];
 
   // RA/Dec: put the raw text in the inputs. If both are present, load right away.
   // If they are invalid, readForm() will show the normal error messages – no crash.
