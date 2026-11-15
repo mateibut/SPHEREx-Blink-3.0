@@ -40,6 +40,7 @@ import { setupTimeline } from "./features/timelineView.js";
 import { FLAGGED_LIMIT } from "./features/timeline.js";
 import { SkyContext } from "./features/skyContext.js?v=12";
 import { setupFullscreen } from "./features/fullscreen.js";
+import { MODE_EXPLANATIONS } from "./features/workspaceExplanations.js";
 import { detectSources, describeMover, matchKnownObject, moverPositionAtMjd, passIndices, trackSupport, blendWarning, VERSION as MOVERS_VERSION, DEFAULTS as MOVER_DEFAULTS, ERROR_MODEL } from "./features/movers.js";
 import { blindCheckCandidate, VERSION as BLIND_CHECK_VERSION } from "./features/blindCheck.js";
 import { buildProvenance, provenanceText, pictureCaption } from "./features/provenance.js";
@@ -502,21 +503,13 @@ const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)
 // ---------------------------------------------------------------
 // View modes
 // ---------------------------------------------------------------
-const MODE_HELP = {
-  blink: "Images from different dates, one after another. Most stars stay put – look for a dot that <strong>jumps</strong>.",
-  diff: 'Each image minus the median of the images from <em>other</em> dates: still stars vanish. <span class="swatch" style="background:#ff9e33"></span> brighter than usual – the object is here now · <span class="swatch" style="background:#409eff"></span> fainter than usual.',
-  mean: "Average of all images: deeper and less noisy. Moving objects get smeared or fade out.",
-  max: "Brightest value of every pixel over all dates: a moving object leaves a <strong>trail of dots</strong>, a still star stays one dot.",
-  compare: 'Pick two images, or whole survey passes. <strong>A − B</strong>: <span class="swatch" style="background:#ff9e33"></span> brighter in A · <span class="swatch" style="background:#409eff"></span> fainter in A – a mover is an orange dot next to a blue one, still stars vanish. <strong>A + B</strong>: the average of both, a deeper picture. Other dates are also other wavelengths, so bright stars can leave a faint leftover even if they did not move.',
-};
-
 function setMode(mode, { updateUrl = true } = {}) {
   if (!MODES.includes(mode)) mode = "blink";
   const radio = document.querySelector(`#mode-switch input[value="${mode}"]`);
   if (radio.disabled) mode = "blink";
   document.querySelector(`#mode-switch input[value="${mode}"]`).checked = true;
   player.setMode(mode);
-  $("mode-help").innerHTML = MODE_HELP[mode];
+  $("mode-help").textContent = MODE_EXPLANATIONS[mode];
   $("compare-controls").hidden = mode !== "compare";
   if (updateUrl) writeUrlState({ mode: mode === "blink" ? null : mode });
   if (player.length) {
