@@ -1,3 +1,39 @@
+## 2026-11-21 — Real or Fake daily leaderboard
+
+Real or Fake now uses large answer tiles and a shared set of ten synthetic candidates that changes at UTC midnight. The result shows the number of correct answers and total answer time. Players can post a completed result under a nickname. The board shows today's ten highest scores, with time as the tiebreaker, and highlights the leading entry. The Pin Board's Supabase project can host the scores through a separate table and read-only leaderboard view.
+
+Validation: all 74 `scratch/test_*.mjs` scripts passed. The Real or Fake test uses deterministic candidates, a mock clock and canvas, and a mocked Supabase API to exercise answer timing, day rollover, rank display, and an idempotent post retry. The offline backend suite passed 268 tests with one Astropy environment warning. The headless smoke test was blocked when Chromium exited before it reported its debugging address. The Supabase migration was prepared but has not been applied or tested on the live project.
+
+## 2026-11-20 — Two separate image games in Training
+
+Training has distinct links for Identify the object and Real or Fake. They share the same synthetic image viewer and ten-question scoring, with separate titles and answer sets. The theory quiz remains linked from Learn Mode.
+
+Validation: `node scratch/test_real_or_fake.mjs` covers both URLs, their visible answer types, the timer, and scoring. Browser navigation could not launch Chromium because opening a socket was blocked in the sandbox.
+
+## 2026-11-20 — Ten-question Training quizzes
+
+Training now links to a ten-question theory quiz drawn from the Learn Mode question bank and to a ten-candidate timed image quiz. The image quiz offers binary Real/Fake or detailed Star/Asteroid/Artefact answers. Both quizzes show a final score and can be replayed. The image quiz uses only synthetic frames.
+
+Validation: `node scratch/test_training_quiz.mjs` exercises all ten theory questions, scoring and replay. `node scratch/test_real_or_fake.mjs` uses deterministic synthetic seeds and a mock clock to check the binary and detailed modes, the ten-second deadline, and final scoring. Browser regression was blocked when system Chromium could not open a socket in the sandbox.
+
+## 2026-11-20 — Real or fake training game
+
+Training links to a timed classification exercise. Each round uses three explicitly synthetic images and asks the player to classify a marked signal as a star, asteroid, or artefact. The examples illustrate stationary point-spread profiles, moving point-spread profiles, and one-frame detector artefacts. Frame selection is manual when reduced motion is enabled. Each answer or timeout reveals an explanation.
+
+Validation: `node scratch/test_real_or_fake.mjs` uses fixed synthetic seeds and a mocked clock, canvas and DOM to check the ten-second deadline, frame playback, manual frame selection, and answer reveal. The Node and backend suites ran locally. Browser navigation could not launch system Chromium because a socket operation was blocked in the sandbox. No real observations were used.
+
+## 2026-11-20 — Daily challenge email reminders
+
+The Home invitation provides an opt-in email form, with explicit confirmation and unsubscribe actions. The cloud API uses a dedicated Firestore collection for subscriptions, and a separate private job can send one reminder per Bucharest date at 09:00. Deployment settings are documented in [DAILY_EMAIL.md](DAILY_EMAIL.md).
+
+Validation: all Node scripts and 268 backend tests passed. The reminder tests use a recording mailer, in-memory subscription storage, fixed UTC clocks, and mocked frontend requests. The suite checks confirmation, token expiry, unsubscribing, duplicate suppression, and the summer-time boundary. Chromium navigation could not run in the sandbox. SMTP, live Firestore, and scheduling were not configured or exercised, and no real email was sent.
+
+## 2026-11-20 — Weekly challenges and synthetic training
+
+Home separates Training from Daily Challenge. From Monday to Saturday, the daily link uses prepared real observations of the Barnard, Epsilon Indi B, and WISE 0855 fields. Missions progressively require Blink, display Difference or Contrast, additional marked epochs, and a model comparison on Saturday. Catalogue predictions provide an approximate two-pixel acceptance window for manual marks. Sunday is explicitly synthetic and uses the Planet X training exercise. Training provides five frames per exercise and retains its separate practice streak. The daily streak covers one missed UTC day per active streak.
+
+Validation: all Node test scripts and 264 backend tests passed locally. Daily tests use mocked canvas, browser state, and prepared API responses for the real-game flow. The four prepared sequence endpoints were checked read-only for frame availability, dates, matching field metadata, and catalogue positions inside the fields. Browser navigation was blocked because Playwright’s bundled Chromium was absent and system Chromium could not open a socket in the sandbox. No new archive acquisition was submitted.
+
 ## Science Workspace — Synthetic field selector layout fix
 
 Checkpoint `477aa5e` fixes the screenshot regression: the moved 1–30′ range no longer inherits text-input styling, its label/value/unit stay inline, and the four controls fit one row on wide screens while wrapping on smaller ones. No request, source, science, or backend behavior changed.
