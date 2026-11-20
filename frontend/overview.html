@@ -62,9 +62,6 @@
     <!-- ── HERO SECTION ── -->
     <section class="overview-hero-3d" aria-labelledby="overview-title">
       <div class="hero-content">
-        <div class="kicker-badge" id="heroKicker">
-          <span>SPHEREx Blink 3.0</span> · <span id="heroDataSource" role="status" aria-live="polite">Synthetic demo</span>
-        </div>
         <h1 class="hero-title" id="overview-title">
           <span class="hero-word">Find</span>
           <span class="hero-word">what</span>
@@ -870,8 +867,7 @@
     if (h1 && window.gsap && !reducedMotion) {
       const heroWords = h1.querySelectorAll('.hero-word');
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-      tl.fromTo('#heroKicker', { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.45 })
-        .fromTo(heroWords, { autoAlpha: 0, y: 24, rotateX: -8 }, {
+      tl.fromTo(heroWords, { autoAlpha: 0, y: 24, rotateX: -8 }, {
           autoAlpha: 1,
           y: 0,
           rotateX: 0,
